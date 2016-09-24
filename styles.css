@@ -1,0 +1,76 @@
+/* Master Styles */
+h1 {
+  color: #369;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 250%;
+}
+h2, h3 {
+  color: #444;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: lighter;
+}
+body {
+  margin: 2em;
+}
+
+.selected {
+  background-color: #CFD8DC !important;
+  color: white;
+}
+.heroes {
+  margin: 0 0 2em 0;
+  list-style-type: none;
+  padding: 0;
+  width: 15em;
+}
+.tasks li {
+  cursor: pointer;
+  position: relative;
+  left: 0;
+  background-color: #EEE;
+  margin: .5em;
+  padding: .3em 0;
+  height: 1.6em;
+  border-radius: 4px;
+}
+.tasks li.selected:hover {
+  background-color: #BBD8DC !important;
+  color: white;
+}
+.tasks li:hover {
+  color: #607D8B;
+  background-color: #DDD;
+  left: .1em;
+}
+.tasks .text {
+  position: relative;
+  top: -3px;
+}
+.tasks .badge {
+  display: inline-block;
+  font-size: small;
+  color: white;
+  padding: 0.8em 0.7em 0 0.7em;
+  background-color: #607D8B;
+  line-height: 1em;
+  position: relative;
+  left: -1px;
+  top: -4px;
+  height: 1.8em;
+  margin-right: .8em;
+  border-radius: 4px 0 0 4px;
+}
+@keyframes MyAnimation {
+  0% {
+    padding-left: 100px;
+    opacity: 0;
+  }
+  100% {
+    padding-left: 0px;
+    opacity: 1;
+  }
+}
+
+.animation {
+  animation: MyAnimation 1s;
+}
