@@ -5,10 +5,14 @@ import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
+import { GeneralTasksComponent } from './generaltasks.component';
+import { TaskFormComponent } from './taskform.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    GeneralTasksComponent,
+    TaskFormComponent
   ],
   imports: [
     BrowserModule,
