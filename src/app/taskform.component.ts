@@ -12,23 +12,8 @@ import { GeneralTasksComponent } from './generaltasks.component';
 
 @Component({
   selector:'task-form',
-  template:`
-<div [hidden]="!visibility"
-     [@visibilityChanged]="isVisible">
-<h3>Add New Task:</h3>
-<input #newStart placeholder="start" value="00:00"/>
-<input #newDuration placeholder="duration" value="60"/>
-<input #newTitle placeholder="title" value="Title"/>
-<input #newType placeholder="type" value="normal"/>
-<input #newDescription placeholder="description" value="desciption"/>
-<button md-raised-button (click)="addTask(newStart.value,
-                        newDuration.value,
-                        newType.value,
-                        newTitle.value,
-                        newDescription.value)">Confirm</button>
-<button md-raised-button (click)="hideTaskForm()">Cancel</button>
-</div>
-`,
+  templateUrl: './taskform.component.html',
+  //styleUrls: ['./taskform.component.css'] TODO later
 animations: [
   trigger('visibilityChanged', [
   state("true" , style({

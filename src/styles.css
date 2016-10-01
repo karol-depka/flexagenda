@@ -1,10 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 /* Master Styles */
+body {
+  /*border: solid; /* just to see what the visible width is */
+}
 div.root {
-  margin: .5em;
+
   padding: .3em 0;
   border-radius: 8px;
-  /*border: solid;*/
   background-color: #CFD8DC !important;
   }
   h2.labels, .root  {
@@ -30,9 +32,6 @@ h2, h3 {
   color: #369;
   font-family: Arial, Helvetica, sans-serif;
   }
-body {
-  margin: 2em;
-}
 .labels {
   text-align: center;
 }

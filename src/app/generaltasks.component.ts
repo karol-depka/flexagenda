@@ -11,42 +11,8 @@ import { TaskFormComponent } from './taskform.component';
 
 @Component({
   selector:'general-tasks',
-  template:`
-  <ul class="tasks">
-  <li>
-  <span class="badge">ID</span>
-  <span class="start">start</span>
-  <span class="duration">duration</span>
-  <span class="title">title</span>
-  </li>
-      <!-- each task goes here -->
-      <li *ngFor="let task of tasks"
-  [class.selected]="task === selectedTask"
-  [@flyInOut]="direction"
-       (click)="onSelect(task)">
-  <span class="badge">{{task.id}}</span>
-  <span class="start">{{task.start}}</span>
-  <span class="duration">{{task.duration}}</span>
-  <span class="title">{{task.title}}</span>
-  <span class="description">{{task.description}}</span>
-      </li>
-  </ul>
-  <div *ngIf="selectedTask">
-  <h2>ID:{{selectedTask.id}} task details!</h2>
-  <div><!--<label>id: </label>{{selectedTask.id}}
-  <label>Start: </label>
-    <input [(ngModel)]="selectedTask.start" placeholder="start"/>
-  <label>Duration: </label>
-  <input [(ngModel)]="selectedTask.duration" placeholder="duration"/>
-  <label>Title: </label>
-    <input [(ngModel)]="selectedTask.title" placeholder="title"/>-->
-    <button md-raised-button (click)="DeleteTask(task)">Delete</button>
-  </div>
-</div>
-<button *ngIf="!selectedTask" md-mini-fab (click)="TaskForm.showTaskForm()">
-<md-icon class="md-24">add</md-icon></button>
-<task-form #TaskForm [tasks]=this.tasks></task-form>
-`,
+  templateUrl: './generaltasks.component.html',
+  //styleUrls: ['./generaltasks.component.css'] TODO later
 animations: [
   trigger('flyInOut', [
     state('*', style({transform: 'translateY(0)'})),
