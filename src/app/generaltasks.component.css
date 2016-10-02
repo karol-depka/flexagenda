@@ -1,0 +1,29 @@
+ul {
+  list-style-type: none;
+}
+li {
+  //border: solid;
+}
+.selected {
+  background-color: #CFD8DC !important;
+}
+.tasks li {
+  cursor: pointer;
+  position: relative;
+  background-color: #7986CB;
+  margin: .5em;
+  padding: .3em 0;
+
+  border-radius: 4px;
+}
+.tasks li:hover {
+  color: #607D8B;
+  background-color: #1A237E;
+}
+.tasks .badge {
+  font-size: small;
+  padding: 0.8em 0.7em 0 0.7em;
+  position: relative;
+  left: -1px;
+  border-radius: 4px 0 0 4px;
+}

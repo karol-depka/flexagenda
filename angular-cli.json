@@ -15,7 +15,8 @@
       "prefix": "app",
       "mobile": false,
       "styles": [
-        "styles.css"
+        "styles.css",
+        "flexagenda-theme.scss"
       ],
       "scripts": [],
       "environments": {

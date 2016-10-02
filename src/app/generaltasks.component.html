@@ -8,13 +8,17 @@
       <!-- each task goes here -->
       <li *ngFor="let task of tasks"
   [class.selected]="task === selectedTask"
-  [@flyInOut]="direction"
-       (click)="onSelect(task)">
-  <span class="badge">{{task.id}}</span>
+  [@flyInOut]="direction">
+  <span class="badge">
+ <md-checkbox color="primary">{{task.id}}</md-checkbox></span>
+ <button md-icon-button color="primary" (click)="TaskForm.showTaskForm(task)">
+   <md-icon>more_vert</md-icon></button>
   <span class="start">{{task.start}}</span>
   <span class="duration">{{task.duration}}</span>
   <span class="title">{{task.title}}</span>
   <span class="description">{{task.description}}</span>
+  <button md-icon-button color="primary" (click)="DeleteTask(task)">
+  <md-icon>delete</md-icon></button>
       </li>
   </ul>
   <div *ngIf="selectedTask">
@@ -26,9 +30,8 @@
   <input [(ngModel)]="selectedTask.duration" placeholder="duration"/>
   <label>Title: </label>
     <input [(ngModel)]="selectedTask.title" placeholder="title"/>-->
-    <button md-raised-button (click)="DeleteTask(task)">Delete</button>
   </div>
 </div>
-<button *ngIf="!selectedTask" md-mini-fab (click)="TaskForm.showTaskForm()">
+<button *ngIf="!selectedTask" md-mini-fab color="primary" (click)="TaskForm.showTaskForm()">
 <md-icon class="md-24">add</md-icon></button>
 <task-form #TaskForm [tasks]=this.tasks></task-form>

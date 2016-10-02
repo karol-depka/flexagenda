@@ -32,7 +32,7 @@ export class TaskFormComponent{
   @Input() tasks: Task[];
   isVisible=false;
   visibility=this.isVisible;
-  showTaskForm(){
+  showTaskForm(task){
     this.isVisible=true;
     this.visibility=this.isVisible;
   }

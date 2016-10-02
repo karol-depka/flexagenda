@@ -12,7 +12,7 @@ import { TaskFormComponent } from './taskform.component';
 @Component({
   selector:'general-tasks',
   templateUrl: './generaltasks.component.html',
-  //styleUrls: ['./generaltasks.component.css'] TODO later
+  styleUrls: ['./generaltasks.component.css'],
 animations: [
   trigger('flyInOut', [
     state('*', style({transform: 'translateY(0)'})),
@@ -37,7 +37,6 @@ export class GeneralTasksComponent implements OnInit {
   getTasks(): void {
     this.tasksService.getTasks().then(tasks=>this.tasks=tasks);
   }
-
   ngOnInit(): void {
     this.getTasks();
   }
@@ -45,7 +44,7 @@ export class GeneralTasksComponent implements OnInit {
     this.selectedTask = task;
   }
   DeleteTask(task: Task): void {
-   this.tasks.splice(this.tasks.indexOf(this.selectedTask),1);
+   this.tasks.splice(this.tasks.indexOf(task),1);
    this.selectedTask = null;
    this.direction="out";
   }
