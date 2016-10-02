@@ -1,7 +1,7 @@
 # Flexagenda
 
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.16.
-More cli options: [README_cli](https://github.com/karol-depka/flexagenda/README_cli.md)
+More cli options: [README_cli](https://github.com/karol-depka/flexagenda/blob/master/README_cli.md)
 
 Install angular-cli:
 ```bash
@@ -23,11 +23,7 @@ Open app url address in a browser:
 ```bash
 open http://localhost:4200/ (xdg-open - linux)
 ```
-To make app remote accessible:
-```bash
-open http://localhost:4200/ --host 0.0.0.0
-```
 Start app:
 ```bash
-ng serve
+ng serve // --host 0.0.0.0 to make app remote accessible
 ```
