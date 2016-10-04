@@ -8,3 +8,6 @@ export const TASKS: Task[] = [
     { id: 3, type: "general", start: "10:00", duration: 200,
      title: 'Nest tasks', description: 'Description' },
   ];
+
+//export const DEFAULT_TASK: Task={ id: 1, type: "normal", start: "18:30", duration: 44,
+ //title: 'Task title', description: 'Type short task description here.' }

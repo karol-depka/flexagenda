@@ -30,9 +30,28 @@ animations: [
 })
 export class TaskFormComponent{
   @Input() tasks: Task[];
-  isVisible=false;
-  visibility=this.isVisible;
+  formCaption: string="Add New task:"
+  isVisible: boolean = false;
+  visibility: boolean = this.isVisible;
+
+  newIdDefault: number = 0;
+  newTypeDefault: string = "general";
+  newStartDefault: string = "12:00";
+  newDurationDefault: number = 60;
+  newTitleDefault: string = "New title";
+  newDescriptionDefault: string = "New description";
+
   showTaskForm(task){
+    if(task){ //if task provided then edit it
+      this.formCaption="Edit task: "+task.id;
+      this.newIdDefault=task.id;
+      this.newTypeDefault=task.type;
+      this.newStartDefault=task.start;
+      this.newDurationDefault=task.duration;
+      this.newTitleDefault=task.title;
+      this.newDescriptionDefault=task.description;
+    }
+    else {this.newIdDefault=0;} //if no task add new task
     this.isVisible=true;
     this.visibility=this.isVisible;
   }
@@ -46,9 +65,24 @@ export class TaskFormComponent{
     this.isVisible=false;
     setTimeout( ()=>this.visibility=false,500);
   }
-  addTask(newStart,newDuration,newType,newTitle,newDescription){
+  addOrEditTask(newStart,newDuration,newType,newTitle,newDescription){
     //console.log(this.tasks);
     this.hideTaskForm();
+    if (this.newIdDefault!=0){ //Edit task
+      //console.log(this.tasks[this.newId-1]);
+      var editedTask={
+        id:this.newIdDefault,
+        type:newType,
+        start:newStart,
+        duration:newDuration,
+        title:newTitle,
+        description:newDescription
+      };
+      //console.log(editedTask);
+      this.tasks[this.newIdDefault-1]=editedTask;
+      //console.log(this.tasks[this.newId-1]);
+    }
+    else { //Add new task
         this.tasks.push({
           id:this.tasks.length+1,
           type:newType,
@@ -56,6 +90,6 @@ export class TaskFormComponent{
           duration:newDuration,
           title:newTitle,
           description:newDescription
-        });
+        });}
              }
 }

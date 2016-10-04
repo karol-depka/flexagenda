@@ -11,5 +11,5 @@ import { GeneralTasksComponent } from './generaltasks.component';
 
 })
 export class AppComponent {
-  title = 'Flexible Agenda App';
+  title: string = 'Flexible Agenda App';
   }

@@ -31,7 +31,7 @@ providers: [TasksService]
 export class GeneralTasksComponent implements OnInit {
     tasks: Task[];
   selectedTask: Task;
-  direction;
+  direction: string;
   constructor(private tasksService: TasksService) { }
 
   getTasks(): void {
@@ -39,9 +39,6 @@ export class GeneralTasksComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getTasks();
-  }
-  onSelect(task: Task): void {
-    this.selectedTask = task;
   }
   DeleteTask(task: Task): void {
    this.tasks.splice(this.tasks.indexOf(task),1);

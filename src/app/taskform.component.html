@@ -1,12 +1,12 @@
 <div [hidden]="!visibility"
      [@visibilityChanged]="isVisible">
-<h3>Add New Task:</h3>
-<input #newStart placeholder="start" value="12:00"/>
-<input #newDuration placeholder="duration" value="60"/>
-<input #newTitle placeholder="title" value="Title"/>
-<input #newType placeholder="type" value="normal"/>
-<input #newDescription placeholder="description" value="desciption"/>
-<button md-raised-button color="primary" (click)="addTask(newStart.value,
+<h3>{{formCaption}}</h3>
+<input #newStart placeholder="start" value={{newStartDefault}}/>
+<input #newDuration placeholder="duration" value={{newDurationDefault}}/>
+<input #newTitle placeholder="title" value={{newTitleDefault}}/>
+<input #newType placeholder="type" value={{newTypeDefault}}/>
+<input #newDescription placeholder="description" value={{newDescriptionDefault}}/>
+<button md-raised-button color="primary" (click)="addOrEditTask(newStart.value,
                         newDuration.value,
                         newType.value,
                         newTitle.value,
