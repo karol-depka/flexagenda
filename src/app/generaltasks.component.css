@@ -12,8 +12,6 @@ li {
   position: relative;
   background-color: #7986CB;
   margin: .5em;
-  padding: .3em 0;
-
   border-radius: 4px;
 }
 .tasks li:hover {
@@ -28,5 +26,5 @@ li {
   border-radius: 4px 0 0 4px;
 }
 .trash {
-  float: right;
+  
 }
