@@ -8,6 +8,7 @@ import { Component,
 import { Task } from './shared/task';
 import { TasksService } from './shared/tasks.service';
 import { TaskFormComponent } from './taskform.component';
+import { AngularFire, FirebaseListObservable} from 'angularfire2';
 
 @Component({
   selector:'general-tasks',
@@ -29,20 +30,23 @@ providers: [TasksService]
 })
 
 export class GeneralTasksComponent implements OnInit {
-    tasks: Task[];
+  tasks: Task[];
   selectedTask: Task;
   direction: string;
-  constructor(private tasksService: TasksService) { }
+  constructor(private _tasksService: TasksService) {
+   }
 
   getTasks(): void {
-    this.tasksService.getTasks().then(tasks=>this.tasks=tasks);
+    this._tasksService.getTasks().then(tasks=>this.tasks=tasks);
   }
   ngOnInit(): void {
     this.getTasks();
   }
   DeleteTask(task: Task): void {
-   this.tasks.splice(this.tasks.indexOf(task),1);
-   this.selectedTask = null;
-   this.direction="out";
+    //console.log(task.$key);
+    this.tasks.remove(task.$key).then(_ => console.log('item deleted!'));
+    //this.tasks.splice(this.tasks.indexOf(task),1);
+    this.selectedTask = null;
+    this.direction="out";
   }
 }

@@ -1,5 +1,4 @@
 export class Task {
-  id: number;
   type: string;
   start: string;
   duration: number;

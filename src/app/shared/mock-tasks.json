@@ -1,0 +1,22 @@
+{
+  "tasks":[
+    {   "type": "normal",
+        "start": "08:30",
+        "duration": 20,
+        "title": "Show edit form on md-icon-button click",
+        "description": "Description"
+      },
+    { "type": "normal",
+      "start": "09:20",
+      "duration": 30,
+      "title": "Combine edit form with adding/editing task",
+      "description": "Description"
+    },
+    { "type": "general",
+      "start": "10:00",
+      "duration": 200,
+      "title": "Nest tasks",
+      "description": "Description"
+    }
+]
+}

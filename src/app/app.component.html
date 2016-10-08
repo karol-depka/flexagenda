@@ -1,7 +1,15 @@
 <h2 class="labels">{{title}}</h2>
-<div class="root">
+<div> <!--TODO make auth as separate component-->
+<span *ngIf="!(af.auth | async)">Please, login:
+<input #uEmail placeholder="your@email.com"><input #uPassword placeholder="password">
+<button (click)="login(uEmail.value,uPassword.value)">Login</button>
+</span>
+<span *ngIf="af.auth | async">Logged in as {{(af.auth | async).auth.email}}
+  <button (click)="logOut()">Logout</button>
+</span>
+</div>
+<div class="root" *ngIf="af.auth | async">
 <h3 class="labels">My Main Agenda</h3>
-
 <general-tasks></general-tasks>
 
 </div>

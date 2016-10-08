@@ -42,6 +42,7 @@ export class TaskFormComponent{
   newDescriptionDefault: string = "New description";
 
   showTaskForm(task){
+    console.log(task);
     if(task){ //if task provided then edit it
       this.formCaption="Edit task: "+task.id;
       this.newIdDefault=task.id;
@@ -71,7 +72,6 @@ export class TaskFormComponent{
     if (this.newIdDefault!=0){ //Edit task
       //console.log(this.tasks[this.newId-1]);
       var editedTask={
-        id:this.newIdDefault,
         type:newType,
         start:newStart,
         duration:newDuration,
@@ -84,7 +84,6 @@ export class TaskFormComponent{
     }
     else { //Add new task
         this.tasks.push({
-          id:this.tasks.length+1,
           type:newType,
           start:newStart,
           duration:newDuration,

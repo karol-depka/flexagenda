@@ -1,0 +1,7 @@
+<span *ngIf="!(af.auth | async)">Please, login:
+  <input #uEmail placeholder="your@email.com"><input #uPassword placeholder="password">
+<button (click)="login(uEmail.value,uPassword.value)">Login</button>
+</span>
+<span *ngIf="af.auth | async">Logged in as {{(af.auth | async).auth.email}}
+  <button (click)="logOut()">Logout</button>
+</span>

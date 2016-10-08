@@ -1,4 +1,4 @@
-  <ul class="tasks">
+  <ul #generalTasksUl class="tasks">
   <li>
   <span class="badge">ID</span>
   <span class="start">start</span>
@@ -6,10 +6,10 @@
   <span class="title">title</span>
   </li>
       <!-- each task goes here -->
-      <li *ngFor="let task of tasks"
+      <li *ngFor="let task of tasks | async; let i = index;"
   [@flyInOut]="direction">
   <span class="badge">
- <md-checkbox color="primary">{{task.id}}</md-checkbox></span>
+ <md-checkbox color="primary">{{i}}</md-checkbox></span>
  <button md-icon-button color="primary" (click)="TaskForm.showTaskForm(task)">
    <md-icon>more_vert</md-icon></button>
   <span class="start">{{task.start}}</span>
