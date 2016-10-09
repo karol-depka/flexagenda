@@ -5,7 +5,6 @@ import { Component,
    animate,
    transition,
    style } from '@angular/core';
-import { Task } from './shared/task';
 import { TasksService } from './shared/tasks.service';
 import { TaskFormComponent } from './taskform.component';
 import { AngularFire, FirebaseListObservable} from 'angularfire2';
@@ -30,8 +29,8 @@ providers: [TasksService]
 })
 
 export class GeneralTasksComponent implements OnInit {
-  tasks: Task[];
-  selectedTask: Task;
+  tasks;
+  selectedTask;
   direction: string;
   constructor(private _tasksService: TasksService) {
    }
@@ -42,11 +41,15 @@ export class GeneralTasksComponent implements OnInit {
   ngOnInit(): void {
     this.getTasks();
   }
-  DeleteTask(task: Task): void {
+  deleteTask(key): void {
     //console.log(task.$key);
-    this.tasks.remove(task.$key).then(_ => console.log('item deleted!'));
+    this.tasks.remove(key).then(_ => console.log('item deleted!'));
     //this.tasks.splice(this.tasks.indexOf(task),1);
     this.selectedTask = null;
     this.direction="out";
+  }
+  updateTask(key,updateKey,updateValue): void {
+    //console.log(update);
+    this.tasks.update(key,{[updateKey]:updateValue}).then(_ => console.log('item updated!'));;
   }
 }

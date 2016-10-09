@@ -26,5 +26,21 @@ li {
   border-radius: 4px 0 0 4px;
 }
 .trash {
-  
+
+}
+.start {
+  color:green;
+  width:50px;
+}
+.duration {
+  color:white;
+  width:30px;
+}
+.title {
+  color:blue;
+  width:auto;
+}
+.description {
+  width:80%;
+  color:orange;
 }

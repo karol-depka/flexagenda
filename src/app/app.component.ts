@@ -18,7 +18,7 @@ import { AuthComponent } from './auth/auth.component';
 export class AppComponent {
   title: string = 'Flexible Agenda App';
   constructor(public af: AngularFire) {
-    this.af.auth.subscribe(auth => console.log(auth));
+    //this.af.auth.subscribe(auth => console.log(auth));
   }
     login(uEmail,uPassword) {
       this.af.auth.login({
@@ -28,5 +28,5 @@ export class AppComponent {
     logOut() {
       this.af.auth.logout();
       this.af.auth.subscribe(auth => console.log(auth));
-    }  
+    }
   }

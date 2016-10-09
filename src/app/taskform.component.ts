@@ -6,7 +6,6 @@ import { Component,
          transition,
          style,
          AnimationTransitionEvent  } from '@angular/core';
-import { Task } from './shared/task';
 import { GeneralTasksComponent } from './generaltasks.component';
 
 
@@ -29,7 +28,7 @@ animations: [
 ]
 })
 export class TaskFormComponent{
-  @Input() tasks: Task[];
+  @Input() tasks: any[];
   formCaption: string="Add New task:"
   isVisible: boolean = false;
   visibility: boolean = this.isVisible;
@@ -42,17 +41,6 @@ export class TaskFormComponent{
   newDescriptionDefault: string = "New description";
 
   showTaskForm(task){
-    console.log(task);
-    if(task){ //if task provided then edit it
-      this.formCaption="Edit task: "+task.id;
-      this.newIdDefault=task.id;
-      this.newTypeDefault=task.type;
-      this.newStartDefault=task.start;
-      this.newDurationDefault=task.duration;
-      this.newTitleDefault=task.title;
-      this.newDescriptionDefault=task.description;
-    }
-    else {this.newIdDefault=0;} //if no task add new task
     this.isVisible=true;
     this.visibility=this.isVisible;
   }
@@ -66,29 +54,15 @@ export class TaskFormComponent{
     this.isVisible=false;
     setTimeout( ()=>this.visibility=false,500);
   }
-  addOrEditTask(newStart,newDuration,newType,newTitle,newDescription){
+  addTask(newStart,newDuration,newType,newTitle,newDescription){
     //console.log(this.tasks);
     this.hideTaskForm();
-    if (this.newIdDefault!=0){ //Edit task
-      //console.log(this.tasks[this.newId-1]);
-      var editedTask={
-        type:newType,
-        start:newStart,
-        duration:newDuration,
-        title:newTitle,
-        description:newDescription
-      };
-      //console.log(editedTask);
-      this.tasks[this.newIdDefault-1]=editedTask;
-      //console.log(this.tasks[this.newId-1]);
-    }
-    else { //Add new task
-        this.tasks.push({
-          type:newType,
-          start:newStart,
-          duration:newDuration,
-          title:newTitle,
-          description:newDescription
-        });}
+    this.tasks.push({
+      type:newType,
+      start:newStart,
+      duration:newDuration,
+      title:newTitle,
+      description:newDescription
+    });
              }
 }

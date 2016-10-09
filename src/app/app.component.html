@@ -1,13 +1,32 @@
 <h2 class="labels">{{title}}</h2>
-<div> <!--TODO make auth as separate component-->
-<span *ngIf="!(af.auth | async)">Please, login:
-<input #uEmail placeholder="your@email.com"><input #uPassword placeholder="password">
-<button (click)="login(uEmail.value,uPassword.value)">Login</button>
+<div *ngIf="!(af.auth | async)"> <!--TODO make auth as separate component-->
+<span>
+  <md-icon>email</md-icon>
+  <md-input required #uEmail
+    placeholder="Email"
+    type="email"
+    (keyup.enter)="login(uEmail.value,uPassword.value)">
+  </md-input>
 </span>
-<span *ngIf="af.auth | async">Logged in as {{(af.auth | async).auth.email}}
-  <button (click)="logOut()">Logout</button>
+<br />
+<span>
+  <md-icon>lock</md-icon>
+  <md-input required #uPassword
+    placeholder="Password"
+    type="password"
+    (keyup.enter)="login(uEmail.value,uPassword.value)">
+  </md-input>
+  <br />
+  <button md-raised-button color="primary"
+  (click)="login(uEmail.value,uPassword.value)">
+  Login</button>
 </span>
 </div>
+<span *ngIf="af.auth | async">Logged in as {{(af.auth | async).auth.email}}
+  <button md-raised-button color="primary"
+  (click)="logOut()">
+  Logout</button>
+</span>
 <div class="root" *ngIf="af.auth | async">
 <h3 class="labels">My Main Agenda</h3>
 <general-tasks></general-tasks>

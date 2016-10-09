@@ -9,15 +9,28 @@
       <li *ngFor="let task of tasks | async; let i = index;"
   [@flyInOut]="direction">
   <span class="badge">
- <md-checkbox color="primary">{{i}}</md-checkbox></span>
- <button md-icon-button color="primary" (click)="TaskForm.showTaskForm(task)">
-   <md-icon>more_vert</md-icon></button>
-  <span class="start">{{task.start}}</span>
-  <span class="duration">{{task.duration}}</span>
-  <span class="title">{{task.title}}</span>
-  <span class="description">{{task.description}}</span>
-  <button md-icon-button color="primary" (click)="DeleteTask(task)" class="trash">
-  <md-icon>delete</md-icon></button>
+ <md-checkbox color="primary">{{i+1}}</md-checkbox></span>
+ <button md-icon-button color="primary" (click)="deleteTask(task.$key)" class="trash">
+ <md-icon>delete</md-icon></button>
+  <md-input #start type="text" class="start"
+    value="{{task.start}}"
+    (keyup.enter)="updateTask(task.$key,'start',start.value)">
+  {{task.start}}</md-input>
+  <md-input #duration type="text" class="duration"
+    value="{{task.duration}}"
+    (keyup.enter)="updateTask(task.$key,'duration',duration.value)">
+  {{task.duration}}</md-input>
+  <md-input #title type="text" class="title"
+    value="{{task.title}}" maxlength="50"
+    (keyup.enter)="updateTask(task.$key,'title',title.value)">
+    {{task.title}}
+</md-input>
+  <br />
+  <md-input #description type="text" class="description"
+    value="{{task.description}}"
+    (keyup.enter)="updateTask(task.$key,'description',description.value)">
+  {{task.description}}</md-input>
+
       </li>
   </ul>
   <div *ngIf="selectedTask">
