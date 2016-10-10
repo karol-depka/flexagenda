@@ -39,8 +39,10 @@ li {
 .title {
   color:blue;
   width:auto;
+  word-wrap: break-word;
 }
 .description {
   width:80%;
   color:orange;
+
 }

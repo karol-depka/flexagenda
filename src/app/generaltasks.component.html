@@ -14,21 +14,21 @@
  <md-icon>delete</md-icon></button>
   <md-input #start type="text" class="start"
     value="{{task.start}}"
-    (keyup.enter)="updateTask(task.$key,'start',start.value)">
+    (change)="updateTask(task.$key,'start',start.value)">
   {{task.start}}</md-input>
   <md-input #duration type="text" class="duration"
     value="{{task.duration}}"
-    (keyup.enter)="updateTask(task.$key,'duration',duration.value)">
+    (change)="updateTask(task.$key,'duration',duration.value)">
   {{task.duration}}</md-input>
   <md-input #title type="text" class="title"
     value="{{task.title}}" maxlength="50"
-    (keyup.enter)="updateTask(task.$key,'title',title.value)">
+    (change)="updateTask(task.$key,'title',title.value)">
     {{task.title}}
 </md-input>
   <br />
   <md-input #description type="text" class="description"
     value="{{task.description}}"
-    (keyup.enter)="updateTask(task.$key,'description',description.value)">
+    (change)="updateTask(task.$key,'description',description.value)">
   {{task.description}}</md-input>
 
       </li>
