@@ -7,7 +7,7 @@ import { Component,
          style,
          AnimationTransitionEvent  } from '@angular/core';
 import { GeneralTasksComponent } from './generaltasks.component';
-
+import { TasksService } from './shared/tasks.service';
 
 @Component({
   selector:'task-form',
@@ -25,7 +25,8 @@ animations: [
   })),
   transition('* => *', animate('0.5s'))
   ])
-]
+],
+providers: [TasksService]
 })
 export class TaskFormComponent{
   @Input() tasks: any[];
@@ -40,9 +41,14 @@ export class TaskFormComponent{
   newTitleDefault: string = "New title";
   newDescriptionDefault: string = "New description";
 
+  constructor(public tasksService: TasksService) {
+   }
+
   showTaskForm(task){
     this.isVisible=true;
     this.visibility=this.isVisible;
+    console.log(this.tasksService.getTasksCount());
+    //this.tasksService.getTasksOrder();
   }
   animationDone(event: AnimationTransitionEvent) {
     //implement later, not working as expected
@@ -55,9 +61,10 @@ export class TaskFormComponent{
     setTimeout( ()=>this.visibility=false,500);
   }
   addTask(newStart,newDuration,newType,newTitle,newDescription){
-    //console.log(this.tasks);
+    //console.log(this.tasks.length);
     this.hideTaskForm();
     this.tasks.push({
+      order:this.tasksService.getTasksCount(),
       type:newType,
       start:newStart,
       duration:newDuration,
