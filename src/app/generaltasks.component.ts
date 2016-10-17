@@ -39,7 +39,7 @@ export class GeneralTasksComponent implements OnInit {
    }
 
   getTasks(): void {
-    this.tasksService.getTasks().then(tasks=>this.tasks=tasks);
+    this.tasks=this.tasksService.getTasks();
   }
   ngOnInit(): void {
     this.getTasks();

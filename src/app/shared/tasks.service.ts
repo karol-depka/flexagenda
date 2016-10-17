@@ -17,8 +17,8 @@ export class TasksService {
         }
     });
   }
-  public getTasks(): Promise<any[]> {
-    return Promise.resolve(this.TASKS);
+  public getTasks(): FirebaseListObservable<any[]> {
+    return this.TASKS;
   }
   public getTasksOrder() {
     this.TASKS
