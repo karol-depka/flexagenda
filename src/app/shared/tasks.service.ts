@@ -33,7 +33,6 @@ export class TasksService {
   //console.log(this.TasksOrder);
   }
   public reorderTasks(task,index) {
-    console.log(task);
     var temp = {};
     var updates = {};
     var test = {};
@@ -74,5 +73,10 @@ export class TasksService {
   logOut() {
     this.af.auth.logout();
     this.af.auth.subscribe(auth => console.log(auth));
+  }
+
+  updateTask(key,updateKey,updateValue): void {
+  //console.log(update);
+  this.TASKS.update(key,{[updateKey]:updateValue}).then(_ => console.log('item updated!'));
   }
 }

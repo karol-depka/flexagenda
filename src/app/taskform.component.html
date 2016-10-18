@@ -4,7 +4,10 @@
 <input #newStart placeholder="start" value={{newStartDefault}}/>
 <input #newDuration placeholder="duration" value={{newDurationDefault}}/>
 <input #newTitle placeholder="title" value={{newTitleDefault}}/>
-<input #newType placeholder="type" value={{newTypeDefault}}/>
+<select #newType placeholder="type" value={{newTypeDefault}}>
+  <option value="general">general</option>
+  <option value="normal">normal</option>
+</select>
 <input #newDescription placeholder="description" value={{newDescriptionDefault}}/>
 <button md-raised-button color="primary" (click)="addTask(newStart.value,
                         newDuration.value,

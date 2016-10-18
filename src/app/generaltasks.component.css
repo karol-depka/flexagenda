@@ -1,9 +1,6 @@
 ul {
   list-style-type: none;
 }
-li {
-  //border: solid;
-}
 .selected {
   background-color: #CFD8DC !important;
 }
@@ -28,6 +25,18 @@ li {
 .trash {
 
 }
+input {
+  background: transparent;
+  border: none;
+  text-align: center;
+}
+input:focus {
+  text-decoration: underline;
+}
+input.break {
+    word-wrap: break-word;
+    word-break: break-all;
+}
 .start {
   color:green;
   width:50px;
@@ -39,10 +48,17 @@ li {
 .title {
   color:blue;
   width:auto;
-  word-wrap: break-word;
+  text-align: left;
 }
 .description {
-  width:80%;
+  text-align: left;
+  width:100%;
   color:orange;
+  padding: 0 0 0 0.7em;
+
+}
+.completed {
+  /*text-decoration: overline;*/
+  opacity:0.4;
 
 }

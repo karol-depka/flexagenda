@@ -49,8 +49,5 @@ export class GeneralTasksComponent implements OnInit {
     this.selectedTask = null;
     this.direction="out";
   }
-  updateTask(key,updateKey,updateValue): void {
-    //console.log(update);
-    this.tasks.update(key,{[updateKey]:updateValue}).then(_ => console.log('item updated!'));
-  }
+
 }
