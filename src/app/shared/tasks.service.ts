@@ -7,6 +7,7 @@ import { AngularFire,
 export class TasksService {
   TASKS: FirebaseListObservable<any[]>;
   taskOrder: FirebaseListObservable<any[]>;
+  orderSubscription;
   TasksCount: number;
   constructor(public af:AngularFire) {
     //this.af.auth.subscribe(auth => console.log(auth));
@@ -44,15 +45,16 @@ export class TasksService {
         startAt: index
         }
      });
-    this.taskOrder
+    this.orderSubscription=this.taskOrder
       .subscribe(tasks =>{
         tasks.forEach(
           task=>{temp[task.val().order-index]=task.key})
       });
       //console.log(temp);
-      updates[temp[0]]=index+1;
-      updates[temp[1]]=index;
+      updates[temp[0]]={order: index+1};
+      updates[temp[1]]={order: index};
       console.log(updates);
+      this.orderSubscription.unsubscribe();
       //console.log(temp[0]);
       //console.log(updates[temp[0]].order);
     //this.TASKS.update(key,{order:step}).then(_ => console.log('item updated!'));
