@@ -5,9 +5,11 @@ import { Component,
          animate,
          transition,
          style,
-         AnimationTransitionEvent  } from '@angular/core';
+         AnimationTransitionEvent,
+         ViewContainerRef  } from '@angular/core';
 import { GeneralTasksComponent } from './generaltasks.component';
 import { TasksService } from './shared/tasks.service';
+import {MdSnackBar, MdSnackBarConfig} from '@angular/material';
 
 @Component({
   selector:'task-form',
@@ -41,12 +43,18 @@ export class TaskFormComponent{
   newTitleDefault: string = "New title";
   newDescriptionDefault: string = "New description";
 
-  constructor(public tasksService: TasksService) {
-   }
+
+  constructor(
+    public tasksService: TasksService,
+    public snackBar: MdSnackBar,
+    public viewContainerRef: ViewContainerRef) { }
+
 
   showTaskForm(task){
     this.isVisible=true;
     this.visibility=this.isVisible;
+    let config = new MdSnackBarConfig(this.viewContainerRef);
+    setTimeout(this.snackBar.open("Item added.", "DISMISS",config),5000);
     console.log(this.tasksService.getTasksCount());
     //this.tasksService.getTasksOrder();
   }

@@ -12,6 +12,9 @@
       let last = last;"
       [@flyInOut]="direction"
       [ngClass]="{completed: task.completed}">
+      <button md-icon-button color="primary"
+      (click)="TaskForm.showTaskForm(task.order)"
+      title="Add task above"><md-icon>add</md-icon></button>
   <span class="badge">
   <md-checkbox color="primary" [checked]="task.completed"
   (change)="tasksService.updateTask(task.$key,'completed',!(task.completed))">{{i+1}}</md-checkbox></span>
@@ -35,7 +38,9 @@
   <input #description type="text" class="description"
     value="{{task.description}}" maxlength="160"
     (change)="tasksService.updateTask(task.$key,'description',description.value)"/>
-        </li>
+
+        </li><button md-icon-button (click)="TaskForm.showTaskForm(task.order)"><md-icon>add</md-icon></button>
+
   </ul>
   <div *ngIf="selectedTask">
   <h2>ID:{{selectedTask.id}} task details!</h2>
@@ -48,7 +53,4 @@
     <input [(ngModel)]="selectedTask.title" placeholder="title"/>-->
   </div>
 </div>
-<button *ngIf="!selectedTask" md-mini-fab color="primary"
- (click)="TaskForm.showTaskForm(null)">
-<md-icon class="md-24">add</md-icon></button>
 <task-form #TaskForm [tasks]=this.tasks></task-form>
