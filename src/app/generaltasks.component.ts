@@ -6,7 +6,7 @@ import { Component,
    transition,
    style,
    Input,
-   Directive, AfterContentInit, QueryList, ViewChildren, ContentChildren
+   Directive
  } from '@angular/core';
 import { TasksService } from './shared/tasks.service';
 import { TaskFormComponent } from './taskform.component';

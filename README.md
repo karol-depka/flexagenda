@@ -17,7 +17,7 @@ cd flexagenda
 ```
 Install angular/material2 (https://github.com/angular/material2):
 ```bash
-npm install --save @angular/material //might be unnecessary after cloning repository
+npm install
 ```
 Open app url address in a browser:
 ```bash

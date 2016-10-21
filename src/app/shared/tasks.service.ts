@@ -6,7 +6,7 @@ import { AngularFire,
 @Injectable()
 export class TasksService {
   TASKS: FirebaseListObservable<any[]>;
-  taskOrder: FirebaseListObservable<any[]>;
+  taskOrder: FirebaseObjectObservable<any[]>;
   orderSubscription;
   TasksCount: number;
   constructor(public af:AngularFire) {
@@ -36,7 +36,7 @@ export class TasksService {
     var temp = {};
     var updates = {};
     var test = {};
-    this.taskOrder = this.af.database.list('/tasks',
+    this.taskOrder = this.af.database.object('/tasks',
     { preserveSnapshot:true,
       query: {
         orderByChild: 'order',
@@ -50,15 +50,16 @@ export class TasksService {
           task=>{temp[task.val().order-index]=task.key})
       });
       //console.log(temp);
-      updates[temp[0]]={order: index+1};
-      updates[temp[1]]={order: index};
+      updates[temp[0]+'/order/']=index+1;
+      updates[temp[1]+'/order/']=index;
       console.log(updates);
       this.orderSubscription.unsubscribe();
       //console.log(temp[0]);
       //console.log(updates[temp[0]].order);
     //this.TASKS.update(key,{order:step}).then(_ => console.log('item updated!'));
-    this.taskOrder.update(temp[0],{order:index+1}).then(_ => console.log(temp[0]+' task moved down!'));
-    this.taskOrder.update(temp[1],{order:index}).then(_ => console.log(temp[1]+' task moved up!'));
+    this.taskOrder.update(updates).then(_ => console.log('items updated!'));
+    //this.taskOrder.update(temp[0],{order:index+1}).then(_ => console.log(temp[0]+' task moved down!'));
+    //this.taskOrder.update(temp[1],{order:index}).then(_ => console.log(temp[1]+' task moved up!'));
   }
   public getTasksCount(): number {
     this.TASKS.subscribe(tasks=>this.TasksCount=tasks.length);
