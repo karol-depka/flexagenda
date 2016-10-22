@@ -8,17 +8,20 @@
       <!-- each task goes here -->
       <li *ngFor="let task of tasks | async;
       let i = index;
-      let first = first;
-      let last = last;"
+      let isFirst = first;
+      let isLast = last;"
       [@flyInOut]="direction"
       [ngClass]="{completed: task.completed}">
+      <!--Add new task above BUTTON -->
       <button md-icon-button color="primary"
-      (click)="TaskForm.showTaskForm(task.order)"
+      (click)="tasksService.addNewTask(task,isFirst);
+      TaskForm.showSnackBar('New task added')"
       title="Add task above"><md-icon>add</md-icon></button>
   <span class="badge">
   <md-checkbox color="primary" [checked]="task.completed"
   (change)="tasksService.updateTask(task.$key,'completed',!(task.completed))">{{i+1}}</md-checkbox></span>
- <button md-icon-button color="primary" (click)="deleteTask(task.$key)" class="trash">
+ <button md-icon-button color="primary" (click)="deleteTask(task.$key);
+ TaskForm.showSnackBar('Tasks deleted')" class="trash">
  <md-icon>delete</md-icon></button>
   <input #start type="text" class="start"
     value="{{task.start}}"
@@ -28,18 +31,21 @@
     (change)="tasksService.updateTask(task.$key,'duration',duration.value)"/>
 
   <input #title type="text" class="title"
-    value="{{task.title}}" maxlength="50"
+    value="{{task.$key}}" maxlength="50"
     (change)="tasksService.updateTask(task.$key,'title',title.value)"/>
-<button *ngIf="!first"
-  (click)="tasksService.reorderTasks(task,task.order-1)">up</button>
-<button *ngIf="!last"
-(click)="tasksService.reorderTasks(task,task.order)">down</button>
+<button *ngIf="!isFirst" md-icon-button class="reorder"
+  (click)="tasksService.reorderTasks(task,'up');
+  TaskForm.showSnackBar('Tasks reordered')"><md-icon>keyboard_arrow_up</md-icon></button>
+<button *ngIf="!isLast" md-icon-button class="reorder"
+(click)="tasksService.reorderTasks(task,'down');
+TaskForm.showSnackBar('Tasks reordered')"><md-icon>keyboard_arrow_down</md-icon></button>
   <br />
   <input #description type="text" class="description"
     value="{{task.description}}" maxlength="160"
     (change)="tasksService.updateTask(task.$key,'description',description.value)"/>
 
-        </li><button md-icon-button (click)="TaskForm.showTaskForm(task.order)"><md-icon>add</md-icon></button>
+  </li><button md-icon-button (click)="tasksService.addNewTask(null,false);
+  TaskForm.showSnackBar('New task added')"><md-icon>add</md-icon></button>
 
   </ul>
   <div *ngIf="selectedTask">
