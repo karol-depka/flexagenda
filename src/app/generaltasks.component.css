@@ -47,18 +47,20 @@ input.break {
 }
 .title {
   color:blue;
-  width:auto;
+  width:40%;
   text-align: left;
 }
 .description {
   text-align: left;
-  width:100%;
+  width:90%;
   color:orange;
   padding: 0 0 0 0.7em;
 
 }
 .completed {
   /*text-decoration: overline;*/
-  opacity:0.4;
-
+  opacity:0.7;
+}
+.reorder {
+  float: right;
 }

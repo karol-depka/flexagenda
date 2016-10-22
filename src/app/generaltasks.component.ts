@@ -45,7 +45,7 @@ export class GeneralTasksComponent implements OnInit {
     this.getTasks();
   }
   deleteTask(key): void {
-    this.tasks.remove(key).then(_ => console.log('item deleted!'));
+    this.tasks.remove(key).then(_ => console.log('task deleted!'));
     this.selectedTask = null;
     this.direction="out";
   }

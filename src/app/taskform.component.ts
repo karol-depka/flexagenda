@@ -49,12 +49,14 @@ export class TaskFormComponent{
     public snackBar: MdSnackBar,
     public viewContainerRef: ViewContainerRef) { }
 
-
+  showSnackBar(message) {
+    let config = new MdSnackBarConfig(this.viewContainerRef);
+    this.snackBar.open(message, "DISMISS",config);
+  }
   showTaskForm(task){
     this.isVisible=true;
     this.visibility=this.isVisible;
-    let config = new MdSnackBarConfig(this.viewContainerRef);
-    setTimeout(this.snackBar.open("Item added.", "DISMISS",config),5000);
+
     console.log(this.tasksService.getTasksCount());
     //this.tasksService.getTasksOrder();
   }
@@ -72,12 +74,13 @@ export class TaskFormComponent{
     //console.log(this.tasks.length);
     this.hideTaskForm();
     this.tasks.push({
-      order:this.tasksService.getTasksCount(),
+      order:this.tasksService.getTasksCount()+1,
       type:newType,
       start:newStart,
       duration:newDuration,
       title:newTitle,
-      description:newDescription
+      description:newDescription,
+      completed:false
     });
              }
 }
