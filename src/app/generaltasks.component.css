@@ -25,10 +25,14 @@ ul {
 .trash {
 
 }
-input {
+input, textarea {
   background: transparent;
   border: none;
   text-align: center;
+
+}
+::-webkit-resizer {
+  display: none; /*textarea resize handler*/
 }
 input:focus {
   text-decoration: underline;
@@ -47,13 +51,16 @@ input.break {
 }
 .title {
   color:blue;
-  width:40%;
-  text-align: left;
+  width: 50%;
+  text-align: center;
+  font-weight: bold;
+  font-size: 130%;
+  padding: 0 0 0.9 0em;
 }
 .description {
   text-align: left;
-  width:90%;
-  color:orange;
+  width:80%;
+  color:navy;
   padding: 0 0 0 0.7em;
 
 }
@@ -62,5 +69,5 @@ input.break {
   opacity:0.7;
 }
 .reorder {
-  float: right;
+  float: left;
 }
