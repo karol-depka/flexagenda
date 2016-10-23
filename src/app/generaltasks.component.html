@@ -31,7 +31,7 @@
     (change)="tasksService.updateTask(task.$key,'duration',duration.value)"/>
 
   <input #title type="text" class="title"
-    value="{{task.$key}}" maxlength="50"
+    value="{{task.$key}}"
     (change)="tasksService.updateTask(task.$key,'title',title.value)"/>
 <button *ngIf="!isFirst" md-icon-button class="reorder"
   (click)="tasksService.reorderTasks(task,'up');
@@ -41,7 +41,7 @@
 TaskForm.showSnackBar('Tasks reordered')"><md-icon>keyboard_arrow_down</md-icon></button>
   <br />
   <input #description type="text" class="description"
-    value="{{task.description}}" maxlength="160"
+    value="{{task.description}}"
     (change)="tasksService.updateTask(task.$key,'description',description.value)"/>
 
   </li><button md-icon-button (click)="tasksService.addNewTask(null,false);
