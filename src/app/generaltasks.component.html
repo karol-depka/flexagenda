@@ -28,7 +28,6 @@
   <input #duration type="text" class="duration"
     value="{{task.order}}"
     (change)="tasksService.updateTask(task.$key,'duration',duration.value)"/>
-
   <textarea #title type="text" class="title" rows="1" cols="1"
     value="{{task.title}}"
     (change)="tasksService.updateTask(task.$key,'title',title.value)"></textarea>
@@ -39,13 +38,12 @@
 <button *ngIf="!isLast" md-icon-button class="reorder"
 (click)="tasksService.reorderTasks(task,'down');
 TaskForm.showSnackBar('Tasks reordered')"><md-icon>keyboard_arrow_down</md-icon></button>
+
   <textarea #description type="text" class="description" rows="3" cols="1"
     value="{{task.description}}"
     (change)="tasksService.updateTask(task.$key,'description',description.value)"></textarea>
-
   </li><button md-icon-button (click)="tasksService.addNewTask(null,false);
   TaskForm.showSnackBar('New task added')"><md-icon>add</md-icon></button>
-
   </ul>
   <div *ngIf="selectedTask">
   <h2>ID:{{selectedTask.id}} task details!</h2>
