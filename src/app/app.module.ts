@@ -11,6 +11,7 @@ import {
 import { AppComponent } from './app.component';
 import { GeneralTasksComponent } from './generaltasks.component';
 import { TaskFormComponent } from './taskform.component';
+import { AgendasListComponent } from './agendaslist/agendaslist.component';
 
 export const firebaseConfig ={
   apiKey: "AIzaSyBughsAzc9KLbFFGeJxrRlGVh4tvm82r-E",
@@ -28,7 +29,8 @@ const firebaseAuthConfig = {
   declarations: [
     AppComponent,
     GeneralTasksComponent,
-    TaskFormComponent
+    TaskFormComponent,
+    AgendasListComponent
 
   ],
   imports: [

@@ -6,6 +6,7 @@ import { AngularFire,
 @Injectable()
 export class TasksService {
   TASKS: FirebaseListObservable<any[]>;
+  AGENDAS: FirebaseListObservable<any[]>;
   taskOrder: FirebaseObjectObservable<any[]>;
   TasksCount: number;
   constructor(public af:AngularFire) {
@@ -16,9 +17,13 @@ export class TasksService {
         orderByChild: 'order'
         }
     });
+    this.AGENDAS = af.database.list('/agendas');
   }
   public getTasks(): FirebaseListObservable<any[]> {
     return this.TASKS;
+  }
+  public getAgendas(): FirebaseListObservable<any[]> {
+    return this.AGENDAS;
   }
 
   public addNewTask(task,isFirst) {
@@ -39,9 +44,6 @@ export class TasksService {
       description:"NEWDESCRIPTION",
       completed:false
     });
-    //console.log(newOrder);
-
-
   }
   public getNewTaskOrder(task,isFirst): any {
     /*
@@ -171,8 +173,15 @@ export class TasksService {
     this.af.auth.subscribe(auth => console.log(auth));
   }
 
-  updateTask(key,updateKey,updateValue): void {
+  updateObject(object,key,updateKey,updateValue): void {
   //console.log(update);
-  this.TASKS.update(key,{[updateKey]:updateValue}).then(_ => console.log('item updated!'));
-  }
+  switch (object) {
+    case 'task':
+        this.TASKS.update(key,{[updateKey]:updateValue}).then(_ => console.log('Task updated!'));
+        break;
+    case 'agenda':
+        this.AGENDAS.update(key,{[updateKey]:updateValue}).then(_ => console.log('Agenda updated!'));
+        break;
+}
+}
 }

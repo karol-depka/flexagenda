@@ -29,7 +29,6 @@ input, textarea {
   background: transparent;
   border: none;
   text-align: center;
-
 }
 ::-webkit-resizer {
   display: none; /*textarea resize handler*/
@@ -60,7 +59,7 @@ input.break {
 .description {
   text-align: left;
   width:80%;
-  color:navy;
+  color:white;
   padding: 0 0 0 0.7em;
 
 }
