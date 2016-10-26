@@ -35,11 +35,12 @@ export class GeneralTasksComponent implements OnInit {
   tasks;
   selectedTask;
   direction: string;
+  @Input() agendaKey;
   constructor(public tasksService: TasksService) {
    }
 
   getTasks(): void {
-    this.tasks=this.tasksService.getTasks();
+    this.tasks=this.tasksService.getTasks(this.agendaKey);
   }
   ngOnInit(): void {
     this.getTasks();
@@ -49,5 +50,4 @@ export class GeneralTasksComponent implements OnInit {
     this.selectedTask = null;
     this.direction="out";
   }
-
 }

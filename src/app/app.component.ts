@@ -14,6 +14,5 @@ import { TasksService } from './shared/tasks.service';
 export class AppComponent {
   title: string = 'Flexible Agenda App';
   constructor(public tasksService: TasksService) {
-
   }
 }

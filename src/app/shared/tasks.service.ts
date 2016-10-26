@@ -11,17 +11,15 @@ export class TasksService {
   TasksCount: number;
   constructor(public af:AngularFire) {
     //this.af.auth.subscribe(auth => console.log(auth));
-    this.TASKS = af.database.list('/tasks',{
-      preserveSnapshot: false,
-      query: {
-        orderByChild: 'order'
-        }
-    });
     this.AGENDAS = af.database.list('/agendas');
-  }
+  }/*
   public getTasks(): FirebaseListObservable<any[]> {
     return this.TASKS;
-  }
+  }*/
+  public getTasks(agendaKey): FirebaseListObservable<any[]> {
+  this.TASKS = this.af.database.list('/agenda_tasks/'+agendaKey);
+  return this.TASKS;
+}
   public getAgendas(): FirebaseListObservable<any[]> {
     return this.AGENDAS;
   }
@@ -93,37 +91,31 @@ export class TasksService {
     /*
     This functions queries DB for list of 2 tasks.
     */
+    var dynQuery:any = {};
+    dynQuery.orderByChild = 'order';
     var tasksList: FirebaseListObservable<any[]>;
-    if (direction==='up') {
-      /*
-      If direction==='up' retrieves clicked and previous task
-      (limits query to last 2 records with last one ending at order='task.order'
-      sorted by 'order')
-      */
-      tasksList = this.af.database.list('/tasks',
-      { preserveSnapshot:true,
-        query: {
-          orderByChild: 'order',
-          limitToLast: 2,
-          endAt: task.order
-          }
-       });
-    }
-    else
-    /*
-    If direction!='up'==='down' retrieves clicked and next task
-    (limits query to first 2 records with first one starting at order='task.order'
-    sorted by 'order')
-    */
-    tasksList = this.af.database.list('/tasks',
-    { preserveSnapshot:true,
-      query: {
-        orderByChild: 'order',
-        limitToFirst: 2,
-        startAt: task.order
-        }
-     });
-     return tasksList
+if (direction==='up') {
+/* If direction==='up' retrieves clicked and previous task
+(limits query to last 2 records with last one ending at order='task.order'
+sorted by 'order')
+query: { orderByChild: 'order',limitToLast: 2,endAt: task.order } */
+      dynQuery.limitToLast = 2;
+      dynQuery.endAt = task.order;
+
+}
+else {
+  /*
+If direction!='up'==='down' retrieves clicked and next task
+(limits query to first 2 records with first one starting at order='task.order'
+sorted by 'order')
+query: { orderByChild: 'order',limitToFirst: 2,startAt: task.order }
+*/
+  dynQuery.limitToFirst = 2;
+  dynQuery.startAt = task.order;
+}
+tasksList = this.af.database.list('/tasks',
+{ preserveSnapshot:true,query: dynQuery });
+      return tasksList
   }
 
   public reorderTasks(task,direction) {
@@ -184,4 +176,6 @@ export class TasksService {
         break;
 }
 }
+
+
 }

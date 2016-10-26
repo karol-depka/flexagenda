@@ -1,9 +1,19 @@
-<button md-mini-fab color="primary" (click)="this.addNewAgenda()">
- <md-icon class="md-24">add</md-icon></button>
- <ul #agendasList>
-   <li> Your agendas:</li>
-      <!-- each agenda goes here -->
-     <li *ngFor="let agenda of agendas | async;">
-       <input #agendaTitle type="text" value="{{agenda.title}}"
-       (change)="tasksService.updateObject('agenda',agenda.$key,'title',agendaTitle.value)"/></li>
+<ul #agendasList>
+  <li> Your agendas:
+    <!-- Add newAgenda button -->
+    <button md-mini-fab color="primary" (click)="this.addNewAgenda()">
+    <md-icon class="md-24">add</md-icon></button>
+  </li>
+     <!-- each agenda goes here -->
+    <li *ngFor="let agenda of agendas | async;">
+      <input #agendaTitle type="text" value="{{agenda.title}}"
+      (change) = "tasksService.updateObject('agenda',
+                                             agenda.$key,
+                                             'title',
+                                             agendaTitle.value)"/>
+    <button (click)="this.agendaKey=agenda.$key; this.isGeneralVisible=true">
+             Show tasks</button>
+    <button (click) = "this.isGeneralVisible=false">Hide tasks</button><br />
+</li>
 <ul>
+<general-tasks *ngIf="this.isGeneralVisible" [agendaKey]='this.agendaKey'></general-tasks>
