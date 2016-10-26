@@ -15,7 +15,7 @@ Navigate to repository directory:
 ```bash
 cd flexagenda
 ```
-Install angular/material2 (https://github.com/angular/material2):
+Install modules:
 ```bash
 npm install
 ```
