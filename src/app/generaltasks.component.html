@@ -13,35 +13,36 @@
       [ngClass]="{completed: task.completed}">
       <!--Add new task above BUTTON -->
       <button md-icon-button color="primary"
-      (click)="tasksService.addNewTask(task,isFirst);
+      (click)="tasksService.addNewTask(this.agendaKey, task, isFirst);
       TaskForm.showSnackBar('New task added')"
       title="Add task above"><md-icon>add</md-icon></button>
   <span class="badge">
   <md-checkbox color="primary" [checked]="task.completed"
-  (change)="tasksService.updateObject('task',task.$key,'completed',!(task.completed))">{{i+1}}</md-checkbox></span>
+  (change)="tasksService.updateObject('task', task.$key, 'completed', !(task.completed))">
+  {{i+1}}</md-checkbox></span>
  <button md-icon-button color="primary" (click)="deleteTask(task.$key);
  TaskForm.showSnackBar('Task deleted')" class="trash">
  <md-icon>delete</md-icon></button>
   <input #start type="text" class="start"
     value="{{task.start}}"
-    (change)="tasksService.updateObject('task',task.$key,'start',start.value)"/>
+    (change)="tasksService.updateObject('task', task.$key, 'start', start.value)"/>
   <input #duration type="text" class="duration"
     value="{{task.order}}"
-    (change)="tasksService.updateObject('task',task.$key,'duration',duration.value)"/>
+    (change)="tasksService.updateObject('task', task.$key, 'duration', duration.value)"/>
   <textarea #title type="text" class="title" rows="1" cols="1"
     value="{{task.title}}"
-    (change)="tasksService.updateObject('task',task.$key,'title',title.value)"></textarea>
+    (change)="tasksService.updateObject('task', task.$key, 'title', title.value)"></textarea>
   <br />
 <button *ngIf="!isFirst" md-icon-button class="reorder"
-  (click)="tasksService.reorderTasks(task,'up');
+  (click)="tasksService.reorderTasks(agendaKey, task, 'up');
   TaskForm.showSnackBar('Tasks reordered')"><md-icon>keyboard_arrow_up</md-icon></button>
 <button *ngIf="!isLast" md-icon-button class="reorder"
-(click)="tasksService.reorderTasks(task,'down');
+(click)="tasksService.reorderTasks(this.agendaKey, task, 'down');
 TaskForm.showSnackBar('Tasks reordered')"><md-icon>keyboard_arrow_down</md-icon></button>
   <textarea #description type="text" class="description" rows="3" cols="1"
     value="{{task.description}}"
-    (change)="tasksService.updateObject('task',task.$key,'description',description.value)"></textarea>
-  </li><button md-icon-button (click)="tasksService.addNewTask(null,false);
+    (change)="tasksService.updateObject('task', task.$key, 'description', description.value)"></textarea>
+  </li><button md-icon-button (click)="tasksService.addNewTask(this.agendaKey, null, false);
   TaskForm.showSnackBar('New task added')"><md-icon>add</md-icon></button>
   </ul>
   <div *ngIf="selectedTask">

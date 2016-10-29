@@ -17,14 +17,15 @@ export class TasksService {
     return this.TASKS;
   }*/
   public getTasks(agendaKey): FirebaseListObservable<any[]> {
-  this.TASKS = this.af.database.list('/agenda_tasks/'+agendaKey);
+  this.TASKS = this.af.database.list('/agenda_tasks/'+agendaKey,
+    {query: {orderByChild: 'order'} });
   return this.TASKS;
 }
   public getAgendas(): FirebaseListObservable<any[]> {
     return this.AGENDAS;
   }
 
-  public addNewTask(task,isFirst) {
+  public addNewTask(agendaKey, task, isFirst) {
     /*
     This function adds newTask object to the database.
     If no 'task' is provided newTask is added at the end of TASKS list.
@@ -32,7 +33,7 @@ export class TasksService {
     with 'getNewTaskOrder' function.
     */
     var newOrder: number
-    task ? newOrder=this.getNewTaskOrder(task,isFirst) : newOrder=this.getTasksCount()+1
+    task ? newOrder=this.getNewTaskOrder(agendaKey,task,isFirst) : newOrder=this.getTasksCount()+1
     this.TASKS.push({
       order:newOrder,
       type:"general",
@@ -43,7 +44,7 @@ export class TasksService {
       completed:false
     });
   }
-  public getNewTaskOrder(task,isFirst): any {
+  public getNewTaskOrder(agendaKey, task, isFirst): any {
     /*
     This function prepares existing tasks to compare for 'calculateNewOrder' function.
     */
@@ -54,7 +55,7 @@ export class TasksService {
     var taskOrder: FirebaseListObservable<any[]>;
     console.log(task.$key);
     if(isFirst) console.log(isFirst);
-    taskOrder = this.af.database.list('/tasks',
+    taskOrder = this.af.database.list('/agenda_tasks/'+agendaKey,
     { preserveSnapshot:true,
       query: {
         orderByChild: 'order',
@@ -73,7 +74,7 @@ export class TasksService {
        return this.calculateNewTaskOrder(ordersArray,isFirst)
   }
 
-  public calculateNewTaskOrder(ordersArray,isFirst): number {
+  public calculateNewTaskOrder(ordersArray, isFirst): number {
     /*
     This function calculates and returns NewTaskOrder.
     If task 'isFirst', newTaskOrder will be set at the beginning of the list.
@@ -87,38 +88,38 @@ export class TasksService {
     return newOrder
   }
 
-  public reorderQuery(task,direction): FirebaseListObservable<any[]> {
+  public reorderQuery(agendaKey, task, direction): FirebaseListObservable<any[]> {
     /*
     This functions queries DB for list of 2 tasks.
     */
     var dynQuery:any = {};
     dynQuery.orderByChild = 'order';
     var tasksList: FirebaseListObservable<any[]>;
-if (direction==='up') {
-/* If direction==='up' retrieves clicked and previous task
-(limits query to last 2 records with last one ending at order='task.order'
-sorted by 'order')
-query: { orderByChild: 'order',limitToLast: 2,endAt: task.order } */
-      dynQuery.limitToLast = 2;
-      dynQuery.endAt = task.order;
+    if (direction==='up') {
+    /* If direction==='up' retrieves clicked and previous task
+    (limits query to last 2 records with last one ending at order='task.order'
+    sorted by 'order')
+    query: { orderByChild: 'order',limitToLast: 2,endAt: task.order } */
+          dynQuery.limitToLast = 2;
+          dynQuery.endAt = task.order;
 
-}
-else {
-  /*
-If direction!='up'==='down' retrieves clicked and next task
-(limits query to first 2 records with first one starting at order='task.order'
-sorted by 'order')
-query: { orderByChild: 'order',limitToFirst: 2,startAt: task.order }
-*/
-  dynQuery.limitToFirst = 2;
-  dynQuery.startAt = task.order;
-}
-tasksList = this.af.database.list('/tasks',
-{ preserveSnapshot:true,query: dynQuery });
-      return tasksList
+    }
+    else {
+      /*
+    If direction!='up'==='down' retrieves clicked and next task
+    (limits query to first 2 records with first one starting at order='task.order'
+    sorted by 'order')
+    query: { orderByChild: 'order',limitToFirst: 2,startAt: task.order }
+    */
+      dynQuery.limitToFirst = 2;
+      dynQuery.startAt = task.order;
+    }
+    tasksList = this.af.database.list('/agenda_tasks/'+agendaKey,
+    { preserveSnapshot:true,query: dynQuery });
+          return tasksList
   }
 
-  public reorderTasks(task,direction) {
+  public reorderTasks(agendaKey, task, direction) {
     //console.log(task.$key);
     var tasksList: FirebaseListObservable<any[]>;
     var tasksObject: FirebaseObjectObservable<any[]>;
@@ -127,7 +128,7 @@ tasksList = this.af.database.list('/tasks',
     var orders = [];
     var updates = {};
 
-    tasksList=this.reorderQuery(task,direction);
+    tasksList=this.reorderQuery(agendaKey, task, direction);
     orderSubscription=tasksList
       .subscribe(tasks =>{
         tasks.forEach(task=>
@@ -143,7 +144,7 @@ tasksList = this.af.database.list('/tasks',
       //console.log(updates);
       orderSubscription.unsubscribe();
       //Querying again as object to use 'data fan-out' update
-      tasksObject = this.af.database.object('/tasks');
+      tasksObject = this.af.database.object('/agenda_tasks/'+agendaKey);
       tasksObject.update(updates).then(
         _ => console.log('Tasks reordered.'+keys[0]+' => order: '+orders[1]
         +' '+keys[1]+' => order: '+orders[0]));
