@@ -45,8 +45,8 @@ export class GeneralTasksComponent implements OnInit {
   ngOnInit(): void {
     this.getTasks();
   }
-  deleteTask(key): void {
-    this.tasks.remove(key).then(_ => console.log('task deleted!'));
+  deleteTask(taskKey): void {
+    this.tasks.remove(taskKey).then(_ => console.log('Task deleted!'));
     this.selectedTask = null;
     this.direction="out";
   }

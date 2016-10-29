@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TasksService } from '../shared/tasks.service';
 import { GeneralTasksComponent } from '../generaltasks.component';
+import { TaskFormComponent } from '../taskform.component';
 
 @Component({
   selector: 'agendas-list',
@@ -29,7 +30,7 @@ export class AgendasListComponent implements OnInit {
     var newAgendaKey: string;
     var newTaskKey: string;
     newAgendaKey = agendasList.push({
-      title: "NEW AGENDA TITLE",
+      title: "NEW AGENDA TITLE - click to edit",
       users: "",
       lastActive: false
     }).key;
@@ -41,10 +42,16 @@ export class AgendasListComponent implements OnInit {
       start:"00:00",
       duration:"10",
       title:"FIRST TASK",
-      description:"This is your first task in this agena. You can edit it as you please.",
+      description:"This is your first task in this agenda. You can edit it as you please.",
       completed:false
     }).key;
     console.log(newTaskKey);
   }
+  public deleteAgenda(agendaKey): void {
+    this.isGeneralVisible=false;
+    var agenda = this.tasksService.af.database.list('/agenda_tasks/');
+    agenda.remove(agendaKey);
+    this.agendas.remove(agendaKey).then(_ => console.log('Agenda deleted!'));
 
+  }
 }
