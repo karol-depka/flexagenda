@@ -1,11 +1,17 @@
 <ul #agendasList>
-  <li> Your agendas:
-    <!-- Add newAgenda button -->
+  <li>    <!-- Add newAgenda button -->
     <button md-mini-fab color="primary" (click)="this.addNewAgenda()" title="Add new Agenda">
     <md-icon class="md-24">add</md-icon></button>
   </li>
      <!-- each agenda goes here -->
     <li *ngFor="let agenda of agendas | async;">
+      <button *ngIf="!(this.isGeneralVisible) || agenda.$key!=this.agendaKey"
+      (click)="this.agendaKey=agenda.$key; this.isGeneralVisible=true"
+      md-icon-button color="accent"><md-icon>list</md-icon></button>
+      <button *ngIf="this.isGeneralVisible && agenda.$key===this.agendaKey"
+      (click) = "this.isGeneralVisible=false; this.agendaKey=null"
+      md-icon-button color="accent">
+      <md-icon>undo</md-icon></button>
       <button md-icon-button color="accent" (click)="deleteAgenda(agenda.$key);
       TaskForm.showSnackBar('Agenda deleted')" class="trash">
       <md-icon>delete</md-icon></button>
@@ -14,9 +20,7 @@
                                              agenda.$key,
                                              'title',
                                              agendaTitle.value)"/>
-    <button (click)="this.agendaKey=agenda.$key; this.isGeneralVisible=true">
-             Show tasks</button>
-    <button (click) = "this.isGeneralVisible=false">Hide tasks</button><br />
+
 </li>
 <ul>
 <general-tasks *ngIf="this.isGeneralVisible" [agendaKey]='this.agendaKey'></general-tasks>

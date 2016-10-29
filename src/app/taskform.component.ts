@@ -51,7 +51,8 @@ export class TaskFormComponent{
 
   showSnackBar(message) {
     let config = new MdSnackBarConfig(this.viewContainerRef);
-    this.snackBar.open(message, "DISMISS",config);
+    let SnackBarRef = this.snackBar.open(message, "DISMISS",config);
+    setTimeout(SnackBarRef.dismiss.bind(SnackBarRef), 2000);
   }
   showTaskForm(task){
     this.isVisible=true;

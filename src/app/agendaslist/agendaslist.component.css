@@ -20,5 +20,6 @@ input {
   color: white;
   padding: 0 0 0 0.7em;
   font-weight: bold;
-  font-size: 130%;  
+  font-size: 130%;
+  width: 50%;
 }
