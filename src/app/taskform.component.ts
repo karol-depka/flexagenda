@@ -7,7 +7,6 @@ import { Component,
          style,
          AnimationTransitionEvent,
          ViewContainerRef  } from '@angular/core';
-import { GeneralTasksComponent } from './generaltasks.component';
 import { TasksService } from './shared/tasks.service';
 import {MdSnackBar, MdSnackBarConfig} from '@angular/material';
 

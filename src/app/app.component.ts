@@ -2,17 +2,20 @@ import { Component } from '@angular/core';
 import { AngularFire,
          AuthProviders,
          AuthMethods } from 'angularfire2';
-import { GeneralTasksComponent } from './generaltasks.component';
+import { AgendasListComponent } from './agendaslist/agendaslist.component';
 import { TasksService } from './shared/tasks.service';
+import { SnackBarComponent } from './shared/snackbar/snackbar.component';
+
 
 @Component({
   selector: 'flexagenda-app',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [TasksService]
+  providers: [TasksService, AgendasListComponent]
 })
 export class AppComponent {
   title: string = 'Flexible Agenda App';
-  constructor(public tasksService: TasksService) {
+  constructor(public tasksService: TasksService,
+  public agendasList: AgendasListComponent ) {
   }
 }

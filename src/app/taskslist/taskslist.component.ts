@@ -8,14 +8,14 @@ import { Component,
    Input,
    Directive
  } from '@angular/core';
-import { TasksService } from './shared/tasks.service';
-import { TaskFormComponent } from './taskform.component';
+import { TasksService } from '../shared/tasks.service';
 import { AngularFire, FirebaseListObservable} from 'angularfire2';
+import { SnackBarComponent } from '../shared/snackbar/snackbar.component';
 
 @Component({
-  selector:'general-tasks',
-  templateUrl: './generaltasks.component.html',
-  styleUrls: ['./generaltasks.component.css'],
+  selector: 'tasks-list',
+  templateUrl: './taskslist.component.html',
+  styleUrls: ['./taskslist.component.css'],
 animations: [
   trigger('flyInOut', [
     state('*', style({transform: 'translateY(0)'})),
@@ -31,7 +31,7 @@ animations: [
 providers: [TasksService]
 })
 
-export class GeneralTasksComponent implements OnInit {
+export class TasksListComponent implements OnInit {
   tasks;
   selectedTask;
   direction: string;

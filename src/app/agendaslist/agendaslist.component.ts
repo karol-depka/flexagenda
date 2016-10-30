@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { TasksListComponent } from '../taskslist/taskslist.component';
 import { TasksService } from '../shared/tasks.service';
-import { GeneralTasksComponent } from '../generaltasks.component';
-import { TaskFormComponent } from '../taskform.component';
+import { SnackBarComponent } from '../shared/snackbar/snackbar.component';
 
 @Component({
   selector: 'agendas-list',
@@ -11,7 +11,7 @@ import { TaskFormComponent } from '../taskform.component';
 })
 export class AgendasListComponent implements OnInit {
   agendas;
-  constructor(public tasksService: TasksService) { }
+  constructor(public tasksService: TasksService ) { }
   isGeneralVisible: boolean = false;
   ngOnInit(): void {
     this.getAgendas();
