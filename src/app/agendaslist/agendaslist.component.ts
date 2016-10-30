@@ -12,7 +12,7 @@ import { SnackBarComponent } from '../shared/snackbar/snackbar.component';
 export class AgendasListComponent implements OnInit {
   agendas;
   constructor(public tasksService: TasksService ) { }
-  isGeneralVisible: boolean = false;
+  lastActiveAgendaKey: string = null;
   ngOnInit(): void {
     this.getAgendas();
   }
@@ -32,7 +32,7 @@ export class AgendasListComponent implements OnInit {
     newAgendaKey = agendasList.push({
       title: "NEW AGENDA TITLE - click to edit",
       users: "",
-      lastActive: false
+      lastActiveAgenda: false
     }).key;
     console.log(newAgendaKey);
     var newAgenda = this.tasksService.af.database.list('/agenda_tasks/'+newAgendaKey);
@@ -48,7 +48,6 @@ export class AgendasListComponent implements OnInit {
     console.log(newTaskKey);
   }
   public deleteAgenda(agendaKey): void {
-    this.isGeneralVisible=false;
     var agenda = this.tasksService.af.database.list('/agenda_tasks/');
     agenda.remove(agendaKey);
     this.agendas.remove(agendaKey).then(_ => console.log('Agenda deleted!'));

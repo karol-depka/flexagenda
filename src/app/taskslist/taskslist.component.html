@@ -25,13 +25,16 @@ SnackBar.showSnackBar('Task deleted')" class="trash">
 <md-icon>delete</md-icon></button>
 <input #start type="text" class="start"
   value="{{task.start}}"
-  (change)="tasksService.updateObject('task', task.$key, 'start', start.value)"/>
+  (change)="tasksService.updateObject('task', task.$key, 'start', start.value);
+  SnackBar.showSnackBar('Tasks updated')"/>
 <input #duration type="text" class="duration"
   value="{{task.order}}"
-  (change)="tasksService.updateObject('task', task.$key, 'duration', duration.value)"/>
+  (change)="tasksService.updateObject('task', task.$key, 'duration', duration.value);
+  SnackBar.showSnackBar('Tasks updated')"/>
 <textarea #title type="text" class="title" rows="1" cols="1"
   value="{{task.title}}"
-  (change)="tasksService.updateObject('task', task.$key, 'title', title.value)"></textarea>
+  (change)="tasksService.updateObject('task', task.$key, 'title', title.value);
+  SnackBar.showSnackBar('Tasks updated')"></textarea>
 <br />
 <button *ngIf="!isFirst" md-icon-button class="reorder"
 (click)="tasksService.reorderTasks(agendaKey, task, 'up');
@@ -41,7 +44,8 @@ SnackBar.showSnackBar('Tasks reordered')"><md-icon>keyboard_arrow_up</md-icon></
 SnackBar.showSnackBar('Tasks reordered')"><md-icon>keyboard_arrow_down</md-icon></button>
 <textarea #description type="text" class="description" rows="3" cols="1"
   value="{{task.description}}"
-  (change)="tasksService.updateObject('task', task.$key, 'description', description.value)"></textarea>
+  (change)="tasksService.updateObject('task', task.$key, 'description', description.value);
+  SnackBar.showSnackBar('Tasks updated')"></textarea>
 </li><button md-icon-button (click)="tasksService.addNewTask(this.agendaKey, null, false);
 SnackBar.showSnackBar('New task added')"><md-icon>add</md-icon></button>
 </ul>

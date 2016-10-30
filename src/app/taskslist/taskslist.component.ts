@@ -9,7 +9,7 @@ import { Component,
    Directive
  } from '@angular/core';
 import { TasksService } from '../shared/tasks.service';
-import { AngularFire, FirebaseListObservable} from 'angularfire2';
+import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { SnackBarComponent } from '../shared/snackbar/snackbar.component';
 
 @Component({
@@ -36,11 +36,14 @@ export class TasksListComponent implements OnInit {
   selectedTask;
   direction: string;
   @Input() agendaKey;
+  @Input() activeAgenda;
   constructor(public tasksService: TasksService) {
    }
 
   getTasks(): void {
+    if(this.activeAgenda) {
     this.tasks=this.tasksService.getTasks(this.agendaKey);
+  }
   }
   ngOnInit(): void {
     this.getTasks();

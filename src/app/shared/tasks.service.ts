@@ -20,7 +20,8 @@ export class TasksService {
   this.TASKS = this.af.database.list('/agenda_tasks/'+agendaKey,
     {query: {orderByChild: 'order'} });
   return this.TASKS;
-}
+  }
+
   public getAgendas(): FirebaseListObservable<any[]> {
     return this.AGENDAS;
   }

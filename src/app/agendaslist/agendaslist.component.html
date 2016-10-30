@@ -1,12 +1,19 @@
 <ul #agendasList>
      <!-- each agenda goes here -->
     <li *ngFor="let agenda of agendas | async;">
-      <button *ngIf="!(this.isGeneralVisible) || agenda.$key!=this.agendaKey"
-      (click)="this.agendaKey=agenda.$key; this.isGeneralVisible=true"
-      md-icon-button color="accent"><md-icon>list</md-icon></button>
-      <button *ngIf="this.isGeneralVisible && agenda.$key===this.agendaKey"
-      (click) = "this.isGeneralVisible=false; this.agendaKey=null"
-      md-icon-button color="accent">
+      <button *ngIf="!agenda.active"
+      md-icon-button color="accent"
+      (click) = "tasksService.updateObject('agenda',
+                                             agenda.$key,
+                                             'active',
+                                             true);">
+      <md-icon>list</md-icon></button>
+      <button *ngIf="agenda.active"
+      md-icon-button color="accent"
+      (click) = "tasksService.updateObject('agenda',
+                                             agenda.$key,
+                                             'active',
+                                             false);">
       <md-icon>undo</md-icon></button>
       <button md-icon-button color="accent" (click)="deleteAgenda(agenda.$key);
       SnackBar.showSnackBar('Agenda deleted.');" class="trash">
@@ -17,8 +24,8 @@
                                              'title',
                                              agendaTitle.value);
                   SnackBar.showSnackBar('Agenda updated.')"/>
-<tasks-list *ngIf="this.isGeneralVisible && agenda.$key===this.agendaKey"
-[agendaKey]='this.agendaKey'></tasks-list>
+<tasks-list *ngIf="agenda.active==true"
+[agendaKey]='agenda.$key' [activeAgenda]='agenda.active'></tasks-list>
 </li>
 <ul>
 <!-- fake component to use SnackBar, try to make it as Directive-->
