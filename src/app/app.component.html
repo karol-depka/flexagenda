@@ -28,6 +28,12 @@
   Logout</button>
 </span>
 <div class="root" *ngIf="tasksService.af.auth | async">
-<h3 class="labels">My Main Agenda</h3>
+<h3 class="labels">My Agendas
+  <!-- Add newAgenda button -->
+  <button md-mini-fab color="primary" title="Add new Agenda"
+  (click)="agendasList.addNewAgenda(); SnackBar.showSnackBar('New Agenda added.')">
+  <md-icon class="md-24">add</md-icon></button></h3>
 <agendas-list></agendas-list>
+<!-- fake component to use SnackBar, try to make it as Directive-->
+<snack-bar #SnackBar></snack-bar>
 </div>

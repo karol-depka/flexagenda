@@ -1,8 +1,4 @@
 <ul #agendasList>
-  <li>    <!-- Add newAgenda button -->
-    <button md-mini-fab color="primary" (click)="this.addNewAgenda()" title="Add new Agenda">
-    <md-icon class="md-24">add</md-icon></button>
-  </li>
      <!-- each agenda goes here -->
     <li *ngFor="let agenda of agendas | async;">
       <button *ngIf="!(this.isGeneralVisible) || agenda.$key!=this.agendaKey"
@@ -13,14 +9,17 @@
       md-icon-button color="accent">
       <md-icon>undo</md-icon></button>
       <button md-icon-button color="accent" (click)="deleteAgenda(agenda.$key);
-      TaskForm.showSnackBar('Agenda deleted')" class="trash">
+      SnackBar.showSnackBar('Agenda deleted.');" class="trash">
       <md-icon>delete</md-icon></button>
       <input #agendaTitle type="text" value="{{agenda.title}}"
       (change) = "tasksService.updateObject('agenda',
                                              agenda.$key,
                                              'title',
-                                             agendaTitle.value)"/>
-
+                                             agendaTitle.value);
+                  SnackBar.showSnackBar('Agenda updated.')"/>
+<tasks-list *ngIf="this.isGeneralVisible && agenda.$key===this.agendaKey"
+[agendaKey]='this.agendaKey'></tasks-list>
 </li>
 <ul>
-<general-tasks *ngIf="this.isGeneralVisible" [agendaKey]='this.agendaKey'></general-tasks>
+<!-- fake component to use SnackBar, try to make it as Directive-->
+<snack-bar #SnackBar></snack-bar>
