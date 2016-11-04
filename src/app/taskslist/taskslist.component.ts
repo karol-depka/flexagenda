@@ -42,7 +42,7 @@ export class TasksListComponent implements OnInit {
 
   getTasks(): void {
     if(this.activeAgenda) {
-    this.tasks=this.tasksService.getTasks(this.agendaKey);
+    this.tasks = this.tasksService.getTasks(this.agendaKey);
   }
   }
   ngOnInit(): void {
