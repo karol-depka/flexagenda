@@ -1,8 +1,7 @@
-
-<h1>Dialog demo</h1>
-
-<button (click)="open()" [disabled]="dialogRef">Open dialog</button>
-
-<p>
-  Last close result: {{lastCloseResult}}
-</p>
+<div><p>Are you sure you want to delete?</p>
+<button md-raised-button color="primary" type="button"
+(click)="dialogRef.close(true)">YES</button>
+<br /><br />
+<button md-raised-button color="primary"
+type="button" (click)="dialogRef.close(false)">No</button>
+</div>

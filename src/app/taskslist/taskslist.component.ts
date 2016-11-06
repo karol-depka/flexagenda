@@ -1,5 +1,4 @@
-import { Component,
-   OnInit,
+import { Component, OnInit, ViewContainerRef,
    trigger,
    state,
    animate,
@@ -8,9 +7,11 @@ import { Component,
    Input,
    Directive
  } from '@angular/core';
+import { MdDialog, MdDialogRef, MdDialogConfig } from '@angular/material';
 import { TasksService } from '../shared/tasks.service';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { SnackBarComponent } from '../shared/snackbar/snackbar.component';
+import { ConfirmationDialog } from '../shared/confirmationdialog/confirmationdialog.component';
 
 @Component({
   selector: 'tasks-list',
@@ -37,7 +38,12 @@ export class TasksListComponent implements OnInit {
   direction: string;
   @Input() agendaKey;
   @Input() activeAgenda;
-  constructor(public tasksService: TasksService) {
+  dialogRef: MdDialogRef<ConfirmationDialog>;
+
+  constructor(public tasksService: TasksService,
+              public dialog: MdDialog,
+              public viewContainerRef: ViewContainerRef,
+              public snackBar: SnackBarComponent) {
    }
 
   getTasks(): void {
@@ -49,8 +55,29 @@ export class TasksListComponent implements OnInit {
     this.getTasks();
   }
   deleteTask(taskKey): void {
-    this.tasks.remove(taskKey).then(_ => console.log('Task deleted!'));
+    this.tasks.remove(taskKey).then(_ => console.log('Task '+taskKey+' deleted!'));
     this.selectedTask = null;
     this.direction="out";
+  }
+  public confirmTaskDelete(taskKey, message): string {
+    /*
+    This function opens 'confirmationdialog' for agenda removal
+    TODO update for the latest version of material2 when 'dialog' will be released
+    https://github.com/angular/material2/blob/master/src/lib/dialog/README.md
+    */
+    let configDialog = new MdDialogConfig();
+    configDialog.viewContainerRef = this.viewContainerRef;
+    this.dialogRef = this.dialog.open(ConfirmationDialog, configDialog);
+
+    this.dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if (result) { this.deleteTask(taskKey);
+      this.snackBar.showSnackBar('Task deleted')
+     }
+      else { console.log('Task '+taskKey+' not deleted.') }
+      this.dialogRef = null;
+
+    });
+    return message
   }
 }

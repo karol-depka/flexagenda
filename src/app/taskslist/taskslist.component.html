@@ -20,8 +20,8 @@
 <md-checkbox color="primary" [checked]="task.completed"
 (change)="tasksService.updateObject('task', task.$key, 'completed', !(task.completed))">
 {{i+1}}</md-checkbox></span>
-<button md-icon-button color="primary" (click)="deleteTask(task.$key);
-SnackBar.showSnackBar('Task deleted')" class="trash">
+<button md-icon-button color="primary" class="trash"
+(click)="confirmTaskDelete(task.$key,'Task deleted')">
 <md-icon>delete</md-icon></button>
 <input #start type="text" class="start"
   value="{{task.start}}"

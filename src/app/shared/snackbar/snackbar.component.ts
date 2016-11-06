@@ -11,7 +11,6 @@ export class SnackBarComponent implements OnInit {
                private _viewContainerRef: ViewContainerRef ) { }
 
   public showSnackBar(message) {
-    console.log(message);
     let configSnackBar = new MdSnackBarConfig(this._viewContainerRef);
     let SnackBarRef = this.snackBar.open(message, "DISMISS",configSnackBar);
     setTimeout(SnackBarRef.dismiss.bind(SnackBarRef), 2000);

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { MdDialog, MdDialogRef, MdDialogConfig } from '@angular/material';
 import { TasksListComponent } from '../taskslist/taskslist.component';
 import { TasksService } from '../shared/tasks.service';
 import { SnackBarComponent } from '../shared/snackbar/snackbar.component';
-import { ConfirmationDialogComponent } from '../shared/confirmationdialog/confirmationdialog.component';
+import { ConfirmationDialog } from '../shared/confirmationdialog/confirmationdialog.component';
 
 
 @Component({
@@ -13,8 +14,15 @@ import { ConfirmationDialogComponent } from '../shared/confirmationdialog/confir
 })
 export class AgendasListComponent implements OnInit {
   agendas;
-  constructor( public tasksService: TasksService ) { }
   lastActiveAgendaKey: string = null;
+  dialogRef: MdDialogRef<ConfirmationDialog>;
+
+  constructor( public tasksService: TasksService,
+    public dialog: MdDialog,
+    public viewContainerRef: ViewContainerRef,
+    public snackBar: SnackBarComponent
+   ) { }
+
   ngOnInit(): void {
     this.getAgendas();
   }
@@ -36,7 +44,7 @@ export class AgendasListComponent implements OnInit {
       users: "",
       lastActiveAgenda: false
     }).key;
-    console.log(newAgendaKey);
+    console.log('In agenda: '+newAgendaKey);
     var newAgenda = this.tasksService.af.database.list('/agenda_tasks/'+newAgendaKey);
     newTaskKey = newAgenda.push({
       order:1,
@@ -47,14 +55,33 @@ export class AgendasListComponent implements OnInit {
       description:"This is your first task in this agenda. You can edit it as you please.",
       completed:false
     }).key;
-    console.log(newTaskKey);
+    console.log('new task added: '+newTaskKey);
   }
   public deleteAgenda(agendaKey): void {
+    var agenda = this.tasksService.af.database.list('/agenda_tasks/');
+    agenda.remove(agendaKey);
+    this.agendas.remove(agendaKey).then(_ => console.log('Agenda '+agendaKey+' deleted!'));
 
-    console.log(agendaKey);
-    //var agenda = this.tasksService.af.database.list('/agenda_tasks/');
-    //agenda.remove(agendaKey);
-    //this.agendas.remove(agendaKey).then(_ => console.log('Agenda deleted!'));
+  }
+  public confirmAgendaDelete(agendaKey, message): string {
+    /*
+    This function opens 'confirmationdialog' for agenda removal
+    TODO update for the latest version of material2 when 'dialog' will be released
+    https://github.com/angular/material2/blob/master/src/lib/dialog/README.md
+    */
+    let configDialog = new MdDialogConfig();
+    configDialog.viewContainerRef = this.viewContainerRef;
+    this.dialogRef = this.dialog.open(ConfirmationDialog, configDialog);
 
+    this.dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if (result) { this.deleteAgenda(agendaKey);
+      this.snackBar.showSnackBar('Agenda deleted')
+     }
+      else { console.log('Agenda '+agendaKey+' not deleted.') }
+      this.dialogRef = null;
+
+    });
+    return message
   }
 }
