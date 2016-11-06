@@ -13,6 +13,8 @@ import { TaskFormComponent } from './taskform.component';
 import { AgendasListComponent } from './agendaslist/agendaslist.component';
 import { TasksListComponent } from './taskslist/taskslist.component';
 import { SnackBarComponent } from './shared/snackbar/snackbar.component';
+import { ConfirmationDialogComponent,
+         ConfirmationDialog } from './shared/confirmationdialog/confirmationdialog.component';
 
 export const firebaseConfig ={
   apiKey: "AIzaSyBughsAzc9KLbFFGeJxrRlGVh4tvm82r-E",
@@ -32,7 +34,12 @@ const firebaseAuthConfig = {
     TaskFormComponent,
     AgendasListComponent,
     TasksListComponent,
-    SnackBarComponent
+    SnackBarComponent,
+    ConfirmationDialogComponent,
+    ConfirmationDialog
+  ],
+  entryComponents: [
+   ConfirmationDialog
   ],
   imports: [
     BrowserModule,

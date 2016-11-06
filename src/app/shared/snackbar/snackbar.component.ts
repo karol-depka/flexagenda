@@ -3,18 +3,17 @@ import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
 
 @Component({
   selector: 'snack-bar',
-  template: '',
-  styleUrls: ['./snackbar.component.css']
+  template: ''
 })
 export class SnackBarComponent implements OnInit {
 
   constructor( public snackBar: MdSnackBar,
-               public viewContainerRef: ViewContainerRef ) { }
+               private _viewContainerRef: ViewContainerRef ) { }
 
   public showSnackBar(message) {
-    console.log("test");
-    let config = new MdSnackBarConfig(this.viewContainerRef);
-    let SnackBarRef = this.snackBar.open(message, "DISMISS",config);
+    console.log(message);
+    let configSnackBar = new MdSnackBarConfig(this._viewContainerRef);
+    let SnackBarRef = this.snackBar.open(message, "DISMISS",configSnackBar);
     setTimeout(SnackBarRef.dismiss.bind(SnackBarRef), 2000);
   }
 

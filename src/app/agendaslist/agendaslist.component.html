@@ -16,7 +16,7 @@
                                              false);">
       <md-icon>undo</md-icon></button>
       <button md-icon-button color="accent" (click)="deleteAgenda(agenda.$key);
-      SnackBar.showSnackBar('Agenda deleted.');" class="trash">
+      Confirmation.confirm('Agenda deleted')" class="trash">
       <md-icon>delete</md-icon></button>
       <input #agendaTitle type="text" value="{{agenda.title}}"
       (change) = "tasksService.updateObject('agenda',
@@ -30,3 +30,4 @@
 <ul>
 <!-- fake component to use SnackBar, try to make it as Directive-->
 <snack-bar #SnackBar></snack-bar>
+<confirmation #Confirmation></confirmation>

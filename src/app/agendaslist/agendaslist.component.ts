@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { TasksListComponent } from '../taskslist/taskslist.component';
 import { TasksService } from '../shared/tasks.service';
 import { SnackBarComponent } from '../shared/snackbar/snackbar.component';
+import { ConfirmationDialogComponent } from '../shared/confirmationdialog/confirmationdialog.component';
+
 
 @Component({
   selector: 'agendas-list',
@@ -11,7 +13,7 @@ import { SnackBarComponent } from '../shared/snackbar/snackbar.component';
 })
 export class AgendasListComponent implements OnInit {
   agendas;
-  constructor(public tasksService: TasksService ) { }
+  constructor( public tasksService: TasksService ) { }
   lastActiveAgendaKey: string = null;
   ngOnInit(): void {
     this.getAgendas();
@@ -48,9 +50,11 @@ export class AgendasListComponent implements OnInit {
     console.log(newTaskKey);
   }
   public deleteAgenda(agendaKey): void {
-    var agenda = this.tasksService.af.database.list('/agenda_tasks/');
-    agenda.remove(agendaKey);
-    this.agendas.remove(agendaKey).then(_ => console.log('Agenda deleted!'));
+
+    console.log(agendaKey);
+    //var agenda = this.tasksService.af.database.list('/agenda_tasks/');
+    //agenda.remove(agendaKey);
+    //this.agendas.remove(agendaKey).then(_ => console.log('Agenda deleted!'));
 
   }
 }
