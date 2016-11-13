@@ -17,7 +17,13 @@
       <md-icon>undo</md-icon></button>
       <button md-icon-button color="accent" class="trash"
       (click)="confirmAgendaDelete(agenda.$key, 'Agenda deleted')">
-      <md-icon>delete</md-icon></button>
+      <md-icon>delete</md-icon></button>Start time:
+      <input #agendaStartTime type="text" value="{{agenda.startTime}}"
+      (change) = "tasksService.updateObject('agenda',
+                                             agenda.$key,
+                                             'startTime',
+                                             agendaStartTime.value);
+                  snackBar.showSnackBar('Agenda updated.')"/>
       <input #agendaTitle type="text" value="{{agenda.title}}"
       (change) = "tasksService.updateObject('agenda',
                                              agenda.$key,
@@ -25,6 +31,6 @@
                                              agendaTitle.value);
                   snackBar.showSnackBar('Agenda updated.')"/>
 <tasks-list *ngIf="agenda.active==true"
-[agendaKey]='agenda.$key' [activeAgenda]='agenda.active'></tasks-list>
+[agendaKey]='agenda.$key' [activeAgenda]='agenda.active' [agendaStartTime]='agenda.startTime'></tasks-list>
 </li>
 <ul>

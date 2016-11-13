@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewContainerRef,
+import { Component, OnInit, OnChanges, ViewContainerRef,
    trigger,
    state,
    animate,
@@ -38,13 +38,14 @@ export class TasksListComponent implements OnInit {
   direction: string;
   @Input() agendaKey;
   @Input() activeAgenda;
+  @Input() agendaStartTime;
+  tasksStartTimes;
   dialogRef: MdDialogRef<ConfirmationDialog>;
 
   constructor(public tasksService: TasksService,
               public dialog: MdDialog,
               public viewContainerRef: ViewContainerRef,
-              public snackBar: SnackBarComponent) {
-   }
+              public snackBar: SnackBarComponent) {}
 
   getTasks(): void {
     if(this.activeAgenda) {
@@ -53,6 +54,29 @@ export class TasksListComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getTasks();
+    this.calculateStartTimes();
+    //this.calculateSeconds();
+  }
+  calculateStartTimes(): void {
+    this.tasks.subscribe(tasks =>{
+      this.tasksStartTimes = [];
+      this.tasksStartTimes.push(this.agendaStartTime);
+     tasks.forEach(task=>
+       {this.tasksStartTimes[this.tasksStartTimes.length] =
+         this.calculateDuration(task.duration,
+                            this.tasksStartTimes[this.tasksStartTimes.length-1])
+     console.log(this.tasksStartTimes);
+   }
+    )
+    });
+  }
+  calculateDuration(minutesToAdd=10, previousTime='02:04'): string {
+    var temp = previousTime.split(':'); // split it at the colons
+    var d = new Date();
+    d.setHours(+temp[0]);
+    d.setMinutes(+temp[1]+minutesToAdd);
+    var newDuration = this.tasksService.addZero(d.getHours())+":"+this.tasksService.addZero(d.getMinutes());
+    return newDuration
   }
   deleteTask(taskKey): void {
     this.tasks.remove(taskKey).then(_ => console.log('Task '+taskKey+' deleted!'));

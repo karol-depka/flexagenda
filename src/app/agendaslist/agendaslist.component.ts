@@ -25,10 +25,18 @@ export class AgendasListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAgendas();
+    var d = new Date();
+    console.log(d.getHours()+":"+d.getMinutes());
   }
 
   getAgendas(): void {
     this.agendas=this.tasksService.getAgendas();
+  }
+  now(): string {
+    var d = new Date();
+    var now = this.tasksService.addZero(d.getHours())+":"+this.tasksService.addZero(d.getMinutes())
+    console.log(now);
+    return now
   }
 
   public addNewAgenda() {
@@ -39,18 +47,19 @@ export class AgendasListComponent implements OnInit {
     var agendasList = this.tasksService.af.database.list('/agendas');
     var newAgendaKey: string;
     var newTaskKey: string;
+
     newAgendaKey = agendasList.push({
       title: "NEW AGENDA TITLE - click to edit",
       users: "",
-      lastActiveAgenda: false
+      lastActiveAgenda: false,
+      startTime:this.now()
     }).key;
     console.log('In agenda: '+newAgendaKey);
     var newAgenda = this.tasksService.af.database.list('/agenda_tasks/'+newAgendaKey);
     newTaskKey = newAgenda.push({
       order:1,
       type:"general",
-      start:"00:00",
-      duration:"10",
+      duration:10,
       title:"FIRST TASK",
       description:"This is your first task in this agenda. You can edit it as you please.",
       completed:false

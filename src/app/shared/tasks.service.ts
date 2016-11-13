@@ -38,8 +38,7 @@ export class TasksService {
     this.TASKS.push({
       order:newOrder,
       type:"general",
-      start:"00:00",
-      duration:"10",
+      duration:10,
       title:"NEWTITLE",
       description:"NEWDESCRIPTION",
       completed:false
@@ -167,8 +166,10 @@ export class TasksService {
     this.af.auth.subscribe(auth => console.log(auth));
   }
 
-  updateObject(object,key,updateKey,updateValue): void {
+  updateObject(object,key,updateKey,updateValue, type): void {
   //console.log(update);
+  if (type == 'number' && updateValue < 1) return
+  else if (type == 'number') updateValue = Number(updateValue)
   switch (object) {
     case 'task':
         this.TASKS.update(key,{[updateKey]:updateValue}).then(_ => console.log('Task updated!'));
@@ -178,6 +179,8 @@ export class TasksService {
         break;
 }
 }
-
+addZero(input): string {
+  return input<10 ? ("0"+input) : input
+}
 
 }
