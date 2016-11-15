@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
 
 @Component({
@@ -7,12 +7,10 @@ import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
 })
 export class SnackBarComponent implements OnInit {
 
-  constructor( public snackBar: MdSnackBar,
-               private _viewContainerRef: ViewContainerRef ) { }
+  constructor( public snackBar: MdSnackBar ) { }
 
   public showSnackBar(message) {
-    let configSnackBar = new MdSnackBarConfig(this._viewContainerRef);
-    let SnackBarRef = this.snackBar.open(message, "DISMISS",configSnackBar);
+    let SnackBarRef = this.snackBar.open(message, "DISMISS");
     setTimeout(SnackBarRef.dismiss.bind(SnackBarRef), 2000);
   }
 

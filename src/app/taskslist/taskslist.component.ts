@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, ViewContainerRef,
+import { Component, OnInit, OnChanges,
    trigger,
    state,
    animate,
@@ -7,7 +7,7 @@ import { Component, OnInit, OnChanges, ViewContainerRef,
    Input,
    Directive
  } from '@angular/core';
-import { MdDialog, MdDialogRef, MdDialogConfig } from '@angular/material';
+import { MdDialog, MdDialogRef } from '@angular/material';
 import { TasksService } from '../shared/tasks.service';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { SnackBarComponent } from '../shared/snackbar/snackbar.component';
@@ -44,7 +44,6 @@ export class TasksListComponent implements OnInit {
 
   constructor(public tasksService: TasksService,
               public dialog: MdDialog,
-              public viewContainerRef: ViewContainerRef,
               public snackBar: SnackBarComponent) {}
 
   getTasks(): void {
@@ -63,10 +62,8 @@ export class TasksListComponent implements OnInit {
       this.tasksStartTimes.push(this.agendaStartTime);
      tasks.forEach(task=>
        {this.tasksStartTimes[this.tasksStartTimes.length] =
-         this.calculateDuration(task.duration,
-                            this.tasksStartTimes[this.tasksStartTimes.length-1])
-     console.log(this.tasksStartTimes);
-   }
+         this.calculateDuration(task.duration, this.tasksStartTimes[this.tasksStartTimes.length-1])
+       }
     )
     });
   }
@@ -89,9 +86,7 @@ export class TasksListComponent implements OnInit {
     TODO update for the latest version of material2 when 'dialog' will be released
     https://github.com/angular/material2/blob/master/src/lib/dialog/README.md
     */
-    let configDialog = new MdDialogConfig();
-    configDialog.viewContainerRef = this.viewContainerRef;
-    this.dialogRef = this.dialog.open(ConfirmationDialog, configDialog);
+    this.dialogRef = this.dialog.open(ConfirmationDialog);
 
     this.dialogRef.afterClosed().subscribe(result => {
       console.log(result);

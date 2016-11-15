@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewContainerRef } from '@angular/core';
-import { MdDialog, MdDialogRef, MdDialogConfig } from '@angular/material';
+import { Component, OnInit } from '@angular/core';
+import { MdDialog, MdDialogRef } from '@angular/material';
 import { TasksListComponent } from '../taskslist/taskslist.component';
 import { TasksService } from '../shared/tasks.service';
 import { SnackBarComponent } from '../shared/snackbar/snackbar.component';
@@ -14,12 +14,10 @@ import { ConfirmationDialog } from '../shared/confirmationdialog/confirmationdia
 })
 export class AgendasListComponent implements OnInit {
   agendas;
-  lastActiveAgendaKey: string = null;
   dialogRef: MdDialogRef<ConfirmationDialog>;
 
   constructor( public tasksService: TasksService,
     public dialog: MdDialog,
-    public viewContainerRef: ViewContainerRef,
     public snackBar: SnackBarComponent
    ) { }
 
@@ -51,7 +49,7 @@ export class AgendasListComponent implements OnInit {
     newAgendaKey = agendasList.push({
       title: "NEW AGENDA TITLE - click to edit",
       users: "",
-      lastActiveAgenda: false,
+      active: true,
       startTime:this.now()
     }).key;
     console.log('In agenda: '+newAgendaKey);
@@ -78,9 +76,7 @@ export class AgendasListComponent implements OnInit {
     TODO update for the latest version of material2 when 'dialog' will be released
     https://github.com/angular/material2/blob/master/src/lib/dialog/README.md
     */
-    let configDialog = new MdDialogConfig();
-    configDialog.viewContainerRef = this.viewContainerRef;
-    this.dialogRef = this.dialog.open(ConfirmationDialog, configDialog);
+    this.dialogRef = this.dialog.open(ConfirmationDialog);
 
     this.dialogRef.afterClosed().subscribe(result => {
       console.log(result);

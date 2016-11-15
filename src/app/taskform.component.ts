@@ -45,12 +45,10 @@ export class TaskFormComponent{
 
   constructor(
     public tasksService: TasksService,
-    public snackBar: MdSnackBar,
-    public viewContainerRef: ViewContainerRef) { }
+    public snackBar: MdSnackBar) { }
 
   showSnackBar(message) {
-    let config = new MdSnackBarConfig(this.viewContainerRef);
-    let SnackBarRef = this.snackBar.open(message, "DISMISS",config);
+    let SnackBarRef = this.snackBar.open(message, "DISMISS");
     setTimeout(SnackBarRef.dismiss.bind(SnackBarRef), 2000);
   }
   showTaskForm(task){
