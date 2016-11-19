@@ -28,9 +28,9 @@
   Logout</button>
 </span>
 <div class="root" *ngIf="tasksService.af.auth | async">
-<h3 class="labels">My Agendas
+<h3 class="labels">Add New Agenda
   <!-- Add newAgenda button -->
-  <button md-mini-fab color="primary" title="Add new Agenda"
+  <button md-mini-fab color="primary" title="Add New Agenda"
   (click)="agendasList.addNewAgenda(); SnackBar.showSnackBar('New Agenda added.')">
   <md-icon class="md-24">add</md-icon></button></h3>
 <agendas-list></agendas-list>

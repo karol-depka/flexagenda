@@ -4,18 +4,22 @@
 body {
   /*border: solid; /* just to see what the visible width is */
 }
+
 div.root {
   padding: .3em 0;
   border-radius: 8px;
   background-color: #CFD8DC !important;
   }
-  h2.labels, .root  {
+
+h2.labels, .root  {
     animation: Initiation 2s;
   }
-  #TaskFromButton  {
+
+#TaskFromButton  {
     animation: MyAnimation 4s;
   }
-  @keyframes Initiation {
+
+@keyframes Initiation {
     0% {
       opacity: 0;
     }
@@ -23,18 +27,21 @@ div.root {
       opacity: 1;
     }
   }
-h1 {
-  color: #369;
-  font-family: Arial, Helvetica, sans-serif;
 
+h1 {
+  color: saddlebrown;
+  font-family: Arial, Helvetica, sans-serif;
 }
+
 h2, h3 {
-  color: #369;
+  color: saddlebrown;
   font-family: Arial, Helvetica, sans-serif;
   }
+
 .labels {
   text-align: center;
 }
+
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

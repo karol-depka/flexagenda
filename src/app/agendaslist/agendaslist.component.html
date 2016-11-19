@@ -24,7 +24,7 @@
                                              'startTime',
                                              agendaStartTime.value);
                   snackBar.showSnackBar('Agenda updated.')"/>
-      <input #agendaTitle type="text" value="{{agenda.title}}"
+      <input #agendaTitle class="agenda-title" type="text" value="{{agenda.title}}"
       (change) = "tasksService.updateObject('agenda',
                                              agenda.$key,
                                              'title',

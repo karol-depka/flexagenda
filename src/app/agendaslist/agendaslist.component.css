@@ -1,33 +1,37 @@
 ul {
   list-style-type: none;
-  color: white;
+  color: #a06c2c;
   font-family: Arial, Helvetica, sans-serif;
 }
+
 li {
   cursor: pointer;
   position: relative;
-  background-color: #33691E;
+  background-color: #f4e7d7;
   margin: .5em;
   border-radius: 4px;
-
 }
-li:hover {
-  background-color: #9CCC65;
-  }
+
 input {
   background: transparent;
   border: none;
-  color: white;
-  padding: 0 0 0 0.7em;
+  color: #a06c2c;
+  padding: 0em;
   font-weight: bold;
   font-size: 130%;
 }
 .agendaStartTime {
   width:10%;
+  text-align: center;
 }
 .agendaTitle {
   width:60%;
   text-align: center;
   font-weight: bold;
   font-size: 130%;
+}
+
+.agenda-title {
+  width: 70%;
+  text-align: left;
 }
