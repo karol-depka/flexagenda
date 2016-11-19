@@ -18,7 +18,7 @@
       <button md-icon-button color="accent" class="trash"
       (click)="confirmAgendaDelete(agenda.$key, 'Agenda deleted')">
       <md-icon>delete</md-icon></button>Start time:
-      <input #agendaStartTime type="text" value="{{agenda.startTime}}"
+      <input #agendaStartTime type="time" value="{{agenda.startTime}}"
       (change) = "tasksService.updateObject('agenda',
                                              agenda.$key,
                                              'startTime',

@@ -167,7 +167,7 @@ export class TasksService {
   }
 
   updateObject(object,key,updateKey,updateValue, type): void {
-  //console.log(update);
+  console.log(updateValue);
   if (type == 'number' && updateValue < 1) return
   else if (type == 'number') updateValue = Number(updateValue)
   switch (object) {
