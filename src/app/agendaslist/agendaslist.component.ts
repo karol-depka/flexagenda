@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
+import { Router }   from '@angular/router';
 import { TasksListComponent } from '../taskslist/taskslist.component';
 import { TasksService } from '../shared/tasks.service';
 import { SnackBarComponent } from '../shared/snackbar/snackbar.component';
@@ -18,7 +19,8 @@ export class AgendasListComponent implements OnInit {
 
   constructor( public tasksService: TasksService,
     public dialog: MdDialog,
-    public snackBar: SnackBarComponent
+    public snackBar: SnackBarComponent,
+    private router: Router,
    ) { }
 
   ngOnInit(): void {
@@ -89,4 +91,7 @@ export class AgendasListComponent implements OnInit {
     });
     return message
   }
+  gotoAgenda(agendaKey): void {
+    this.router.navigate(['/agenda',agendaKey]);
+  }  
 }

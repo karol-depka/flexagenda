@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
+import { RouterModule }   from '@angular/router';
 import {
   AngularFireModule,
   AngularFire,
@@ -14,6 +15,7 @@ import { AgendasListComponent } from './agendaslist/agendaslist.component';
 import { TasksListComponent } from './taskslist/taskslist.component';
 import { SnackBarComponent } from './shared/snackbar/snackbar.component';
 import { ConfirmationDialog } from './shared/confirmationdialog/confirmationdialog.component';
+import { AgendaComponent } from './agenda/agenda.component';
 
 export const firebaseConfig ={
   apiKey: "AIzaSyBughsAzc9KLbFFGeJxrRlGVh4tvm82r-E",
@@ -34,7 +36,8 @@ const firebaseAuthConfig = {
     AgendasListComponent,
     TasksListComponent,
     SnackBarComponent,
-    ConfirmationDialog
+    ConfirmationDialog,
+    AgendaComponent
   ],
   entryComponents: [
    ConfirmationDialog
@@ -43,7 +46,17 @@ const firebaseAuthConfig = {
     BrowserModule,
     HttpModule,
     MaterialModule.forRoot(),
-    AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig)
+    AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig),
+    RouterModule.forRoot([
+      {
+        path: 'agendas-list',
+        component: AgendasListComponent        
+      },      
+      {
+        path: 'agenda/:agendaKey',
+        component: AgendaComponent
+      }
+    ])
   ],
   providers: [],
   bootstrap: [AppComponent]
