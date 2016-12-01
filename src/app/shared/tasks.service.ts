@@ -25,6 +25,11 @@ export class TasksService {
   public getAgendas(): FirebaseListObservable<any[]> {
     return this.AGENDAS;
   }
+  public getAgenda(agendaKey): FirebaseObjectObservable<any[]> {
+    var agenda: FirebaseObjectObservable<any[]>;
+    agenda = this.af.database.object('/agendas/'+agendaKey);
+    return agenda
+  }
 
   public addNewTask(agendaKey, task, isFirst) {
     /*

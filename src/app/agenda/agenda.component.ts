@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { MdDialog, MdDialogRef } from '@angular/material';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
+
+import { TasksListComponent } from '../taskslist/taskslist.component';
+import { TasksService } from '../shared/tasks.service';
+import { SnackBarComponent } from '../shared/snackbar/snackbar.component';
+import { ConfirmationDialog } from '../shared/confirmationdialog/confirmationdialog.component';
 
 
 @Component({
@@ -9,12 +15,22 @@ import 'rxjs/add/operator/switchMap';
   styleUrls: ['./agenda.component.css']
 })
 export class AgendaComponent implements OnInit {
-  agendaKey: string = this.route.snapshot.params['agendaKey']; 
+  agendaKey: string = this._route.snapshot.params['agendaKey'];
+  agenda; 
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private _route: ActivatedRoute,
+    private _tasksService: TasksService,
+    public dialog: MdDialog,
+    public snackBar: SnackBarComponent) { }
 
-  ngOnInit() {
-    console.log(this.agendaKey);
+  ngOnInit(): void {
+    this.getAgenda();
+    var d = new Date();
+    console.log(d.getHours()+":"+d.getMinutes());
+  }
+
+  getAgenda(): void {
+    this.agenda=this._tasksService.getAgenda(this.agendaKey);
   }
 
 }
