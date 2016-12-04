@@ -46,16 +46,14 @@ export class TasksListComponent implements OnInit {
               public dialog: MdDialog,
               public snackBar: SnackBarComponent) {}
 
-  getTasks(): void {
-    if(this.activeAgenda) {
-    this.tasks = this.tasksService.getTasks(this.agendaKey);
-  }
-  }
   ngOnInit(): void {
     this.getTasks();
     this.calculateStartTimes();
-    //this.calculateSeconds();
   }
+
+  getTasks(): void {
+    if(this.activeAgenda) { this.tasks = this.tasksService.getTasks(this.agendaKey); }
+  }  
   calculateStartTimes(): void {
     this.tasks.subscribe(tasks =>{
       this.tasksStartTimes = [];

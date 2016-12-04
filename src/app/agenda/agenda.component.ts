@@ -16,17 +16,17 @@ import { ConfirmationDialog } from '../shared/confirmationdialog/confirmationdia
 })
 export class AgendaComponent implements OnInit {
   agendaKey: string = this._route.snapshot.params['agendaKey'];
-  agenda; 
-
+  agenda;
+  
   constructor(private _route: ActivatedRoute,
     private _tasksService: TasksService,
     public dialog: MdDialog,
     public snackBar: SnackBarComponent) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
     this.getAgenda();
     var d = new Date();
-    console.log(d.getHours()+":"+d.getMinutes());
+    //console.log(d.getHours()+":"+d.getMinutes()); 
   }
 
   getAgenda(): void {

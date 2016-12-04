@@ -53,7 +53,7 @@ const firebaseAuthConfig = {
         component: AgendasListComponent        
       },      
       {
-        path: 'agenda/:agendaKey',
+        path: 'agendas/:agendaKey',
         component: AgendaComponent
       }
     ])

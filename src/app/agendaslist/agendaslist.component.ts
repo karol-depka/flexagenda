@@ -92,6 +92,6 @@ export class AgendasListComponent implements OnInit {
     return message
   }
   gotoAgenda(agendaKey): void {
-    this.router.navigate(['/agenda',agendaKey]);
+    this.router.navigate(['/agendas',agendaKey]);
   }  
 }
