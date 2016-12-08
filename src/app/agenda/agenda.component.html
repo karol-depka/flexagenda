@@ -2,13 +2,13 @@
       <!--<button md-icon-button color="accent" class="trash"
       (click)="confirmAgendaDelete(agenda.$key, 'Agenda deleted')">
       <md-icon>delete</md-icon></button>-->Start time:
-      <input #agendaStartTime type="time" value="{{(agenda | async)?.startTime}}"
+      <input #agendaStartTime id="agendaStartTime" type="time" value="{{(agenda | async)?.startTime}}"
       (change) = "tasksService.updateObject('agenda',
                                              agenda.$key,
                                              'startTime',
                                              agendaStartTime.value);
                   snackBar.showSnackBar('Agenda updated.')"/>
-      <input #agendaTitle class="agenda-title" type="text" value="{{(agenda | async)?.title}}"
+      <input #agendaTitle id="agendaTitle" class="agenda-title" type="text" value="{{(agenda | async)?.title}}"
       (change) = "tasksService.updateObject('agenda',
                                              agenda.$key,
                                              'title',

@@ -17,17 +17,17 @@
     (keyup.enter)="tasksService.login(uEmail.value,uPassword.value)">
   </md-input>
   <br />
-  <button md-raised-button color="primary"
+  <button id="login" md-raised-button color="primary"
   (click)="tasksService.login(uEmail.value,uPassword.value)">
   Login</button>
 </span>
 </div>
 <span *ngIf="tasksService.af.auth | async">Logged in as {{(tasksService.af.auth | async).auth.email}}
-  <button md-raised-button color="primary"
+  <button id="logout" md-raised-button color="primary"
   (click)="tasksService.logOut()">
   Logout</button>
 </span>
 <div class="root" *ngIf="tasksService.af.auth | async">
-<a [routerLink]="['/agendas-list']">Agendas List</a>
+<a [routerLink]="['/agendas-list']" id="agendasListShow">Agendas List</a>
 <router-outlet ></router-outlet>  
 </div>
