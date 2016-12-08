@@ -27,7 +27,6 @@
   (click)="tasksService.logOut()">
   Logout</button>
 </span>
-<div class="root" *ngIf="tasksService.af.auth | async">
-<a [routerLink]="['/agendas-list']" id="agendasListShow">Agendas List</a>
+<div class="root">
 <router-outlet ></router-outlet>  
 </div>

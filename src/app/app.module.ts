@@ -10,12 +10,14 @@ import {
   AuthProviders} from 'angularfire2';
 
 import { AppComponent } from './app.component';
-import { TaskFormComponent } from './taskform.component';
+import { TestComponent } from './test.component';
 import { AgendasListComponent } from './agendaslist/agendaslist.component';
 import { TasksListComponent } from './taskslist/taskslist.component';
 import { SnackBarComponent } from './shared/snackbar/snackbar.component';
 import { ConfirmationDialog } from './shared/confirmationdialog/confirmationdialog.component';
 import { AgendaComponent } from './agenda/agenda.component';
+import { RouterGuardService } from './shared/router-guard.service';
+import { TasksService } from './shared/tasks.service';
 
 export const firebaseConfig ={
   apiKey: "AIzaSyBughsAzc9KLbFFGeJxrRlGVh4tvm82r-E",
@@ -32,7 +34,7 @@ const firebaseAuthConfig = {
 @NgModule({
   declarations: [
     AppComponent,
-    TaskFormComponent,
+    TestComponent,
     AgendasListComponent,
     TasksListComponent,
     SnackBarComponent,
@@ -49,8 +51,9 @@ const firebaseAuthConfig = {
     AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig),
     RouterModule.forRoot([
       {
-        path: 'agendas-list',
-        component: AgendasListComponent        
+        path: '',
+        component: AgendasListComponent,
+        canActivate:[RouterGuardService]       
       },      
       {
         path: 'agendas/:agendaKey',
@@ -58,7 +61,7 @@ const firebaseAuthConfig = {
       }
     ])
   ],
-  providers: [],
+  providers: [RouterGuardService, TasksService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
