@@ -1,18 +1,24 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot } from '@angular/router';
-import { TasksService } from './tasks.service';
+import { CanActivate, Router } from '@angular/router';
+import { FirebaseAuth, FirebaseAuthState } from 'angularfire2';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/take';
 
 @Injectable()
 export class RouterGuardService implements CanActivate {
 
-  constructor (private tasksService: TasksService) {
-  }
+  constructor (private auth: FirebaseAuth,
+               private router: Router) {}
 
-  canActivate() {
-    console.log('AuthGuard#canActivate called');
-    return (this.tasksService.af.auth ? true : false) 
+  canActivate(): Observable<boolean> {
+    return this.auth
+      .take(1)
+      .map((authState: FirebaseAuthState) => !!authState)
+      .do(authenticated => {
+        if (!authenticated) {
+          console.log("Not authenticated!");
+          this.router.navigate(['/'])}; //login page
+      });
   }
 
 }

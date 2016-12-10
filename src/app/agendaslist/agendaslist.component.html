@@ -1,8 +1,9 @@
+<div class="root">
 <h3 class="labels">Add New Agenda
-  <!-- Add newAgenda button -->
-  <button id="agendaAddNew" md-mini-fab color="primary" title="Add New Agenda"
-  (click)="this.addNewAgenda(); snackBar.showSnackBar('New Agenda added.')">
-  <md-icon class="md-24">add</md-icon></button></h3>
+<!-- Add newAgenda button -->
+<button id="agendaAddNew" md-mini-fab color="primary" title="Add New Agenda"
+(click)="this.addNewAgenda(); snackBar.showSnackBar('New Agenda added.')">
+<md-icon class="md-24">add</md-icon></button></h3>
 <ul #agendasList>
      <!-- each agenda goes here -->
     <li *ngFor="let agenda of agendas | async;">
@@ -44,4 +45,5 @@
 <tasks-list *ngIf="agenda.active==true"
 [agendaKey]='agenda.$key' [activeAgenda]='agenda.active' [agendaStartTime]='agenda.startTime'></tasks-list>
 </li>
-<ul>
+</ul>
+</div>

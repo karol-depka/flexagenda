@@ -52,7 +52,7 @@ const firebaseAuthConfig = {
     AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig),
     RouterModule.forRoot([
       {
-        path: '',
+        path: 'agendas',
         component: AgendasListComponent,
         canActivate:[RouterGuardService]       
       },      
@@ -60,7 +60,12 @@ const firebaseAuthConfig = {
         path: 'agendas/:agendaKey',
         component: AgendaComponent,
         canActivate:[RouterGuardService]
-      }
+      },
+      {
+        path: 'test', //this route is just for tests
+        component: TestComponent,
+        canActivate:[RouterGuardService]       
+      },      
     ])
   ],
   providers: [AuthService, RouterGuardService, TasksService],

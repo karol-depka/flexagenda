@@ -12,11 +12,20 @@ export class AuthService {
     this.af.auth.login({
       email: uEmail,
       password: uPassword,});
-    console.log("Logged in as: "+uEmail);
+    this.af.auth.subscribe(user=>{
+      console.log("Logged in as: "+uEmail);
+      if(user) this.router.navigate(['/agendas']) //agendas list
+    })
+    
   }
   logOut() {
     this.af.auth.logout();
     console.log("Logged out");
+    this.router.navigate(['/']); //login page
+  }
+  test() {
+    this.router.navigate(['/test']);
+    console.log("test");
   }
 
 }
