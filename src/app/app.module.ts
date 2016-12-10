@@ -16,6 +16,7 @@ import { TasksListComponent } from './taskslist/taskslist.component';
 import { SnackBarComponent } from './shared/snackbar/snackbar.component';
 import { ConfirmationDialog } from './shared/confirmationdialog/confirmationdialog.component';
 import { AgendaComponent } from './agenda/agenda.component';
+import { AuthService } from './shared/auth.service';
 import { RouterGuardService } from './shared/router-guard.service';
 import { TasksService } from './shared/tasks.service';
 
@@ -57,11 +58,12 @@ const firebaseAuthConfig = {
       },      
       {
         path: 'agendas/:agendaKey',
-        component: AgendaComponent
+        component: AgendaComponent,
+        canActivate:[RouterGuardService]
       }
     ])
   ],
-  providers: [RouterGuardService, TasksService],
+  providers: [AuthService, RouterGuardService, TasksService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

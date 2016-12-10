@@ -1,11 +1,11 @@
 <h2 class="labels">{{title}}</h2>
-<div *ngIf="!(tasksService.af.auth | async)">
+<div *ngIf="!(authService.af.auth | async)">
 <span>
   <md-icon>email</md-icon>
   <md-input required #uEmail
     placeholder="Email"
     type="email"
-    (keyup.enter)="tasksService.login(uEmail.value,uPassword.value)">
+    (keyup.enter)="authService.login(uEmail.value,uPassword.value)">
   </md-input>
 </span>
 <br />
@@ -14,19 +14,17 @@
   <md-input required #uPassword
     placeholder="Password"
     type="password"
-    (keyup.enter)="tasksService.login(uEmail.value,uPassword.value)">
+    (keyup.enter)="authService.login(uEmail.value,uPassword.value)">
   </md-input>
   <br />
   <button id="login" md-raised-button color="primary"
-  (click)="tasksService.login(uEmail.value,uPassword.value)">
+  (click)="authService.login(uEmail.value,uPassword.value)">
   Login</button>
 </span>
 </div>
-<span *ngIf="tasksService.af.auth | async">Logged in as {{(tasksService.af.auth | async).auth.email}}
+<span *ngIf="authService.af.auth | async">Logged in as {{(authService.af.auth | async).auth.email}}
   <button id="logout" md-raised-button color="primary"
-  (click)="tasksService.logOut()">
+  (click)="authService.logOut()">
   Logout</button>
 </span>
-<div class="root">
 <router-outlet ></router-outlet>  
-</div>
