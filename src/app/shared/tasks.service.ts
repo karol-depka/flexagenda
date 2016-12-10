@@ -161,31 +161,22 @@ export class TasksService {
     //console.log(Promise.resolve(this.TasksCount));
     return this.TasksCount
   }
-  login(uEmail,uPassword) {;
-    this.af.auth.login({
-      email: uEmail,
-      password: uPassword,});
-  }
-  logOut() {
-    this.af.auth.logout();
-    this.af.auth.subscribe(auth => console.log(auth));
-  }
 
   updateObject(object,key,updateKey,updateValue, type): void {
-  console.log(updateValue);
-  if (type == 'number' && updateValue < 1) return
-  else if (type == 'number') updateValue = Number(updateValue)
-  switch (object) {
-    case 'task':
-        this.TASKS.update(key,{[updateKey]:updateValue}).then(_ => console.log('Task updated!'));
-        break;
-    case 'agenda':
-        this.AGENDAS.update(key,{[updateKey]:updateValue}).then(_ => console.log('Agenda updated!'));
-        break;
-}
-}
-addZero(input): string {
-  return input<10 ? ("0"+input) : input
-}
+    console.log(updateValue);
+    if (type == 'number' && updateValue < 1) return
+    else if (type == 'number') updateValue = Number(updateValue)
+    switch (object) {
+      case 'task':
+          this.TASKS.update(key,{[updateKey]:updateValue}).then(_ => console.log('Task updated!'));
+          break;
+      case 'agenda':
+          this.AGENDAS.update(key,{[updateKey]:updateValue}).then(_ => console.log('Agenda updated!'));
+          break;
+    }
+  }
+  addZero(input): string {
+    return input<10 ? ("0"+input) : input
+  }
 
 }
