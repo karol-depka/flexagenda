@@ -19,6 +19,7 @@ import { AgendaComponent } from './agenda/agenda.component';
 import { AuthService } from './shared/auth.service';
 import { RouterGuardService } from './shared/router-guard.service';
 import { TasksService } from './shared/tasks.service';
+import { LoginComponent } from './shared/login/login.component';
 
 export const firebaseConfig ={
   apiKey: "AIzaSyBughsAzc9KLbFFGeJxrRlGVh4tvm82r-E",
@@ -40,7 +41,8 @@ const firebaseAuthConfig = {
     TasksListComponent,
     SnackBarComponent,
     ConfirmationDialog,
-    AgendaComponent
+    AgendaComponent,
+    LoginComponent
   ],
   entryComponents: [
    ConfirmationDialog
@@ -52,19 +54,30 @@ const firebaseAuthConfig = {
     AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig),
     RouterModule.forRoot([
       {
+        path: '',
+        redirectTo: 'agendas',
+        pathMatch: 'full',
+        canActivate:[ RouterGuardService ]
+      },       
+      {
         path: 'agendas',
         component: AgendasListComponent,
-        canActivate:[RouterGuardService]       
+        canActivate:[ RouterGuardService ]       
       },      
       {
         path: 'agendas/:agendaKey',
         component: AgendaComponent,
-        canActivate:[RouterGuardService]
+        canActivate:[ RouterGuardService ]
       },
+      {
+        path: 'login', //this route is just for tests
+        component: LoginComponent,
+        canActivate:[ RouterGuardService ]       
+      },      
       {
         path: 'test', //this route is just for tests
         component: TestComponent,
-        canActivate:[RouterGuardService]       
+        canActivate:[ RouterGuardService ]       
       },      
     ])
   ],
