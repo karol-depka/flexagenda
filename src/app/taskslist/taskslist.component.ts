@@ -78,6 +78,20 @@ export class TasksListComponent implements OnInit {
     this.selectedTask = null;
     this.direction="out";
   }
+  updateObject(key,property,value,type, message): void {
+    this.tasksService.updateObject('task', key, property, value, type);
+    if (message != null) this.snackBar.showSnackBar(message);    
+  }
+  addNewTask(agendaKey, task, isFirst): void {
+    this.tasksService.addNewTask(agendaKey, task, isFirst);
+    this.snackBar.showSnackBar('New task added');
+  }
+  reorderTasks(agendaKey, task, direction): void {
+    this.tasksService.reorderTasks(agendaKey, task, direction);
+    this.snackBar.showSnackBar('Tasks reordered.')
+  }
+  
+
   public confirmTaskDelete(taskKey, message): string {
     /*
     This function opens 'confirmationdialog' for agenda removal
@@ -89,7 +103,7 @@ export class TasksListComponent implements OnInit {
     this.dialogRef.afterClosed().subscribe(result => {
       console.log(result);
       if (result) { this.deleteTask(taskKey);
-      this.snackBar.showSnackBar('Task deleted')
+      this.snackBar.showSnackBar('Task deleted.')
      }
       else { console.log('Task '+taskKey+' not deleted.') }
       this.dialogRef = null;

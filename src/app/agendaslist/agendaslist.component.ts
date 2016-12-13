@@ -55,6 +55,7 @@ export class AgendasListComponent implements OnInit {
       startTime:this.now()
     }).key;
     console.log('In agenda: '+newAgendaKey);
+    this.snackBar.showSnackBar('New Agenda added.')
     var newAgenda = this.tasksService.af.database.list('/agenda_tasks/'+newAgendaKey);
     newTaskKey = newAgenda.push({
       order:1,
@@ -93,5 +94,9 @@ export class AgendasListComponent implements OnInit {
   }
   gotoAgenda(agendaKey): void {
     this.router.navigate(['/agendas',agendaKey]);
+  }
+  updateObject(key,property,value,message): void {
+    this.tasksService.updateObject('agenda',key,property,value, 'string')
+    if (message != null) this.snackBar.showSnackBar(message);
   }  
 }

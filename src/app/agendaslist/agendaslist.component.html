@@ -2,7 +2,7 @@
 <h3 class="labels">Add New Agenda
 <!-- Add newAgenda button -->
 <button id="agendaAddNew" md-mini-fab color="primary" title="Add New Agenda"
-(click)="this.addNewAgenda(); snackBar.showSnackBar('New Agenda added.')">
+(click)="addNewAgenda()">
 <md-icon class="md-24">add</md-icon></button></h3>
 <ul #agendasList>
      <!-- each agenda goes here -->
@@ -10,34 +10,30 @@
       <button *ngIf="!agenda.active"
       id="agendaShow"
       md-icon-button color="accent"
-      (click) = "tasksService.updateObject('agenda',
-                                             agenda.$key,
-                                             'active',
-                                             true);">
+      (click) = "updateObject(agenda.$key,
+                              'active',
+                              true);">
       <md-icon>list</md-icon></button>
       <button *ngIf="agenda.active"
       id="agendaHide"
       md-icon-button color="accent"
-      (click) = "tasksService.updateObject('agenda',
-                                             agenda.$key,
-                                             'active',
-                                             false);">
+      (click) = "updateObject(agenda.$key,
+                              'active',
+                              false)">
       <md-icon>undo</md-icon></button>
       <button id="agendaDelete" md-icon-button color="accent" class="trash"
       (click)="confirmAgendaDelete(agenda.$key, 'Agenda deleted')">
       <md-icon>delete</md-icon></button>Start time:
       <input #agendaStartTime id="agendaStartTime" type="time" value="{{agenda.startTime}}"
-      (change) = "tasksService.updateObject('agenda',
-                                             agenda.$key,
-                                             'startTime',
-                                             agendaStartTime.value);
-                  snackBar.showSnackBar('Agenda updated.')"/>
+      (change) = "updateObject(agenda.$key,
+                               'startTime',
+                               agendaStartTime.value,
+                               'Agenda updated.')"/>
       <input #agendaTitle id="agendaTitle" class="agenda-title" type="text" value="{{agenda.title}}"
-      (change) = "tasksService.updateObject('agenda',
-                                             agenda.$key,
-                                             'title',
-                                             agendaTitle.value);
-                  snackBar.showSnackBar('Agenda updated.')"/>
+      (change) = "updateObject(agenda.$key,
+                               'title',
+                               agendaTitle.value,
+                               'Agenda updated.')"/>
 <!-- Button opens specific agenda with URL-->
 <button md-mini-fab color="primary" title="Open Agenda"
   (click)="gotoAgenda(agenda.$key)">
