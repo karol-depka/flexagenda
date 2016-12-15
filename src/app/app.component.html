@@ -22,6 +22,11 @@
   Login</button>
 </span>
 </div>
+<button *ngIf="authService.af.auth | async"
+      id="home"
+      md-icon-button color="primary"
+      (click) = "authService.router.navigate(['/'])">
+      <md-icon>home</md-icon></button>
 <span *ngIf="authService.af.auth | async">Logged in as {{(authService.af.auth | async).auth.email}}
   <button id="logout" md-raised-button color="primary"
   (click)="authService.logOut()">
