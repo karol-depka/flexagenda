@@ -70,13 +70,12 @@ const firebaseAuthConfig = {
         canActivate:[ RouterGuardService ]
       },
       {
-        path: 'login', //this route is just for tests
-        component: LoginComponent,
-        canActivate:[ RouterGuardService ]       
+        path: 'login',
+        component: LoginComponent
       },      
       {
-        path: 'test', //this route is just for tests
-        component: TestComponent,
+        path: '**', //
+        redirectTo: '',
         canActivate:[ RouterGuardService ]       
       },      
     ])
