@@ -12,19 +12,21 @@ export class RouterGuardService implements CanActivate {
                private auth: FirebaseAuth,
                private router: Router) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     let url: string = state.url;
-    console.log("Original URL: "+url);
-    return this.checkLogin(url);
-  }
-  checkLogin(url: string): boolean {
     this.authService.redirectUrl = url;
-    if (this.authService.isLoggedIn) {
-      console.log(this.authService.isLoggedIn) ;
-      //this.router.navigate([url]);
-      return true; }
-    // Navigate to the login page with extras
-    return false;
+    console.log("Original URL: "+url);
+    return this.isLoggedIn();
+  }
+  isLoggedIn(): Observable<boolean> {
+    return this.auth
+      .take(1)
+      .map((authState: FirebaseAuthState) => !!authState)
+      .do(authenticated => {
+        if (!authenticated) {
+          console.log("Not authenticated!");
+          this.router.navigate(['/login'])}; //login page
+      })
   }
 
 }
