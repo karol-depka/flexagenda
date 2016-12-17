@@ -49,6 +49,7 @@ export class TasksListComponent implements OnInit {
   ngOnInit(): void {
     this.getTasks();
     this.calculateStartTimes();
+    console.log("AgendaStartTime: "+this.agendaStartTime);    
   }
 
   getTasks(): void {

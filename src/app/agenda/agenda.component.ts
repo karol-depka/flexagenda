@@ -26,6 +26,7 @@ export class AgendaComponent implements OnInit {
   ngOnInit(): void { 
     this.getAgenda();
     var d = new Date();
+    console.log("Agenda: "+this.agendaKey);
     //console.log(d.getHours()+":"+d.getMinutes()); 
   }
 

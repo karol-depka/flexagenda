@@ -14,5 +14,6 @@
                                              'title',
                                              agendaTitle.value);
                   snackBar.showSnackBar('Agenda updated.')"/>         
-      <tasks-list [agendaKey]='this.agendaKey' [activeAgenda]='true' [agendaStartTime]='(agenda | async)?.startTime'></tasks-list>
+      <tasks-list *ngIf='agenda | async' [agendaKey]='this.agendaKey'
+       [activeAgenda]='true' [agendaStartTime]='(agenda | async)?.startTime'></tasks-list>
 </div>
