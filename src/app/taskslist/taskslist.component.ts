@@ -49,12 +49,13 @@ export class TasksListComponent implements OnInit {
   ngOnInit(): void {
     this.getTasks();
     this.calculateStartTimes();
-    console.log("AgendaStartTime: "+this.agendaStartTime);    
+    console.log("AgendaStartTime: " + this.agendaStartTime);    
   }
 
   getTasks(): void {
     if(this.activeAgenda) { this.tasks = this.tasksService.getTasks(this.agendaKey); }
   }  
+
   calculateStartTimes(): void {
     this.tasks.subscribe(tasks =>{
       this.tasksStartTimes = [];
@@ -66,23 +67,27 @@ export class TasksListComponent implements OnInit {
     )
     });
   }
+
   calculateDuration(minutesToAdd=10, previousTime='02:04'): string {
     var temp = previousTime.split(':'); // split it at the colons
     var d = new Date();
     d.setHours(+temp[0]);
     d.setMinutes(+temp[1]+minutesToAdd);
     var newDuration = this.tasksService.addZero(d.getHours())+":"+this.tasksService.addZero(d.getMinutes());
-    return newDuration
+    return newDuration 
   }
+
   deleteTask(taskKey): void {
-    this.tasks.remove(taskKey).then(_ => console.log('Task '+taskKey+' deleted!'));
+    this.tasks.remove(taskKey).then(_ => console.log('Task ' + taskKey + ' deleted!'));
     this.selectedTask = null;
     this.direction="out";
   }
+
   updateObject(key,property,value,type, message): void {
     this.tasksService.updateObject('task', key, property, value, type);
     if (message != null) this.snackBar.showSnackBar(message);    
   }
+
   addNewTask(agendaKey, task, isFirst): void {
     this.tasksService.addNewTask(agendaKey, task, isFirst);
     this.snackBar.showSnackBar('New task added');
