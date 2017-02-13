@@ -111,7 +111,7 @@ export class TasksListComponent implements OnInit {
       if (result) { this.deleteTask(taskKey);
       this.snackBar.showSnackBar('Task deleted.')
      }
-      else { console.log('Task '+taskKey+' not deleted.') }
+      else { console.log('Task ' + taskKey + ' not deleted!') }
       this.dialogRef = null;
 
     });
