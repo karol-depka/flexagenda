@@ -112,4 +112,8 @@ export class TasksListComponent implements OnInit {
     });
     return message
   }
+
+  trackById(index: number, item) {
+    return item.$key
+  }
 }
