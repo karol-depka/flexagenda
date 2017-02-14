@@ -17,21 +17,29 @@ import { ConfirmationDialog } from '../shared/confirmationdialog/confirmationdia
 export class AgendaComponent implements OnInit {
   agendaKey: string = this._route.snapshot.params['agendaKey'];
   agenda;
-  
-  constructor(private _route: ActivatedRoute,
-    private _tasksService: TasksService,
-    public dialog: MdDialog,
-    public snackBar: SnackBarComponent) { }
 
-  ngOnInit(): void { 
+  constructor(private _route: ActivatedRoute,
+              private _tasksService: TasksService,
+              public dialog: MdDialog,
+              public snackBar: SnackBarComponent) {
+  }
+
+  ngOnInit(): void {
     this.getAgenda();
     var d = new Date();
-    console.log("Agenda: "+this.agendaKey);
-    //console.log(d.getHours()+":"+d.getMinutes()); 
+    console.log("Agenda: " + this.agendaKey);
+    //console.log(d.getHours()+":"+d.getMinutes());
   }
 
   getAgenda(): void {
-    this.agenda=this._tasksService.getAgenda(this.agendaKey);
+    this.agenda = this._tasksService.getAgenda(this.agendaKey);
   }
 
+  setStartTimeToNow(): void {
+    var timeNow = this._tasksService.now();
+    console.log("agenda key: " + this.agendaKey);
+
+    this._tasksService.updateObject('agenda', this.agendaKey, 'startTime', timeNow, 'string');
+    this.snackBar.showSnackBar('Agenda updated.')
+  }
 }

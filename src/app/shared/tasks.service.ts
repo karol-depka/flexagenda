@@ -16,6 +16,7 @@ export class TasksService {
   public getTasks(): FirebaseListObservable<any[]> {
     return this.TASKS;
   }*/
+
   public getTasks(agendaKey): FirebaseListObservable<any[]> {
   this.TASKS = this.af.database.list('/agenda_tasks/'+agendaKey,
     {query: {orderByChild: 'order'} });
@@ -25,6 +26,7 @@ export class TasksService {
   public getAgendas(): FirebaseListObservable<any[]> {
     return this.AGENDAS;
   }
+  
   public getAgenda(agendaKey): FirebaseObjectObservable<any[]> {
     var agenda: FirebaseObjectObservable<any[]>;
     agenda = this.af.database.object('/agendas/'+agendaKey);
@@ -163,7 +165,7 @@ export class TasksService {
   }
 
   updateObject(object,key,updateKey,updateValue, type): void {
-    console.log(updateValue);
+    console.log("updateObject: " + updateValue + ", object: " + object);
     if (type == 'number' && updateValue < 1) return
     else if (type == 'number') updateValue = Number(updateValue)
     switch (object) {
@@ -175,8 +177,16 @@ export class TasksService {
           break;
     }
   }
+  
+  now(): string {
+    var d = new Date();
+    var now = this.addZero(d.getHours())+":"+this.addZero(d.getMinutes())
+    console.log(now);
+    return now
+  }
+
+
   addZero(input): string {
     return input<10 ? ("0"+input) : input
   }
-
 }

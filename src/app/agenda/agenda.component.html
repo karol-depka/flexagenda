@@ -8,12 +8,14 @@
                                              'startTime',
                                              agendaStartTime.value);
                   snackBar.showSnackBar('Agenda updated.')"/>
+      <button md-raised-button color="primary"
+      (click) = "setStartTimeToNow()">Start Now</button>
       <input #agendaTitle id="agendaTitle" class="agenda-title" type="text" value="{{(agenda | async)?.title}}"
       (change) = "tasksService.updateObject('agenda',
                                              agenda.$key,
                                              'title',
                                              agendaTitle.value);
-                  snackBar.showSnackBar('Agenda updated.')"/>         
+                  snackBar.showSnackBar('Agenda updated.')"/>
       <tasks-list *ngIf='agenda | async' [agendaKey]='this.agendaKey'
-       [activeAgenda]='true' [agendaStartTime]='(agenda | async)?.startTime'></tasks-list>
+      [activeAgenda]='true' [agendaStartTime]='(agenda | async)?.startTime'></tasks-list>
 </div>
