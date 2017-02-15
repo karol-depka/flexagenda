@@ -110,4 +110,8 @@ export class TasksListComponent implements OnInit {
     this.tasksService.updateObject('task', key, property, value, type);
     if (message != null) this.snackBar.showSnackBar(message);
   }
+
+  trackById(index: number, item) {
+    return item.$key
+  }
 }

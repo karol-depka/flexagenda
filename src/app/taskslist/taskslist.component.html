@@ -9,8 +9,8 @@
     <li *ngFor="let task of tasks | async;
     let i = index;
     let isFirst = first;
-    let isLast = last;"
-    [ngClass]="{completed: task.completed}">
+    let isLast = last; trackBy: trackById"
+    [ngClass]="{completed: task.completed, 'task-animation': true}">
     <!--Add new task above BUTTON -->
     <button id="taskAddAbove" md-icon-button color="primary"
     (click)="addNewTask(this.agendaKey, task, isFirst)"
