@@ -36,7 +36,7 @@ export class AgendaComponent implements OnInit {
   }
 
   setStartTimeToNow(): void {
-    var timeNow = this._tasksService.now();
+    var timeNow = this._tasksService.timeNow();
     console.log("agenda key: " + this.agendaKey);
 
     this._tasksService.updateObject('agenda', this.agendaKey, 'startTime', timeNow, 'string');

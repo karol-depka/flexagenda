@@ -32,7 +32,7 @@ export class AgendasListComponent implements OnInit {
   getAgendas(): void {
     this.agendas=this.tasksService.getAgendas();
   }
-  
+
   public addNewAgenda() {
     /*
     This function adds newAgenda object to the database.
@@ -46,11 +46,11 @@ export class AgendasListComponent implements OnInit {
       title: "NEW AGENDA TITLE - click to edit",
       users: "",
       active: true,
-      startTime:this.tasksService.now()
+      startTime:this.tasksService.timeNow()
     }).key;
     console.log('In agenda: ' + newAgendaKey);
     this.snackBar.showSnackBar('New Agenda added.')
-    
+
     var newAgenda = this.tasksService.af.database.list('/agenda_tasks/'+newAgendaKey);
     newTaskKey = newAgenda.push({
       order:1,
@@ -62,7 +62,7 @@ export class AgendasListComponent implements OnInit {
     }).key;
     console.log('new task added: '+newTaskKey);
   }
-  
+
   public deleteAgenda(agendaKey): void {
     var agenda = this.tasksService.af.database.list('/agenda_tasks/');
     agenda.remove(agendaKey);

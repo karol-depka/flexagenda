@@ -12,6 +12,7 @@ import {
 import { AppComponent } from './app.component';
 import { TestComponent } from './test.component';
 import { AgendasListComponent } from './agendaslist/agendaslist.component';
+import { TaskDirective } from './task/task.directive';
 import { TasksListComponent } from './taskslist/taskslist.component';
 import { SnackBarComponent } from './shared/snackbar/snackbar.component';
 import { ConfirmationDialog } from './shared/confirmationdialog/confirmationdialog.component';
@@ -28,6 +29,7 @@ export const firebaseConfig ={
   storageBucket: "flexagenda-a532f.appspot.com",
   messagingSenderId: "825810762567"
 }
+
 const firebaseAuthConfig = {
   provider: AuthProviders.Password,
   method: AuthMethods.Password
@@ -38,6 +40,7 @@ const firebaseAuthConfig = {
     AppComponent,
     TestComponent,
     AgendasListComponent,
+    TaskDirective,
     TasksListComponent,
     SnackBarComponent,
     ConfirmationDialog,
@@ -58,12 +61,12 @@ const firebaseAuthConfig = {
         redirectTo: 'agendas',
         pathMatch: 'full',
         canActivate:[ RouterGuardService ]
-      },       
+      },
       {
         path: 'agendas',
         component: AgendasListComponent,
-        canActivate:[ RouterGuardService ]       
-      },      
+        canActivate:[ RouterGuardService ]
+      },
       {
         path: 'agendas/:agendaKey',
         component: AgendaComponent,
@@ -72,12 +75,12 @@ const firebaseAuthConfig = {
       {
         path: 'login',
         component: LoginComponent
-      },      
+      },
       {
         path: '**', //
         redirectTo: '',
-        canActivate:[ RouterGuardService ]       
-      },      
+        canActivate:[ RouterGuardService ]
+      },
     ])
   ],
   providers: [AuthService, RouterGuardService, TasksService],

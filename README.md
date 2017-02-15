@@ -1,4 +1,4 @@
-# Flexagenda
+# FlexAgenda
 
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.16.
 More cli options: [README_cli](https://github.com/karol-depka/flexagenda/blob/master/README_cli.md)

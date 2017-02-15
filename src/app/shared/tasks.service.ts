@@ -9,28 +9,33 @@ export class TasksService {
   AGENDAS: FirebaseListObservable<any[]>;
   taskOrder: FirebaseObjectObservable<any[]>;
   TasksCount: number;
+
   constructor(public af:AngularFire) {
     //this.af.auth.subscribe(auth => console.log(auth));
     this.AGENDAS = af.database.list('/agendas');
-  }/*
+  }
+
+  /*
   public getTasks(): FirebaseListObservable<any[]> {
     return this.TASKS;
   }*/
 
   public getTasks(agendaKey): FirebaseListObservable<any[]> {
-  this.TASKS = this.af.database.list('/agenda_tasks/'+agendaKey,
-    {query: {orderByChild: 'order'} });
-  return this.TASKS;
+    this.TASKS = this.af.database.list('/agenda_tasks/' + agendaKey,
+      {query: {orderByChild: 'order'} });
+
+    return this.TASKS;
   }
 
   public getAgendas(): FirebaseListObservable<any[]> {
     return this.AGENDAS;
   }
-  
+
   public getAgenda(agendaKey): FirebaseObjectObservable<any[]> {
     var agenda: FirebaseObjectObservable<any[]>;
-    agenda = this.af.database.object('/agendas/'+agendaKey);
-    return agenda
+    agenda = this.af.database.object('/agendas/' + agendaKey);
+
+    return agenda;
   }
 
   public addNewTask(agendaKey, task, isFirst) {
@@ -41,7 +46,7 @@ export class TasksService {
     with 'getNewTaskOrder' function.
     */
     var newOrder: number
-    task ? newOrder=this.getNewTaskOrder(agendaKey,task,isFirst) : newOrder=this.getTasksCount()+1
+    task ? newOrder=this.getNewTaskOrder(agendaKey,task,isFirst) : newOrder = this.getTasksCount()+1
     this.TASKS.push({
       order:newOrder,
       type:"general",
@@ -51,6 +56,7 @@ export class TasksService {
       completed:false
     });
   }
+
   public getNewTaskOrder(agendaKey, task, isFirst): any {
     /*
     This function prepares existing tasks to compare for 'calculateNewOrder' function.
@@ -62,7 +68,7 @@ export class TasksService {
     var taskOrder: FirebaseListObservable<any[]>;
     console.log(task.$key);
     if(isFirst) console.log(isFirst);
-    taskOrder = this.af.database.list('/agenda_tasks/'+agendaKey,
+    taskOrder = this.af.database.list('/agenda_tasks/' + agendaKey,
     { preserveSnapshot:true,
       query: {
         orderByChild: 'order',
@@ -70,15 +76,17 @@ export class TasksService {
         endAt: task.order
         }
      });
-     orderSubscription=taskOrder
-       .subscribe(tasks =>{
-        tasks.forEach(task=>
-          {{ordersArray.push(task.val().order)}
+     orderSubscription = taskOrder
+      .subscribe(tasks => {
+        tasks.forEach(task=> {
+          {ordersArray.push(task.val().order)}
           console.log(task.key)}
-       )
+        )
        });
+
        orderSubscription.unsubscribe();
-       return this.calculateNewTaskOrder(ordersArray,isFirst)
+
+       return this.calculateNewTaskOrder(ordersArray,isFirst);
   }
 
   public calculateNewTaskOrder(ordersArray, isFirst): number {
@@ -92,6 +100,7 @@ export class TasksService {
     isFirst ? newOrder=ordersArray[ordersArray.length-1]/2 : (
       newOrder=(ordersArray[ordersArray.length-1]+ordersArray[ordersArray.length-2])/2
     )
+
     return newOrder
   }
 
@@ -121,9 +130,11 @@ export class TasksService {
       dynQuery.limitToFirst = 2;
       dynQuery.startAt = task.order;
     }
+
     tasksList = this.af.database.list('/agenda_tasks/'+agendaKey,
-    { preserveSnapshot:true,query: dynQuery });
-          return tasksList
+      { preserveSnapshot: true, query: dynQuery });
+
+    return tasksList;
   }
 
   public reorderTasks(agendaKey, task, direction) {
@@ -136,6 +147,7 @@ export class TasksService {
     var updates = {};
 
     tasksList=this.reorderQuery(agendaKey, task, direction);
+
     orderSubscription=tasksList
       .subscribe(tasks =>{
         tasks.forEach(task=>
@@ -158,35 +170,41 @@ export class TasksService {
     //this.taskOrder.update(temp[0],{order:index+1}).then(_ => console.log(temp[0]+' task moved down!'));
     //this.taskOrder.update(temp[1],{order:index}).then(_ => console.log(temp[1]+' task moved up!'));
   }
+
   public getTasksCount(): number {
     this.TASKS.subscribe(tasks=>this.TasksCount=tasks.length);
     //console.log(Promise.resolve(this.TasksCount));
-    return this.TasksCount
-  }
 
-  updateObject(object,key,updateKey,updateValue, type): void {
-    console.log("updateObject: " + updateValue + ", object: " + object);
-    if (type == 'number' && updateValue < 1) return
-    else if (type == 'number') updateValue = Number(updateValue)
+    return this.TasksCount;
+  }
+  
+  updateObject(object, key, updateKey, updateValue, type): void {
+    if (type == 'number') updateValue = this.guardPositiveValue(updateValue,type);
+
     switch (object) {
       case 'task':
-          this.TASKS.update(key,{[updateKey]:updateValue}).then(_ => console.log('Task updated!'));
+          this.TASKS.update(key, {[updateKey]:updateValue}).then(_ => console.log('Task updated!'));
           break;
       case 'agenda':
-          this.AGENDAS.update(key,{[updateKey]:updateValue}).then(_ => console.log('Agenda updated!'));
+          this.AGENDAS.update(key, {[updateKey]:updateValue}).then(_ => console.log('Agenda updated!'));
           break;
     }
   }
-  
-  now(): string {
-    var d = new Date();
-    var now = this.addZero(d.getHours())+":"+this.addZero(d.getMinutes())
-    console.log(now);
-    return now
+
+  guardPositiveValue(value, type): Number {
+    if (value < 1) return;
+    else return Number(value);
   }
 
+  timeNow(): string {
+    var d = new Date();
+    var now = this.addZero(d.getHours()) + ":" + this.addZero(d.getMinutes());
+    console.log(now);
+
+    return now;
+  }
 
   addZero(input): string {
-    return input<10 ? ("0"+input) : input
+    return input < 10 ? ("0" + input) : input;
   }
 }
