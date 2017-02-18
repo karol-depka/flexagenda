@@ -1,6 +1,5 @@
 import { Component,
   OnInit,
-  OnChanges,
   trigger,
   state,
   animate,
@@ -9,11 +8,9 @@ import { Component,
   Input
  } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
-import { TasksService } from '../shared/tasks.service';
-import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { TasksService } from '../shared/tasks.service'
 import { SnackBarComponent } from '../shared/snackbar/snackbar.component';
 import { ConfirmationDialog } from '../shared/confirmationdialog/confirmationdialog.component';
-import { TaskDirective } from '../task/task.directive';
 
 @Component({
   selector: 'tasks-list',
@@ -31,7 +28,7 @@ import { TaskDirective } from '../task/task.directive';
       ])
     ])
   ],
-  providers: [TasksService, TaskDirective],
+  providers: [TasksService],
 })
 
 export class TasksListComponent implements OnInit {
@@ -46,13 +43,12 @@ export class TasksListComponent implements OnInit {
 
   constructor(public tasksService: TasksService,
               public dialog: MdDialog,
-              public snackBar: SnackBarComponent,
-              public task: TaskDirective) {}
+              public snackBar: SnackBarComponent) {}
 
   ngOnInit(): void {
     this.getTasks();
-    this.calculateStartTimes();
-    console.log("AgendaStartTime: " + this.agendaStartTime);   
+    // this.calculateStartTimes();
+    console.log("AgendaStartTime: " + this.agendaStartTime);
   }
 
   public confirmTaskDelete(taskKey, message): string {
@@ -74,10 +70,10 @@ export class TasksListComponent implements OnInit {
 
     return message
   }
-  
+
   getTasks(): void {
     if(this.activeAgenda) { this.tasks = this.tasksService.getTasks(this.agendaKey); }
-  }  
+  }
 
   addNewTask(agendaKey, task, isFirst): void {
     this.tasksService.addNewTask(agendaKey, task, isFirst);
@@ -87,7 +83,7 @@ export class TasksListComponent implements OnInit {
   deleteTask(taskKey): void {
     this.tasks.remove(taskKey).then(_ => console.log('Task ' + taskKey + ' deleted!'));
     this.selectedTask = null;
-    this.direction="out";
+    this.direction = "out";
   }
 
   reorderTasks(agendaKey, task, direction): void {
@@ -96,19 +92,14 @@ export class TasksListComponent implements OnInit {
   }
 
   calculateStartTimes(): void {
-    this.tasks.subscribe(tasks =>{
+    this.tasks.subscribe(tasks => {
       this.tasksStartTimes = [];
       this.tasksStartTimes.push(this.agendaStartTime);
-     tasks.forEach(task=>
-       {this.tasksStartTimes[this.tasksStartTimes.length] =
-         this.task.calculateDuration(task.duration, this.tasksStartTimes[this.tasksStartTimes.length-1])
-       })
+      tasks.forEach(task => {
+        this.tasksStartTimes[this.tasksStartTimes.length] =
+          task.calculateDuration(task.duration, this.tasksStartTimes[this.tasksStartTimes.length - 1])
+      })
     });
-  }
-
-  updateObject(key, property, value, type, message): void {
-    this.tasksService.updateObject('task', key, property, value, type);
-    if (message != null) this.snackBar.showSnackBar(message);
   }
 
   trackById(index: number, item) {

@@ -14,6 +14,7 @@ import { ConfirmationDialog } from '../shared/confirmationdialog/confirmationdia
   templateUrl: './agenda.component.html',
   styleUrls: ['./agenda.component.css']
 })
+
 export class AgendaComponent implements OnInit {
   agendaKey: string = this._route.snapshot.params['agendaKey'];
   agenda;

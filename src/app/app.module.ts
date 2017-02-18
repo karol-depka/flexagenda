@@ -12,7 +12,7 @@ import {
 import { AppComponent } from './app.component';
 import { TestComponent } from './test.component';
 import { AgendasListComponent } from './agendaslist/agendaslist.component';
-import { TaskDirective } from './task/task.directive';
+import { TaskComponent } from './task/task.component';
 import { TasksListComponent } from './taskslist/taskslist.component';
 import { SnackBarComponent } from './shared/snackbar/snackbar.component';
 import { ConfirmationDialog } from './shared/confirmationdialog/confirmationdialog.component';
@@ -23,11 +23,11 @@ import { TasksService } from './shared/tasks.service';
 import { LoginComponent } from './shared/login/login.component';
 
 export const firebaseConfig ={
-  apiKey: "AIzaSyBughsAzc9KLbFFGeJxrRlGVh4tvm82r-E",
-  authDomain: "flexagenda-a532f.firebaseapp.com",
-  databaseURL: "https://flexagenda-a532f.firebaseio.com",
-  storageBucket: "flexagenda-a532f.appspot.com",
-  messagingSenderId: "825810762567"
+  apiKey: "AIzaSyAY3ksN18uBrFPJ60EjCrQbm41lcBUqDkA",
+  authDomain: "flexagendatests.firebaseapp.com",
+  databaseURL: "https://flexagendatests.firebaseio.com",
+  storageBucket: "flexagendatests.appspot.com",
+  messagingSenderId: "118818375162"
 }
 
 const firebaseAuthConfig = {
@@ -40,7 +40,7 @@ const firebaseAuthConfig = {
     AppComponent,
     TestComponent,
     AgendasListComponent,
-    TaskDirective,
+    TaskComponent,
     TasksListComponent,
     SnackBarComponent,
     ConfirmationDialog,
