@@ -1,12 +1,12 @@
 <!--Add new task above BUTTON -->
 <button id="taskAddAbove" md-icon-button color="primary"
-    (click)="addNewTask(this.agendaKey, task, isFirst)"
+    (click)="tasksListComponent.addNewTask(task, isFirst)"
     title="Add task above"><md-icon>add</md-icon></button>
 <span class="badge">
 <md-checkbox id="taskComplete" color="primary" [checked]="task.completed"
         (change)="updateObject(task.$key, 'completed', !(task.completed), 'boolean')">
-        {{i+1}}</md-checkbox></span>
-<!--<span #start class="start">{{taskList.tasksStartTimes[i]}}</span>-->
+        {{taskIndex+1}}</md-checkbox></span>
+<!--<span #start class="start">{{tasksListComponent.tasksStartTimes[i]}}</span>-->
 <input #duration id="taskDuration" type="number" class="duration" size="3" min="1"
     value="{{task.duration}}"
     (change)="updateObject(task.$key, 'duration', duration.value, 'number','Task updated')"/>
@@ -14,13 +14,13 @@
         value="{{task.title}}"
         (change)="updateObject(task.$key, 'title', title.value, 'string','Task updated')"></textarea>
 <button id="taskDelete" md-icon-button color="primary" class="trash"
-    (click)="confirmTaskDelete(task.$key,'Task deleted')">
+    (click)="tasksListComponent.confirmTaskDelete(task.$key,'Task deleted')">
 <md-icon>delete</md-icon></button>
 <br />
 <button *ngIf="!isFirst" id="taskMoveUp" md-icon-button class="reorder"
-    (click)="reorderTasks(agendaKey, task, 'up')"><md-icon>keyboard_arrow_up</md-icon></button>
+    (click)="tasksListComponent.reorderTasks(task, 'up')"><md-icon>keyboard_arrow_up</md-icon></button>
 <button *ngIf="!isLast" id="taskMoveDown" md-icon-button class="reorder"
-    (click)="reorderTasks(this.agendaKey, task, 'down')"><md-icon>keyboard_arrow_down</md-icon></button>
+    (click)="tasksListComponent.reorderTasks(task, 'down')"><md-icon>keyboard_arrow_down</md-icon></button>
 <textarea md-autosize #description id="taskDescription" type="text" class="description"
         value="{{task.description}}"
         (change)="updateObject(task.$key, 'description', description.value, 'string','Task updated')"></textarea>

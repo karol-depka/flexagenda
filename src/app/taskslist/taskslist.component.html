@@ -11,7 +11,7 @@
     let isFirst = first;
     let isLast = last; trackBy: trackById"
       [ngClass]="{completed: task.completed, 'task-animation': true}">
-    <task [task]=task [taskList]="this"></task>
+    <task [isFirst]="isFirst" [isLast]="isLast" [taskIndex]=i [task]=task [tasksListComponent]="this"></task>
   </li>
   <button md-icon-button id="taskAddNewLast" (click)="addNewTask(this.agendaKey, null, false)">
     <md-icon>add</md-icon></button>

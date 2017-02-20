@@ -1,7 +1,5 @@
 import { Component,
-  OnInit,
-  Input,
-  Host
+  Input
  } from '@angular/core';
 import { TasksService } from '../shared/tasks.service';
 import { SnackBarComponent } from '../shared/snackbar/snackbar.component';
@@ -15,15 +13,14 @@ import { TasksListComponent } from "../taskslist/taskslist.component";
 
 export class TaskComponent {
   tasks;
-  // @Input() agendaKey;
-  // @Input() activeAgenda;
-  // @Input() agendaStartTime;
   @Input() task;
-  @Input() taskList: TasksListComponent;
+  @Input() tasksListComponent: TasksListComponent;
+  @Input() taskIndex;
+  @Input() isFirst;
+  @Input() isLast;
 
   constructor(public tasksService: TasksService,
               public snackBar: SnackBarComponent
-              // @Host() public parent: TasksListComponent
    ) {}
 
   calculateDuration(minutesToAdd=10, previousTime='02:04'): string {

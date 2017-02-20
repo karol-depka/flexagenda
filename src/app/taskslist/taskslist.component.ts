@@ -11,6 +11,7 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 import { TasksService } from '../shared/tasks.service'
 import { SnackBarComponent } from '../shared/snackbar/snackbar.component';
 import { ConfirmationDialog } from '../shared/confirmationdialog/confirmationdialog.component';
+import {FirebaseListObservable} from "angularfire2";
 
 @Component({
   selector: 'tasks-list',
@@ -32,7 +33,7 @@ import { ConfirmationDialog } from '../shared/confirmationdialog/confirmationdia
 })
 
 export class TasksListComponent implements OnInit {
-  tasks;
+  tasks: FirebaseListObservable<any[]>;
   selectedTask;
   direction: string;
   @Input() agendaKey;
@@ -75,8 +76,9 @@ export class TasksListComponent implements OnInit {
     if(this.activeAgenda) { this.tasks = this.tasksService.getTasks(this.agendaKey); }
   }
 
-  addNewTask(agendaKey, task, isFirst): void {
-    this.tasksService.addNewTask(agendaKey, task, isFirst);
+  addNewTask(task, isFirst): void {
+    console.log("agenda key: " + this.agendaKey);
+    this.tasksService.addNewTask(this.agendaKey, task, isFirst);
     this.snackBar.showSnackBar('New task added');
   }
 
@@ -86,8 +88,8 @@ export class TasksListComponent implements OnInit {
     this.direction = "out";
   }
 
-  reorderTasks(agendaKey, task, direction): void {
-    this.tasksService.reorderTasks(agendaKey, task, direction);
+  reorderTasks(task, direction): void {
+    this.tasksService.reorderTasks(this.agendaKey, task, direction);
     this.snackBar.showSnackBar('Tasks reordered.')
   }
 
