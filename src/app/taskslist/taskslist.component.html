@@ -1,13 +1,12 @@
 <ul #generalTasksUl class="tasks">
   <!-- Test for crlf -->
-
   <!--<li>
   <span class="column-header">ID</span>
   <span class="column-header">start</span>
   <span class="column-header">duration</span>
   <span class="column-header">title</span>
   </li>-->
-  
+
   <li *ngFor="let task of tasks | async;
     let i = index;
     let isFirst = first;
