@@ -1,5 +1,4 @@
 <!-- Test for crlf -->
-
 <button id="taskAddAbove" md-icon-button color="primary"
     (click)="tasksListComponent.addNewTask(task, isFirst)"
     title="Add task above"><md-icon>add</md-icon></button>
@@ -25,5 +24,3 @@
 <textarea md-autosize #description id="taskDescription" type="text" class="description"
         value="{{task.description}}"
         (change)="updateObject(task.$key, 'description', description.value, 'string','Task updated')"></textarea>
-
-<!--Testing config change-->
