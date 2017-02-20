@@ -96,4 +96,8 @@ export class AgendasListComponent implements OnInit {
     this.tasksService.updateObject('agenda',key,property,value, 'string')
     if (message != null) this.snackBar.showSnackBar(message);
   }
+
+  trackById(index: number, item) {
+    return item.$key
+  }
 }

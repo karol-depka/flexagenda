@@ -6,7 +6,7 @@
 <md-icon class="md-24">add</md-icon></button></h3>
 <ul #agendasList>
      <!-- each agenda goes here -->
-    <li *ngFor="let agenda of agendas | async;" id="agenda">
+    <li *ngFor="let agenda of agendas | async; trackBy: trackById" id="agenda">
       <button *ngIf="!agenda.active"
       id="agendaShow"
       md-icon-button color="accent"
