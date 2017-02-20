@@ -12,17 +12,17 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/common": "2.3.1",
-    "@angular/compiler": "2.3.1",
-    "@angular/compiler-cli": "2.3.1",    
-    "@angular/core": "2.3.1",
-    "@angular/forms": "2.3.1",
-    "@angular/http": "2.3.1",
-    "@angular/platform-server": "2.3.1",
-    "@angular/platform-browser": "2.3.1",
-    "@angular/platform-browser-dynamic": "2.3.1",
-    "@angular/router": "3.3.1",
-    "@angular/upgrade": "2.3.1",
+    "@angular/common": "2.4.1",
+    "@angular/compiler": "2.4.1",
+    "@angular/compiler-cli": "2.4.1",    
+    "@angular/core": "2.4.1",
+    "@angular/forms": "2.4.1",
+    "@angular/http": "2.4.1",
+    "@angular/platform-server": "2.4.1",
+    "@angular/platform-browser": "2.4.1",
+    "@angular/platform-browser-dynamic": "2.4.1",
+    "@angular/router": "3.4.1",
+    "@angular/upgrade": "2.4.1",
     "@angular/material": "2.0.0-alpha.11-3",    
     "@types/hammerjs": "^2.0.33",
     "@types/jasmine": "2.5.41",
@@ -46,6 +46,6 @@
     "protractor": "4.0.13",
     "ts-node": "1.7.2",
     "tslint": "4.0.2",
-    "typescript": "2.1.1"
+    "typescript": "2.1.5"
   }
 }
