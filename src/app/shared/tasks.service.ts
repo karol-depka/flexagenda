@@ -46,6 +46,8 @@ export class TasksService {
     with 'getNewTaskOrder' function.
     */
     var newOrder: number
+    console.log(`TasksService: addNewTask: ${agendaKey}, ${task}, ${isFirst}`);
+
     task ? newOrder=this.getNewTaskOrder(agendaKey,task,isFirst) : newOrder = this.getTasksCount()+1
     this.TASKS.push({
       order:newOrder,

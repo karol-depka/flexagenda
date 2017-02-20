@@ -77,7 +77,7 @@ export class TasksListComponent implements OnInit {
   }
 
   addNewTask(task, isFirst): void {
-    console.log("agenda key: " + this.agendaKey);
+    console.log(`addNewTask: ${task}, ${isFirst} agenda key: ${this.agendaKey}`);
     this.tasksService.addNewTask(this.agendaKey, task, isFirst);
     this.snackBar.showSnackBar('New task added');
   }

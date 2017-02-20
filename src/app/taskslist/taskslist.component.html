@@ -14,7 +14,7 @@
       [ngClass]="{completed: task.completed, 'task-animation': true}">
     <task [isFirst]="isFirst" [isLast]="isLast" [taskIndex]=i [task]=task [tasksListComponent]="this"></task>
   </li>
-  <button md-icon-button id="taskAddNewLast" (click)="addNewTask(this.agendaKey, null, false)">
+  <button md-icon-button id="taskAddNewLast" (click)="addNewTask(null, false)">
     <md-icon>add</md-icon></button>
 </ul>
 <div *ngIf="selectedTask">
