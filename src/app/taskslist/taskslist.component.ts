@@ -76,19 +76,19 @@ export class TasksListComponent implements OnInit {
     if(this.activeAgenda) { this.tasks = this.tasksService.getTasks(this.agendaKey); }
   }
 
-  addNewTask(task, isFirst): void {
+  addNewTask(task, isFirst : boolean): void {
     console.log(`addNewTask: ${task}, ${isFirst} agenda key: ${this.agendaKey}`);
     this.tasksService.addNewTask(this.agendaKey, task, isFirst);
     this.snackBar.showSnackBar('New task added');
   }
 
-  deleteTask(taskKey): void {
+  deleteTask(taskKey : string): void {
     this.tasks.remove(taskKey).then(_ => console.log('Task ' + taskKey + ' deleted!'));
     this.selectedTask = null;
     this.direction = "out";
   }
 
-  reorderTasks(task, direction): void {
+  reorderTasks(task, direction : string): void {
     this.tasksService.reorderTasks(this.agendaKey, task, direction);
     this.snackBar.showSnackBar('Tasks reordered.')
   }

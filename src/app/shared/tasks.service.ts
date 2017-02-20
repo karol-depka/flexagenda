@@ -31,14 +31,14 @@ export class TasksService {
     return this.AGENDAS;
   }
 
-  public getAgenda(agendaKey): FirebaseObjectObservable<any[]> {
+  public getAgenda(agendaKey : string): FirebaseObjectObservable<any[]> {
     var agenda: FirebaseObjectObservable<any[]>;
     agenda = this.af.database.object('/agendas/' + agendaKey);
 
     return agenda;
   }
 
-  public addNewTask(agendaKey, task, isFirst) {
+  public addNewTask(agendaKey : string, task, isFirst : boolean) {
     /*
     This function adds newTask object to the database.
     If no 'task' is provided newTask is added at the end of TASKS list.
@@ -59,7 +59,7 @@ export class TasksService {
     });
   }
 
-  public getNewTaskOrder(agendaKey, task, isFirst): any {
+  public getNewTaskOrder(agendaKey : string, task, isFirst : boolean): any {
     /*
     This function prepares existing tasks to compare for 'calculateNewOrder' function.
     */
@@ -139,7 +139,7 @@ export class TasksService {
     return tasksList;
   }
 
-  public reorderTasks(agendaKey, task, direction) {
+  public reorderTasks(agendaKey : string, task, direction) {
     //console.log(task.$key);
     var tasksList: FirebaseListObservable<any[]>;
     var tasksObject: FirebaseObjectObservable<any[]>;
