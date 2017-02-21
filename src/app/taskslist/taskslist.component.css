@@ -2,91 +2,13 @@ ul {
   list-style-type: none;
 }
 
-.selected {
-  background-color: #CFD8DC !important;
-}
-
-.tasks li {
+li {
   cursor: pointer;
   position: relative;
   background-color: #e9cfaf;
   margin: .5em;
   border-radius: 4px;
 }
-
-.tasks li:hover {
-  background-color: #e4c39b;
-}
-
-.tasks .badge {
-  font-size: small;
-  padding: 0.8em 0.7em 0 0.7em;
-  position: relative;
-  left: 6px;
-  border-radius: 4px 0 0 4px;
-}
-
-input, textarea {
-  background: transparent;
-  border: none;
-  text-align: center;
-}
-
-::-webkit-resizer {
-  display: none; /*textarea resize handler*/
-}
-
-input:focus {
-  text-decoration: underline;
-}
-
-input.break {
-    word-wrap: break-word;
-    word-break: break-all;
-}
-
-.start {
-  color: green;
-  width: 50px;
-}
-
-.duration {
-  color: #a06c2c;
-  width: 40px;
-}
-
-.tasks .title {
-  color: #a06c2c;
-  width: 50%;
-  text-align: center;
-  font-weight: bold;
-  font-size: 130%;
-  padding: 0 0 0.9 0em;
-}
-
-.tasks .description {
-  text-align: left;
-  width: 80%;
-  color: #a06c2c;
-  padding: 0 0 0 0.7em;
-}
-
-.tasks .completed {
-  /*text-decoration: overline;*/
-  opacity: 0.5;
-}
-
-.tasks .completed .description {
-  text-decoration: line-through;
-}
-
-.reorder {
-  float: left;
-}
-
-.trash {
-
-}       
 
 /* BEGIN animation; from http://plnkr.co/edit/TMZKPbuzorVt9UsGJ2Nr?p=preview
     http://stackoverflow.com/questions/37217314/how-can-i-animate-ngfor-in-angular-2 */

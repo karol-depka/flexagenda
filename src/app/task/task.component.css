@@ -1,0 +1,79 @@
+.selected {
+  background-color: #CFD8DC !important;
+}
+
+li:hover {
+  background-color: #e4c39b;
+}
+
+.badge {
+  font-size: small;
+  padding: 0.8em 0.7em 0 0.7em;
+  position: relative;
+  left: 6px;
+  border-radius: 4px 0 0 4px;
+}
+
+.start {
+  color: green;
+  width: 50px;
+}
+
+.duration {
+  color: #a06c2c;
+  width: 40px;
+}
+
+.title {
+  color: #a06c2c;
+  width: 50%;
+  text-align: center;
+  font-weight: bold;
+  font-size: 130%;
+  padding: 0 0 0.9 0em;
+}
+
+.description {
+  text-align: left;
+  width: 80%;
+  color: #a06c2c;
+  padding: 0 0 0 0.7em;
+}
+
+.completed {
+  /*text-decoration: overline;*/
+  opacity: 0.5;
+}
+
+.completed .description {
+  text-decoration: line-through;
+}
+
+input, textarea {
+  background: transparent;
+  border: none;
+  text-align: center;
+}
+
+::-webkit-resizer {
+  display: none; /*textarea resize handler*/
+}
+
+
+input:focus {
+  text-decoration: underline;
+}
+
+input.break {
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.reorder {
+  float: left;
+}
+
+.trash {
+
+}       
+

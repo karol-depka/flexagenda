@@ -1,4 +1,3 @@
-<!-- Test for crlf -->
 <button id="taskAddAbove" md-icon-button color="primary"
     (click)="tasksListComponent.addNewTask(task, isFirst)"
     title="Add task above"><md-icon>add</md-icon></button>
@@ -6,7 +5,7 @@
 <md-checkbox id="taskComplete" color="primary" [checked]="task.completed"
         (change)="updateObject(task.$key, 'completed', !(task.completed), 'boolean')">
         {{taskIndex+1}}</md-checkbox></span>
-<!--<span #start class="start">{{tasksListComponent.tasksStartTimes[i]}}</span>-->
+<span #start class="start">{{tasksListComponent.tasksStartTimes[i]}}</span>
 <input #duration id="taskDuration" type="number" class="duration" size="3" min="1"
     value="{{task.duration}}"
     (change)="updateObject(task.$key, 'duration', duration.value, 'number','Task updated')"/>

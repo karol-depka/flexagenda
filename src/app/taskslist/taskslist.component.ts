@@ -48,7 +48,7 @@ export class TasksListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTasks();
-    // this.calculateStartTimes();
+    this.calculateStartTimes();
     console.log("AgendaStartTime: " + this.agendaStartTime);
   }
 
@@ -99,9 +99,22 @@ export class TasksListComponent implements OnInit {
       this.tasksStartTimes.push(this.agendaStartTime);
       tasks.forEach(task => {
         this.tasksStartTimes[this.tasksStartTimes.length] =
-          task.calculateDuration(task.duration, this.tasksStartTimes[this.tasksStartTimes.length - 1])
+          this.calculateDuration(task.duration, this.tasksStartTimes[this.tasksStartTimes.length - 1])
       })
     });
+  }
+
+  calculateDuration(minutesToAdd=10, previousTime='02:04'): string {
+    var temp = previousTime.split(':');
+    var d = new Date();
+
+    d.setHours(+temp[0]);
+    d.setMinutes(+temp[1] + minutesToAdd);
+
+    var newDuration = this.tasksService.addZero(d.getHours()) +
+      ":" + this.tasksService.addZero(d.getMinutes());
+
+    return newDuration
   }
 
   trackById(index: number, item) {

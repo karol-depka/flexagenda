@@ -9,6 +9,7 @@ import { TasksListComponent } from "../taskslist/taskslist.component";
 @Component({
   selector: 'task',
   templateUrl: './task.component.html',
+  styleUrls: ['./task.component.css'],
   providers: [TasksService, TasksListComponent]
 })
 
@@ -23,21 +24,9 @@ export class TaskComponent implements OnInit {
 
   constructor(public snackBar: SnackBarComponent) { }
 
-   ngOnInit() {
-      this.tasksService = this.tasksListComponent.tasksService;
+  ngOnInit() {
+    this.tasksService = this.tasksListComponent.tasksService;
    }
-
-  calculateDuration(minutesToAdd=10, previousTime='02:04'): string {
-    var temp = previousTime.split(':');
-    var d = new Date();
-
-    d.setHours(+temp[0]);
-    d.setMinutes(+temp[1] + minutesToAdd);
-
-    var newDuration = this.tasksService.addZero(d.getHours()) +
-      ":" + this.tasksService.addZero(d.getMinutes());
-    return newDuration
-  }
 
   updateObject(key, property, value, type, message): void {
     this.tasksService.updateObject('task', key, property, value, type);
