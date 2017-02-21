@@ -23,6 +23,7 @@ export class TasksService {
   public getTasks(agendaKey): FirebaseListObservable<any[]> {
     this.TASKS = this.af.database.list('/agenda_tasks/' + agendaKey,
       {query: {orderByChild: 'order'} });
+    console.log("tasks list for agenda: " + this.TASKS)
 
     return this.TASKS;
   }
@@ -182,6 +183,8 @@ export class TasksService {
   
   updateObject(object, key, updateKey, updateValue, type): void {
     if (type == 'number') updateValue = this.guardPositiveValue(updateValue,type);
+
+    console.log("tasks list for agenda: " + this.TASKS)
 
     switch (object) {
       case 'task':

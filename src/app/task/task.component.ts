@@ -1,4 +1,5 @@
 import { Component,
+  OnInit,
   Input
  } from '@angular/core';
 import { TasksService } from '../shared/tasks.service';
@@ -11,22 +12,25 @@ import { TasksListComponent } from "../taskslist/taskslist.component";
   providers: [TasksService, TasksListComponent]
 })
 
-export class TaskComponent {
+export class TaskComponent implements OnInit {
   tasks;
   @Input() task;
   @Input() tasksListComponent: TasksListComponent;
   @Input() taskIndex;
   @Input() isFirst;
   @Input() isLast;
+  tasksService: TasksService;
 
-  constructor(public tasksService: TasksService,
-              public snackBar: SnackBarComponent
-   ) {}
+  constructor(public snackBar: SnackBarComponent) { }
+
+   ngOnInit() {
+      this.tasksService = this.tasksListComponent.tasksService;
+   }
 
   calculateDuration(minutesToAdd=10, previousTime='02:04'): string {
     var temp = previousTime.split(':');
     var d = new Date();
-    
+
     d.setHours(+temp[0]);
     d.setMinutes(+temp[1] + minutesToAdd);
 
