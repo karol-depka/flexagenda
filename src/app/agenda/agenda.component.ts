@@ -36,11 +36,19 @@ export class AgendaComponent implements OnInit {
     this.agenda = this._tasksService.getAgenda(this.agendaKey);
   }
 
-  setStartTimeToNow(): void {
-    var timeNow = this._tasksService.timeNow();
-    console.log("agenda key: " + this.agendaKey);
+  updateTime(time): void {
+    this._tasksService.updateObject('agenda', this.agendaKey, 'startTime', time, 'string');
+    this.snackBar.showSnackBar('Agenda updated.')
+  }
 
-    this._tasksService.updateObject('agenda', this.agendaKey, 'startTime', timeNow, 'string');
+  updateTimeToNow(): void {
+    var timeNow = this._tasksService.timeNow();
+    // console.log("agenda key: " + this.agendaKey);
+    this.updateTime(timeNow);
+  }
+
+  updateTitle(title): void {
+    this._tasksService.updateObject('agenda', this.agendaKey, 'title', title, 'string');
     this.snackBar.showSnackBar('Agenda updated.')
   }
 }
