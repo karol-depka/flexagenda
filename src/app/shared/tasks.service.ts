@@ -54,8 +54,8 @@ export class TasksService {
       order:newOrder,
       type:"general",
       duration:10,
-      title:"NEWTITLE",
-      description:"NEWDESCRIPTION",
+      title:"",
+      description:"",
       completed:false
     });
   }
