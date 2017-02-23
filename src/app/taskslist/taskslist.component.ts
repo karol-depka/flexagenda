@@ -1,12 +1,15 @@
-import { Component,
-  OnInit,
-  trigger,
-  state,
-  animate,
-  transition,
-  style,
-  Input
- } from '@angular/core';
+import {
+    AfterViewInit,
+    animate,
+    Component,
+    Input,
+    OnInit,
+    Renderer,
+    state,
+    style,
+    transition,
+    trigger
+} from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { TasksService } from '../shared/tasks.service'
 import { SnackBarComponent } from '../shared/snackbar/snackbar.component';
@@ -29,7 +32,7 @@ import {FirebaseListObservable} from "angularfire2";
       ])
     ])
   ],
-  providers: [TasksService],
+  providers: [TasksService]
 })
 
 export class TasksListComponent implements OnInit {

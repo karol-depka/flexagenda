@@ -1,7 +1,4 @@
-import { Component,
-  OnInit,
-  Input
- } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, Renderer, ViewChild } from '@angular/core';
 import { TasksService } from '../shared/tasks.service';
 import { SnackBarComponent } from '../shared/snackbar/snackbar.component';
 import { TasksListComponent } from "../taskslist/taskslist.component";
@@ -15,18 +12,24 @@ import { TasksListComponent } from "../taskslist/taskslist.component";
 
 export class TaskComponent implements OnInit {
   tasks;
+  tasksService: TasksService;
   @Input() task;
   @Input() tasksListComponent: TasksListComponent;
   @Input() taskIndex;
   @Input() isFirst;
   @Input() isLast;
-  tasksService: TasksService;
+  @ViewChild('title') input: ElementRef;
 
-  constructor(public snackBar: SnackBarComponent) { }
+  constructor(public renderer: Renderer, public snackBar: SnackBarComponent) { }
 
   ngOnInit() {
     this.tasksService = this.tasksListComponent.tasksService;
    }
+
+  ngAfterViewInit() {
+    this.renderer.invokeElementMethod(this.input.nativeElement,    
+    'focus');
+  }
 
   updateObject(key, property, value, type, message): void {
     this.tasksService.updateObject('task', key, property, value, type);

@@ -16,5 +16,4 @@ export class SnackBarComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }
