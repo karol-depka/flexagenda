@@ -45,6 +45,8 @@ export class TasksListComponent implements OnInit {
   tasksStartTimes;
   dialogRef: MdDialogRef<ConfirmationDialog>;
 
+  public shallFocusNewTask: boolean;
+
   constructor(public tasksService: TasksService,
               public dialog: MdDialog,
               public snackBar: SnackBarComponent) {}
@@ -81,6 +83,7 @@ export class TasksListComponent implements OnInit {
 
   addNewTask(task, isFirst : boolean): void {
     console.log(`addNewTask: ${task}, ${isFirst}, agenda key: ${this.agendaKey}`);
+    this.shallFocusNewTask = true;
     this.tasksService.addNewTask(this.agendaKey, task, isFirst);
     this.snackBar.showSnackBar('New task added');
   }

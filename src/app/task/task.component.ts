@@ -27,8 +27,10 @@ export class TaskComponent implements OnInit {
    }
 
   ngAfterViewInit() {
-    this.renderer.invokeElementMethod(this.input.nativeElement,    
-    'focus');
+    if (this.tasksListComponent.shallFocusNewTask) {
+      this.renderer.invokeElementMethod(this.input.nativeElement, 'focus');
+      this.tasksListComponent.shallFocusNewTask = false;
+    }
   }
 
   updateObject(key, property, value, type, message): void {
