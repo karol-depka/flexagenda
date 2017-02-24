@@ -13,7 +13,9 @@
     let isFirst = first;
     let isLast = last; trackBy: trackById"
       [ngClass]="{completed: task.completed, 'task-animation': true}">
-    <task [isFirst]="isFirst" [isLast]="isLast" [taskIndex]=i [task]=task [tasksListComponent]="this"></task>
+    <task [isFirst]="isFirst" [isLast]="isLast" [taskIndex]=i [task]=task [tasksListComponent]="this"
+    (keyup.control.arrowup)="reorderTasks(task, isFirst, 'up')"
+    (keyup.control.arrowdown)="reorderTasks(task, isLast, 'down')"></task>
   </li>
   <button md-icon-button id="taskAddNewLast"
   (click)="addNewTask(null, false)">

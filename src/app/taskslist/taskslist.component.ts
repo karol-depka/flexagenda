@@ -94,9 +94,14 @@ export class TasksListComponent implements OnInit {
     this.direction = "out";
   }
 
-  reorderTasks(task, direction : string): void {
-    this.tasksService.reorderTasks(this.agendaKey, task, direction);
-    this.snackBar.showSnackBar('Tasks reordered.')
+  reorderTasks(task, firstLast:boolean, direction: string): void {
+    // FIXME: Use of isFirst and isLast should be reconcidered 
+   if((direction == "up" && firstLast === false)
+   || (direction == "down" && firstLast === false))
+    { 
+     this.tasksService.reorderTasks(this.agendaKey, task, direction);
+     this.snackBar.showSnackBar('Tasks reordered.')
+    }
   }
 
   calculateStartTimes(): void {
