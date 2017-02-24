@@ -24,6 +24,6 @@ li {
 }
 
 .task-animation {
-  animation: TaskAnimation 1s;
+  animation: TaskAnimation 0.5s;
 }
 /* END animation */
