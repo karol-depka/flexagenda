@@ -1,4 +1,5 @@
-<ul #generalTasksUl class="tasks">
+<ul #generalTasksUl class="tasks"
+(keyup.control.enter)="addNewTask(null, false)">
   <!-- Test for crlf -->
   <!--<li>
   <span class="column-header">ID</span>
@@ -14,7 +15,8 @@
       [ngClass]="{completed: task.completed, 'task-animation': true}">
     <task [isFirst]="isFirst" [isLast]="isLast" [taskIndex]=i [task]=task [tasksListComponent]="this"></task>
   </li>
-  <button md-icon-button id="taskAddNewLast" (click)="addNewTask(null, false)">
+  <button md-icon-button id="taskAddNewLast"
+  (click)="addNewTask(null, false)">
     <md-icon>add</md-icon></button>
 </ul>
 <div *ngIf="selectedTask">
