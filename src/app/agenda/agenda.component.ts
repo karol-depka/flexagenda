@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
@@ -18,6 +18,7 @@ import { ConfirmationDialog } from '../shared/confirmationdialog/confirmationdia
 export class AgendaComponent implements OnInit {
   agendaKey: string = this._route.snapshot.params['agendaKey'];
   agenda;
+  @ViewChild(TasksListComponent) taskListComponent: TasksListComponent
 
   constructor(private _route: ActivatedRoute,
               private _tasksService: TasksService,
@@ -38,7 +39,9 @@ export class AgendaComponent implements OnInit {
 
   updateTime(time): void {
     this._tasksService.updateObject('agenda', this.agendaKey, 'startTime', time, 'string');
-    this.snackBar.showSnackBar('Agenda updated.')
+    this.taskListComponent.calculateStartTimes(time);
+    // this.taskListComponent.calculateStartTimes(time); // HACK
+    this.snackBar.showSnackBar('Agenda updated.');
   }
 
   updateTimeToNow(): void {

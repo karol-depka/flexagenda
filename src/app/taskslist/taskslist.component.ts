@@ -1,3 +1,4 @@
+import { AgendaComponent } from '../agenda/agenda.component';
 import {
     AfterViewInit,
     animate,
@@ -44,6 +45,7 @@ export class TasksListComponent implements OnInit {
   @Input() agendaStartTime;
   tasksStartTimes;
   dialogRef: MdDialogRef<ConfirmationDialog>;
+  tasksArray: any[]
 
   public shallFocusNewTask: boolean;
 
@@ -53,7 +55,11 @@ export class TasksListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTasks();
-    this.calculateStartTimes();
+    //this.tasksArray.
+    this.tasks.subscribe(tasks => {
+      this.tasksArray = tasks
+    });
+    this.calculateStartTimes(this.agendaStartTime);   //FIXME
     console.log("AgendaStartTime: " + this.agendaStartTime);
   }
 
@@ -95,24 +101,34 @@ export class TasksListComponent implements OnInit {
   }
 
   reorderTasks(task, firstLast:boolean, direction: string): void {
-    // FIXME: Use of isFirst and isLast should be reconcidered 
+    // FIXME: Use of isFirst and isLast should be reconcidered
    if((direction == "up" && firstLast === false)
    || (direction == "down" && firstLast === false))
-    { 
+    {
      this.tasksService.reorderTasks(this.agendaKey, task, direction);
      this.snackBar.showSnackBar('Tasks reordered.')
     }
   }
 
-  calculateStartTimes(): void {
-    this.tasks.subscribe(tasks => {
+  calculateStartTimes(startTime): void {
+    // this.tasks.subscribe(tasks => {
+    //   this.tasksStartTimes = [];
+    //   this.tasksStartTimes.push(this.agendaStartTime);
+    //   tasks.forEach(task => {
+    //     this.tasksStartTimes[this.tasksStartTimes.length] =
+    //       this.calculateDuration(task.duration, this.tasksStartTimes[this.tasksStartTimes.length - 1])
+    //   })
+    // });
+
+    if (this.tasksArray) {
       this.tasksStartTimes = [];
-      this.tasksStartTimes.push(this.agendaStartTime);
-      tasks.forEach(task => {
+      // this.tasksStartTimes.push(this.agendaStartTime);
+      this.tasksStartTimes.push(startTime);
+      this.tasksArray.forEach(task => {
         this.tasksStartTimes[this.tasksStartTimes.length] =
           this.calculateDuration(task.duration, this.tasksStartTimes[this.tasksStartTimes.length - 1])
       })
-    });
+    }
   }
 
   calculateDuration(minutesToAdd=10, previousTime='02:04'): string {
