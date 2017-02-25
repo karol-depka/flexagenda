@@ -2,6 +2,7 @@
     (click)="tasksListComponent.addNewTask(task, isFirst)"
     title="Add task above"><md-icon>add</md-icon></button>
 <span class="badge">
+order: {{task.order}}
 <md-checkbox id="taskComplete" color="primary" [checked]="task.completed"
         (change)="updateObject(task.$key, 'completed', !(task.completed), 'boolean')">
         {{taskIndex+1}}</md-checkbox></span>

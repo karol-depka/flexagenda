@@ -49,7 +49,7 @@ export class TasksService {
     var newOrder: number
     console.log(`TasksService: addNewTask: ${agendaKey}, ${task}, ${isFirst}`);
 
-    task ? newOrder=this.getNewTaskOrder(agendaKey,task,isFirst) : newOrder = this.getTasksCount()+1
+    newOrder = this.getNewTaskOrder(agendaKey,task,isFirst);
     this.TASKS.push({
       order:newOrder,
       type:"general",
@@ -69,14 +69,14 @@ export class TasksService {
     //console.log(newOrder);
     var orderSubscription;
     var taskOrder: FirebaseListObservable<any[]>;
-    console.log(task.$key);
+    // console.log(task.$key);
     if(isFirst) console.log(isFirst);
     taskOrder = this.af.database.list('/agenda_tasks/' + agendaKey,
     { preserveSnapshot:true,
       query: {
         orderByChild: 'order',
         limitToLast: 2,
-        endAt: task.order
+        endAt: task ? task.order : null
         }
      });
      orderSubscription = taskOrder
@@ -86,10 +86,14 @@ export class TasksService {
           console.log(task.key)}
         )
        });
-
+       // FIXME: RACE CONDITION: ordersArray might not yet be initialized 
        orderSubscription.unsubscribe();
+       if (task) {
+         return this.calculateNewTaskOrder(ordersArray,isFirst);
+       } else {
+         return ordersArray[ordersArray.length-1] + 1; // FIXME: add new task if zero tasks does not work yet
+       }
 
-       return this.calculateNewTaskOrder(ordersArray,isFirst);
   }
 
   public calculateNewTaskOrder(ordersArray, isFirst): number {
