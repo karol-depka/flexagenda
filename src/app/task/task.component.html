@@ -10,7 +10,7 @@ order: {{task.order}}
 <input #duration id="taskDuration" type="number" class="duration" size="3" min="1"
     value="{{task.duration}}"
     (change)="updateObject(task.$key, 'duration', duration.value, 'number','Task updated')"/>
-<textarea md-autosize #title id="taskTitle" type="text" class="title"
+<textarea #title id="taskTitle" type="text" class="title" rows="1" maxlength="60" placeholder="Title is missing"
         value="{{task.title}}"
         (change)="updateObject(task.$key, 'title', title.value, 'string','Task updated')"></textarea>
 <button id="taskDelete" md-icon-button color="primary" class="trash"
