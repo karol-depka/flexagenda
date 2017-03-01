@@ -18,9 +18,9 @@ order: {{task.order}}
 <md-icon>delete</md-icon></button>
 <br />
 <button *ngIf="!isFirst" id="taskMoveUp" md-icon-button class="reorder"
-    (click)="tasksListComponent.reorderTasks(task, 'up')"><md-icon>keyboard_arrow_up</md-icon></button>
+    (click)="tasksListComponent.reorderTasks(task, isFirst, 'up')"><md-icon>keyboard_arrow_up</md-icon></button>
 <button *ngIf="!isLast" id="taskMoveDown" md-icon-button class="reorder"
-    (click)="tasksListComponent.reorderTasks(task, 'down')"><md-icon>keyboard_arrow_down</md-icon></button>
+    (click)="tasksListComponent.reorderTasks(task, isLast, 'down')"><md-icon>keyboard_arrow_down</md-icon></button>
 <textarea md-autosize #description id="taskDescription" type="text" class="description"
         value="{{task.description}}"
         (change)="updateObject(task.$key, 'description', description.value, 'string','Task updated')"></textarea>
