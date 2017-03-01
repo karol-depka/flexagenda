@@ -10,8 +10,8 @@ order: {{task.order}}
 <input #duration id="taskDuration" type="number" class="duration" size="3" min="1"
     value="{{task.duration}}"
     (change)="updateObject(task.$key, 'duration', duration.value, 'number','Task updated')"/>
-<textarea #title id="taskTitle" type="text" class="title" rows="1" maxlength="60" placeholder="Title is missing"
-        value="{{task.title}}"
+<textarea #title id="taskTitle" type="text" class="title" rows="1" maxlength="60"
+        placeholder="New title" value="{{task.title}}"
         (change)="updateObject(task.$key, 'title', title.value, 'string','Task updated')"></textarea>
 <button id="taskDelete" md-icon-button color="primary" class="trash"
     (click)="tasksListComponent.confirmTaskDelete(task.$key,'Task deleted')">
@@ -22,5 +22,5 @@ order: {{task.order}}
 <button *ngIf="!isLast" id="taskMoveDown" md-icon-button class="reorder"
     (click)="tasksListComponent.reorderTasks(task, isLast, 'down')"><md-icon>keyboard_arrow_down</md-icon></button>
 <textarea md-autosize #description id="taskDescription" type="text" class="description"
-        value="{{task.description}}"
+        placeholder="Description is missing" value="{{task.description}}"
         (change)="updateObject(task.$key, 'description', description.value, 'string','Task updated')"></textarea>
