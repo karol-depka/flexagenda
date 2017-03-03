@@ -75,5 +75,32 @@ input.break {
 
 .trash {
 
-}       
+}      
+
+
+li {
+  cursor: pointer;
+  position: relative;
+  background-color: #e9cfaf;
+  margin: .5em;
+  border-radius: 4px;
+}
+
+/* BEGIN animation; from http://plnkr.co/edit/TMZKPbuzorVt9UsGJ2Nr?p=preview
+    http://stackoverflow.com/questions/37217314/how-can-i-animate-ngfor-in-angular-2 */
+@keyframes TaskAnimation {
+  0% {
+    padding-left: 100px;
+    opacity: 0.0;
+  }
+  100% {
+    padding-left: 0px;
+    opacity: 1.0;
+  }
+}
+
+.task-animation {
+  animation: TaskAnimation 0.5s;
+}
+/* END animation */ 
 
