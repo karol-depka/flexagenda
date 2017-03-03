@@ -33,7 +33,8 @@ export class TaskComponent implements OnInit {
     }
   }
 
-  updateObject(key, property, value, type, message): void {
+  updateObject(key, property, value, type): void {
+    var message = "Task updated"
     this.tasksService.updateObject('task', key, property, value, type);
     if (message != null) this.snackBar.showSnackBar(message);
   }

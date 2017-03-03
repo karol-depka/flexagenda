@@ -63,7 +63,9 @@ export class TasksListComponent implements OnInit {
     console.log("AgendaStartTime: " + this.agendaStartTime);
   }
 
-  public confirmTaskDelete(taskKey, message): string {
+  public requestTaskDelete(taskKey): string {
+    var message = "Task deleted"
+
     /*
     This function opens 'confirmationdialog' for agenda removal
     TODO update for the latest version of material2 when 'dialog' will be released
@@ -73,8 +75,9 @@ export class TasksListComponent implements OnInit {
 
     this.dialogRef.afterClosed().subscribe(result => {
       console.log(result);
-      if (result) { this.deleteTask(taskKey);
-      this.snackBar.showSnackBar('Task deleted.')
+      if (result) { 
+        this.deleteTask(taskKey);
+        this.snackBar.showSnackBar(message)
      }
       else { console.log('Task ' + taskKey + ' not deleted!') }
       this.dialogRef = null;
@@ -87,14 +90,14 @@ export class TasksListComponent implements OnInit {
     if(this.activeAgenda) { this.tasks = this.tasksService.getTasks(this.agendaKey); }
   }
 
-  addNewTask(task, isFirst : boolean): void {
+  addNewTask(task, isFirst: boolean): void {
     console.log(`addNewTask: ${task}, ${isFirst}, agenda key: ${this.agendaKey}`);
     this.shallFocusNewTask = true;
     this.tasksService.addNewTask(this.agendaKey, task, isFirst);
     this.snackBar.showSnackBar('New task added');
   }
 
-  deleteTask(taskKey : string): void {
+  deleteTask(taskKey: string): void {
     this.tasks.remove(taskKey).then(_ => console.log('Task ' + taskKey + ' deleted!'));
     this.selectedTask = null;
     this.direction = "out";
