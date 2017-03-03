@@ -1,3 +1,4 @@
+import { provideForRootGuard } from '@angular/router/src/router_module';
 import { AgendaComponent } from '../agenda/agenda.component';
 import {
     AfterViewInit,
@@ -63,20 +64,20 @@ export class TasksListComponent implements OnInit {
     console.log("AgendaStartTime: " + this.agendaStartTime);
   }
 
-  public requestTaskDelete(taskKey): string {
-    var message = "Task deleted"
-
+  public requestTaskDelete(taskKey, isFirst, isLast): string {
     /*
     This function opens 'confirmationdialog' for agenda removal
     TODO update for the latest version of material2 when 'dialog' will be released
     https://github.com/angular/material2/blob/master/src/lib/dialog/README.md
     */
     this.dialogRef = this.dialog.open(ConfirmationDialog);
+    var message = "Task deleted";
+    var onlyTask = isFirst && isLast;
 
     this.dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+      // console.log(result);
       if (result) { 
-        this.deleteTask(taskKey);
+        this.deleteTask(taskKey, onlyTask);
         this.snackBar.showSnackBar(message)
      }
       else { console.log('Task ' + taskKey + ' not deleted!') }
@@ -97,10 +98,15 @@ export class TasksListComponent implements OnInit {
     this.snackBar.showSnackBar('New task added');
   }
 
-  deleteTask(taskKey: string): void {
-    this.tasks.remove(taskKey).then(_ => console.log('Task ' + taskKey + ' deleted!'));
-    this.selectedTask = null;
-    this.direction = "out";
+  deleteTask(taskKey: string, onlyTask: boolean): void {
+    if(onlyTask) {
+      this.removeTaskData(taskKey);
+    }
+    else {
+      this.tasks.remove(taskKey).then(_ => console.log('Task ' + taskKey + ' deleted!'));
+      this.selectedTask = null;
+      this.direction = "out";
+    }
   }
 
   reorderTasks(task, firstLast:boolean, direction: string): void {
@@ -145,6 +151,13 @@ export class TasksListComponent implements OnInit {
       ":" + this.tasksService.addZero(d.getMinutes());
 
     return newDuration
+  }
+
+  removeTaskData(taskKey: string): void {
+    this.tasksService.updateObject('task', taskKey, 'title', '', 'string');
+    this.tasksService.updateObject('task', taskKey, 'description', '', 'string');
+    this.tasksService.updateObject('task', taskKey, 'duration', '10', 'string');
+    this.tasksService.updateObject('task', taskKey, 'completed', false, 'boolean');
   }
 
   trackById(index: number, item) {

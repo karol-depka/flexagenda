@@ -14,7 +14,7 @@ order: {{task.order}}
         placeholder="New title" value="{{task.title}}"
         (change)="updateObject(task.$key, 'title', title.value, 'string')"></textarea>
 <button id="taskDelete" md-icon-button color="primary" class="trash"
-    (click)="tasksListComponent.requestTaskDelete(task.$key)">
+    (click)="tasksListComponent.requestTaskDelete(task.$key, isFirst, isLast)">
 <md-icon>delete</md-icon></button>
 <br />
 <button *ngIf="!isFirst" id="taskMoveUp" md-icon-button class="reorder"
