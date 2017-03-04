@@ -1,23 +1,27 @@
 import { Injectable } from '@angular/core';
-import { AngularFire } from 'angularfire2';
+import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
 import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 @Injectable()
 export class AuthService {
 
   constructor(public af: AngularFire,
-              public router: Router) { }
+              public router: Router) {}
 
-  redirectUrl: string;  
+  redirectUrl: string='/agendas';  
   login(uEmail,uPassword) {
-    this.af.auth.login({
-      email: uEmail,
-      password: uPassword,});
-    this.af.auth.subscribe(user=>{    
-      if(user) {console.log("Logged in as: "+uEmail); 
-                this.router.navigate([this.redirectUrl]);}
-
-    }) 
+    if (uEmail) {
+      this.af.auth.login({
+        email: uEmail,
+        password: uPassword
+      }).then(()=>{this.router.navigate([this.redirectUrl])});
+    }
+    else {
+      this.af.auth.login({
+        provider: AuthProviders.Google,
+        method: AuthMethods.Popup
+      }).then(()=>this.router.navigate([this.redirectUrl]))
+    }
   }
   logOut() {
     this.router.navigate(['/login']);

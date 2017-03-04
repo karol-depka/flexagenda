@@ -20,6 +20,9 @@
   <button id="login" md-raised-button color="primary"
   (click)="authService.login(uEmail.value,uPassword.value)">
   Login</button>
+  <button id="login" md-raised-button color="primary"
+  (click)="authService.login()">
+  Login with Google</button>  
 </span>
 </div>
 <button *ngIf="authService.af.auth | async"
