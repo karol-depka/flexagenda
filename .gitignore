@@ -33,6 +33,6 @@ testem.log
 Thumbs.db
 
 #Firebase CLI/hosting files
-.firebaserc
-database.rules.json
-firebase.json
+#.firebaserc
+#database.rules.json
+#firebase.json
