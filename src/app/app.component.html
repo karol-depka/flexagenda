@@ -1,4 +1,4 @@
-<h2 class="labels">{{title}}</h2>
+<!--<h2 class="labels">{{title}}</h2>-->
 <div *ngIf="!(authService.af.auth | async)">
 <span>
   <md-icon>email</md-icon>
@@ -22,11 +22,18 @@
   Login</button>
 </span>
 </div>
+
+<img src="https://raw.githubusercontent.com/karol-depka/FlexAgendaPublic/master/assets/FlexAgenda_Logo.png"
+      (click) = "authService.router.navigate(['/'])">
+      <!-- TODO: make this an svg -->
+      <!-- TODO: make this a link with click-cursor -->
+
 <button *ngIf="authService.af.auth | async"
       id="home"
       md-icon-button color="primary"
       (click) = "authService.router.navigate(['/'])">
-      <md-icon>home</md-icon></button>
+      <md-icon>home</md-icon>
+      </button>
 <span *ngIf="authService.af.auth | async">Logged in as {{(authService.af.auth | async).auth.email}}
   <button id="logout" md-raised-button color="primary"
   (click)="authService.logOut()">
