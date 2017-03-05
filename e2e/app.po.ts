@@ -1,11 +1,12 @@
-import { browser, element, by } from 'protractor';
+import { browser, element, by, protractor } from 'protractor';
 
 export class FlexagendaCliPage {
   navigateTo() {
-    return browser.get('/');
+    browser.get('/');
+    
   }
 
   getParagraphText() {
-    return element(by.css('app-root h1')).getText();
+    return element(by.css('app-login > p')).getText();
   }
 }
