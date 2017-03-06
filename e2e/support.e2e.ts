@@ -1,7 +1,8 @@
-import { ElementFinder } from 'protractor/built/element';
+// import { ElementFinder } from 'protractor/built/element';
 import { browser, element, by, protractor } from 'protractor';
 
-import { WaitHelpers } from './waits.e2e' 
+import { WaitHelpers }        from './waits.e2e' 
+import { FlexAgendaLocators } from './elementLocators.e2e'
 
 export class FlexagendaCliPage {
   userLogin = 'anna.bckwabb@gmail.com';
@@ -9,15 +10,16 @@ export class FlexagendaCliPage {
 
   ec = protractor.ExpectedConditions;
   waits = new WaitHelpers();
+  locator = new FlexAgendaLocators();
 
   navigateToLogin() {
     browser.get('/');
   }
 
   loginAndDisplayAgenda(agendaId: string) {
-    element(by.css('#md-input-0-input')).sendKeys(this.userLogin);
-    element(by.css('#md-input-1-input')).sendKeys(this.userPassword);
-    element(by.id('login')).click(); 
+    this.locator.LOGIN_INPUT.sendKeys(this.userLogin);
+    this.locator.LOGIN_PASSWORD.sendKeys(this.userPassword);
+    this.locator.LOGIN_BUTTON.click(); 
     this.waitForPageToLoadAfterLogin();
 
     browser.get('/agendas/' + agendaId);
@@ -25,12 +27,11 @@ export class FlexagendaCliPage {
   }
 
   private waitForPageToLoadAfterLogin() {
-
-    return browser.wait(this.ec.presenceOf(element(by.id('agendaAddNew'))));
+    return browser.wait(this.ec.presenceOf(this.locator.AGENDA_ADD_NEW));
   }
 
   addEmptyTask() {
-    element(by.id('taskAddNewLast')).click();
+    this.locator.TASK_ADD_NEW_LAST.click();
   }
 
   countTasks() {
@@ -40,13 +41,12 @@ export class FlexagendaCliPage {
   updateTaskTitle() {
     var miliseconds = new Date().getMilliseconds();
     var newTitle = 'This is my new title at ' + miliseconds + ' miliseconds';
-    
-    var title = element(by.id('taskTitle'));
-    title.clear();
-    title.sendKeys(newTitle);
+
+    this.locator.TASK_TITLE.clear();
+    this.locator.TASK_TITLE.sendKeys(newTitle);
     
     //change focus to save
-    element(by.id('taskDescription')).click();
+    this.locator.TASK_DESCRIPTION.click();
 
     return newTitle;
   }
@@ -55,23 +55,41 @@ export class FlexagendaCliPage {
     var miliseconds = new Date().getMilliseconds();
     var newDescription = 'This is my new description at ' + miliseconds + ' miliseconds';
     
-    var title = element(by.id('taskDescription'));
-    title.clear();
-    title.sendKeys(newDescription);
+    this.locator.TASK_DESCRIPTION.clear();
+    this.locator.TASK_DESCRIPTION.sendKeys(newDescription);
     
     //change focus to save
-    element(by.id('taskTitle')).click();
+    this.locator.TASK_TITLE.click();
 
     return newDescription;
   }
 
-  updateTaskDurationTo(duration: number) {
-    var taskDuration = element(by.id('taskDuration'));
+  updateTaskDuration() {
+    var minutes = new Date().getMinutes();
+    var taskDuration = this.locator.TASK_DURATION;
     taskDuration.clear();
-    taskDuration.sendKeys(duration);
+    taskDuration.sendKeys(minutes);
     
     //change focus to save
-    element(by.id('taskTitle')).click();
+    this.locator.TASK_TITLE.click();
+
+    return minutes.toString();
+  }
+
+  updateTaskToDone() {  //fixme
+    this.locator.TASK_COMPLETE.click();
+  }
+
+  updateTaskToNotDone() {  //fixme
+    this.updateTaskToDone();
+  }
+
+  updateStartTime() {
+    var time = new Date();
+    var timeFormatted = time.getHours() + ':' + time.getMinutes();
+    this.locator.AGENDA_START_TIME_INPUT.sendKeys(timeFormatted);
+
+    return timeFormatted;
   }
 }
 
