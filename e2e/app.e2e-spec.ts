@@ -1,4 +1,4 @@
-import { browser, by, $ } from 'protractor';
+import { browser, by, $$ } from 'protractor';
 
 import { FlexagendaCliPage }  from './support.e2e';
 import { WaitHelpers }        from './waits.e2e'
@@ -78,6 +78,31 @@ describe('Flexagenda', function() {
     expect(locator.TASK_START_TIME.getText()).toEqual(startTime);
   });
 
+  // it('should be able calculate end time of all tasks based on duration', () => {
+  //   var i = 0;
+  //   while (i <= 10) {
+  //     agenda.addEmptyTask();
+  //     i++;
+  //   }
+
+  //   var startTime = locator.AGENDA_START_TIME_INPUT.getAttribute('value');
+  //   var tasksCount = agenda.countTasks();   //promise; assumption: last task is the final (END) task
+
+  //   tasksCount.then(function(count) {
+  //     var agendaDuration = count * 10;
+
+  //     startTime.then(function(time) {
+  //         var timeSplit = time.split(':');
+  //         var agendaStartTime = agenda.timeNowAdjusted(+timeSplit[0], +timeSplit[1]);
+  //         console.log('agendaStartTime: ' + agendaStartTime);
+  //         var expectedEndTime = agenda.timeNowAdjustedText(
+  //           agendaStartTime.getHours(), agendaStartTime.getMinutes() + agendaDuration);
+
+  //           expect(agenda.allTaskStartTimes().last().getText()).toEqual(expectedEndTime); //FIXME
+  //     });
+  //   });
+  // });
+
   it('should be able to edit task title to a text', () => {
     var title = agenda.updateTaskTitle();
 
@@ -134,9 +159,9 @@ describe('Flexagenda', function() {
   //  //expect title empty
   //  //excpect duration default
   //  //expect done false
-  // });  
+  // }); 
 
-  // it('should be able calculate end time of all tasks based on duration', () => {
+  // it('should be able to delete all tasks leaving one empty', () => {
 
-  // });
+  // }); 
 });

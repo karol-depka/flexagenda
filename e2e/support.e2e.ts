@@ -42,7 +42,15 @@ export class FlexagendaCliPage {
   }
 
   countTasks() {
-    return element.all(by.css('task')).count();
+   return this.allTasks().count();
+  }
+
+  allTaskStartTimes() {
+    return element.all(by.id('taskStart'));
+  }
+
+  allTasks() {
+    return element.all(by.css('task'));
   }
 
   updateTaskTitle() {
@@ -83,6 +91,10 @@ export class FlexagendaCliPage {
     return minutes.toString();
   }
 
+  allDurations() {
+    return element.all(this.locator.TASK_DURATION.getAttribute('value'));
+  }
+
   updateTaskToDone() {  //fixme
     this.locator.TASK_COMPLETE.click();
   }
@@ -92,7 +104,7 @@ export class FlexagendaCliPage {
   }
 
   updateStartTime(adjustMinutes: number) {
-    var timeFormatted = this.timeNowAdjusted(0, adjustMinutes);
+    var timeFormatted = this.timeNowAdjustedText(0, adjustMinutes);
     this.locator.AGENDA_START_TIME_INPUT.sendKeys(timeFormatted);
 
     // //change focus to save
@@ -101,12 +113,19 @@ export class FlexagendaCliPage {
     return timeFormatted;
   }
 
-  timeNowAdjusted(hours: number, minutes: number) {
-    var time = new Date();
-    var timeFormatted = this.addZero(time.getHours())
-      + ':' + this.addZero((time.getMinutes() + minutes));
+  timeNowAdjustedText(hours: number, minutes: number) {
+    var time = this.timeNowAdjusted(hours, minutes);
+    var timeFormatted = this.addZero(time.getHours()) + ':' + this.addZero(time.getMinutes());
 
     return timeFormatted;
+  }
+
+  timeNowAdjusted(hours: number, minutes: number) {
+    var time = new Date();
+    time.setHours(time.getHours() + hours);
+    time.setMinutes(time.getMinutes() + minutes);
+
+    return time;
   }
 
   addZero(input): string {
