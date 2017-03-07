@@ -55,7 +55,13 @@ describe('Flexagenda', function() {
 
       expect(agenda.countTasks()).toEqual(initialTaskCount-1);
     })
-  });  
+  });
+
+  it('should be able to show start time for all tasks', () => {
+    var setTime = locator.AGENDA_START_TIME_INPUT.getAttribute('value');
+
+    expect(locator.TASK_START_TIME.getText()).toEqual(setTime);
+  });
 
   it('should be able to see updated agenda start time in first task', () => {
     var startTime = agenda.updateStartTime(3);
