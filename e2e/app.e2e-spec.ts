@@ -61,7 +61,7 @@ describe('Flexagenda', function() {
     var startTime = agenda.updateStartTime(3);
 
     expect(locator.AGENDA_START_TIME_INPUT.getAttribute('value')).toEqual(startTime);
-    // expect(locator.TASK_START_TIME.getAttribute('value')).toEqual(startTime); //FIXME
+    expect(locator.TASK_START_TIME.getText()).toEqual(startTime);
   });
 
   it('should be able to set time to Now', () => {
@@ -69,7 +69,7 @@ describe('Flexagenda', function() {
     locator.AGENDA_START_TIME_NOW.click();
 
     expect(locator.AGENDA_START_TIME_INPUT.getAttribute('value')).toEqual(startTime);
-    // expect(locator.TASK_START_TIME.getAttribute('value')).toEqual(startTime); //FIXME
+    expect(locator.TASK_START_TIME.getText()).toEqual(startTime);
   });
 
   it('should be able to edit task title to a text', () => {
@@ -102,31 +102,35 @@ describe('Flexagenda', function() {
   //   expect(locator.TASK_COMPLETE.getAttribute('ng-reflect-checked')).toEqual('false');
   // });
 
-  it('should be able to move task up', () => {
-    // secondTask = ....locator.TASK_MOVE_UP.click();
-    // secondTask.click();
+  // it('should be able to move task up', () => {
+  //   // secondTask = ....locator.TASK_MOVE_UP.click();
+  //   // secondTask.click();
 
-  });
+  // });
 
-  it('should be able to move task down', () => {
-    // locator.TASK_MOVE_DOWN.click();
+  // it('should be able to move task down', () => {
+  //   // locator.TASK_MOVE_DOWN.click();
 
 
-  });
+  // });
 
-  it('should move up arrow NOT show for first task', () => {
+  // it('should move up arrow NOT show for first task', () => {
     
-  });
+  // });
 
-  it('should move down arrow NOT show for last task', () => {
+  // it('should move down arrow NOT show for last task', () => {
 
-  });
+  // });
 
-  it('should be possible to remove all tasks except one empty', () => {
-   //  expect(agenda.countTasks()).toEqual(1);
-   //expect description empty
-   //expect title empty
-   //excpect duration default
-   //expect done false
-  });  
+  // it('should be possible to remove all tasks except one empty', () => {
+  //  //  expect(agenda.countTasks()).toEqual(1);
+  //  //expect description empty
+  //  //expect title empty
+  //  //excpect duration default
+  //  //expect done false
+  // });  
+
+  // it('should be able calculate end time of all tasks based on duration', () => {
+
+  // });
 });

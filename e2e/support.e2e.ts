@@ -103,16 +103,14 @@ export class FlexagendaCliPage {
 
   timeNowAdjusted(hours: number, minutes: number) {
     var time = new Date();
-    var timeFormatted = time.getHours() + ':' + (time.getMinutes() + minutes);
+    var timeFormatted = this.addZero(time.getHours())
+      + ':' + this.addZero((time.getMinutes() + minutes));
 
     return timeFormatted;
   }
 
-  timeNow() {
-    var time = new Date();
-    var timeFormatted = time.getHours() + ':' + time.getMinutes();
-
-    return timeFormatted;
+  addZero(input): string {
+    return input < 10 ? ("0" + input) : input;
   }
 }
 
