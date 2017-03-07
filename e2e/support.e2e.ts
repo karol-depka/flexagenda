@@ -34,6 +34,13 @@ export class FlexagendaCliPage {
     this.locator.TASK_ADD_NEW_LAST.click();
   }
 
+  deleteTask() {
+    this.locator.TASK_DELETE.click();
+    
+    browser.wait(this.ec.presenceOf(this.locator.TASK_DELETE_CONFIRM));
+    this.locator.TASK_DELETE_CONFIRM.click();
+  }
+
   countTasks() {
     return element.all(by.css('task')).count();
   }
@@ -84,10 +91,26 @@ export class FlexagendaCliPage {
     this.updateTaskToDone();
   }
 
-  updateStartTime() {
+  updateStartTime(adjustMinutes: number) {
+    var timeFormatted = this.timeNowAdjusted(0, adjustMinutes);
+    this.locator.AGENDA_START_TIME_INPUT.sendKeys(timeFormatted);
+
+    // //change focus to save
+    // this.locator.TASK_TITLE.click();
+
+    return timeFormatted;
+  }
+
+  timeNowAdjusted(hours: number, minutes: number) {
+    var time = new Date();
+    var timeFormatted = time.getHours() + ':' + (time.getMinutes() + minutes);
+
+    return timeFormatted;
+  }
+
+  timeNow() {
     var time = new Date();
     var timeFormatted = time.getHours() + ':' + time.getMinutes();
-    this.locator.AGENDA_START_TIME_INPUT.sendKeys(timeFormatted);
 
     return timeFormatted;
   }

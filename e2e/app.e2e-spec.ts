@@ -46,10 +46,30 @@ describe('Flexagenda', function() {
     })
   });
 
-  it('should be able to see updated agenda start time in first task', () => {
-    agenda.updateStartTime();
+  it('should be able to delete a task', () => {
+    var initialTaskCount = 0;
+    var initialTaskCountPromise = agenda.countTasks();
+    initialTaskCountPromise.then(function(value) {
+      initialTaskCount = value;
+      agenda.deleteTask();
 
-    //expect(element(by.id('agendaStartTime'))).toEqual('11:11');
+      expect(agenda.countTasks()).toEqual(initialTaskCount-1);
+    })
+  });  
+
+  it('should be able to see updated agenda start time in first task', () => {
+    var startTime = agenda.updateStartTime(3);
+
+    expect(locator.AGENDA_START_TIME_INPUT.getAttribute('value')).toEqual(startTime);
+    // expect(locator.TASK_START_TIME.getAttribute('value')).toEqual(startTime); //FIXME
+  });
+
+  it('should be able to set time to Now', () => {
+    var startTime = agenda.updateStartTime(0);
+    locator.AGENDA_START_TIME_NOW.click();
+
+    expect(locator.AGENDA_START_TIME_INPUT.getAttribute('value')).toEqual(startTime);
+    // expect(locator.TASK_START_TIME.getAttribute('value')).toEqual(startTime); //FIXME
   });
 
   it('should be able to edit task title to a text', () => {
@@ -108,5 +128,5 @@ describe('Flexagenda', function() {
    //expect title empty
    //excpect duration default
    //expect done false
-  });
+  });  
 });
