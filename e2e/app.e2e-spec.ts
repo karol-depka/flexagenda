@@ -1,4 +1,4 @@
-import { browser, by } from 'protractor';
+import { browser, by, $ } from 'protractor';
 
 import { FlexagendaCliPage }  from './support.e2e';
 import { WaitHelpers }        from './waits.e2e'
@@ -10,7 +10,6 @@ describe('Flexagenda', function() {
   let agendaId = '-KdSBN0xRC0A62t_TzNm';
   let agenda: FlexagendaCliPage;
   let waits: WaitHelpers;
-  let taskCount = 0;
   let locator: FlexAgendaLocators;
 
 //  beforeEach(() => {
@@ -36,15 +35,16 @@ describe('Flexagenda', function() {
         .toEqual(true);
   });
 
-  // it('should be able to add an empty task', () => {
-  //   agenda.countTasks().then(function(count) {
-  //       taskCount = count;
-  //   });
+  it('should be able to add an empty task', () => {
+    var initialTaskCount = 0;
+    var initialTaskCountPromise = agenda.countTasks();
+    initialTaskCountPromise.then(function(value) {
+      initialTaskCount = value;
+      agenda.addEmptyTask();
 
-  //   agenda.addEmptyTask();
-
-  //   expect(agenda.countTasks()).toEqual(taskCount+1);
-  // });
+      expect(agenda.countTasks()).toEqual(initialTaskCount+1);
+    })
+  });
 
   it('should be able to see updated agenda start time in first task', () => {
     agenda.updateStartTime();
@@ -83,15 +83,19 @@ describe('Flexagenda', function() {
   // });
 
   it('should be able to move task up', () => {
+    // secondTask = ....locator.TASK_MOVE_UP.click();
+    // secondTask.click();
 
   });
 
   it('should be able to move task down', () => {
+    // locator.TASK_MOVE_DOWN.click();
+
 
   });
 
   it('should move up arrow NOT show for first task', () => {
-
+    
   });
 
   it('should move down arrow NOT show for last task', () => {
@@ -99,6 +103,10 @@ describe('Flexagenda', function() {
   });
 
   it('should be possible to remove all tasks except one empty', () => {
-
+   //  expect(agenda.countTasks()).toEqual(1);
+   //expect description empty
+   //expect title empty
+   //excpect duration default
+   //expect done false
   });
 });

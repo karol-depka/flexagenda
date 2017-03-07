@@ -4,14 +4,14 @@ import { element, by, browser, protractor } from 'protractor';
 
 export class WaitHelpers {
   ec = protractor.ExpectedConditions;
-  timeout = 3000;
+  timeout = 5000;
 
   waitForExpectedTextInElement(text: string, locator: string) {
     return this.waitForElementText(element(by.css(locator)), text);
   }
 
   waitForExpectedTextInElementById(text: string, locator: string) {
-      return this.waitForElementText(element(by.id(locator)), text);
+    return this.waitForElementText(element(by.id(locator)), text);
   }
 
   waitForElementText(element: ElementFinder, text: string) {
