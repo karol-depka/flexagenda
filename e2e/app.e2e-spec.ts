@@ -7,10 +7,10 @@ import { FlexAgendaLocators } from './elementLocators.e2e'
 browser.ignoreSynchronization = true;
 
 describe('Flexagenda', function() {
-  let agendaId = '-KdSBN0xRC0A62t_TzNm';
-  let agenda: FlexagendaCliPage;
-  let waits: WaitHelpers;
-  let locator: FlexAgendaLocators;
+  var agendaId = '-KdSBN0xRC0A62t_TzNm';
+  var agenda: FlexagendaCliPage;
+  var waits: WaitHelpers;
+  var locator: FlexAgendaLocators;
 
 //  beforeEach(() => {
     agenda = new FlexagendaCliPage();
@@ -43,6 +43,7 @@ describe('Flexagenda', function() {
       agenda.addEmptyTask();
 
       expect(agenda.countTasks()).toEqual(initialTaskCount+1);
+      //TODO: add expect for task to be empty
     })
   });
 
@@ -78,30 +79,32 @@ describe('Flexagenda', function() {
     expect(locator.TASK_START_TIME.getText()).toEqual(startTime);
   });
 
-  // it('should be able calculate end time of all tasks based on duration', () => {
-  //   var i = 0;
-  //   while (i <= 10) {
-  //     agenda.addEmptyTask();
-  //     i++;
-  //   }
+  it('should be able calculate end time of all tasks based on duration', () => {
+    var i = 0;
+    while (i <= 10) {
+      agenda.addEmptyTask();
+      i++;
+    }
 
-  //   var startTime = locator.AGENDA_START_TIME_INPUT.getAttribute('value');
-  //   var tasksCount = agenda.countTasks();   //promise; assumption: last task is the final (END) task
+    agenda.updateStartTime(0);    //just a workaround a bug with displaying task start time
 
-  //   tasksCount.then(function(count) {
-  //     var agendaDuration = count * 10;
+    var startTime = locator.AGENDA_START_TIME_INPUT.getAttribute('value');
+    var tasksCount = agenda.countTasks();   //promise; assumption: last task is the final (END) task
 
-  //     startTime.then(function(time) {
-  //         var timeSplit = time.split(':');
-  //         var agendaStartTime = agenda.timeNowAdjusted(+timeSplit[0], +timeSplit[1]);
-  //         console.log('agendaStartTime: ' + agendaStartTime);
-  //         var expectedEndTime = agenda.timeNowAdjustedText(
-  //           agendaStartTime.getHours(), agendaStartTime.getMinutes() + agendaDuration);
+    tasksCount.then(function(count) {
+      var agendaDuration = (count - 1) * 10;      //TODO: remove -1 when final (END) task is added
+      console.log('--------- agedaDuration: ' + agendaDuration);
 
-  //           expect(agenda.allTaskStartTimes().last().getText()).toEqual(expectedEndTime); //FIXME
-  //     });
-  //   });
-  // });
+      startTime.then(function(time) {
+          var agendaStartTime = agenda.timeAdjustedTextBy(time, 0);
+          console.log('agendaStartTime: ' + agendaStartTime);
+          var expectedEndTime = agenda.timeAdjustedTextBy(agendaStartTime, agendaDuration);
+          console.log('expectedEndTime: ' + expectedEndTime);
+
+          expect(agenda.allTaskStartTimes().last().getText()).toEqual(expectedEndTime);
+      });
+    });
+  });
 
   it('should be able to edit task title to a text', () => {
     var title = agenda.updateTaskTitle();
@@ -142,7 +145,6 @@ describe('Flexagenda', function() {
   // it('should be able to move task down', () => {
   //   // locator.TASK_MOVE_DOWN.click();
 
-
   // });
 
   // it('should move up arrow NOT show for first task', () => {
@@ -150,18 +152,22 @@ describe('Flexagenda', function() {
   // });
 
   // it('should move down arrow NOT show for last task', () => {
-
+    //fix checking last item before this one can be implemented
   // });
 
-  // it('should be possible to remove all tasks except one empty', () => {
-  //  //  expect(agenda.countTasks()).toEqual(1);
-  //  //expect description empty
-  //  //expect title empty
-  //  //excpect duration default
-  //  //expect done false
-  // }); 
+  it('should be able to delete all tasks leaving one empty', () => {
+      agenda.allTasks().count().then(function(count) {
+        var i = count;
+        while (i > 0) {
+          agenda.deleteTask();
+          i--;
+        }
+      });
 
-  // it('should be able to delete all tasks leaving one empty', () => {
-
-  // }); 
+      expect(agenda.allTasks().count()).toEqual(1);
+      expect(locator.TASK_TITLE.getAttribute('value')).toEqual('');
+      expect(locator.TASK_DESCRIPTION.getAttribute('value')).toEqual('');
+      expect(locator.TASK_DURATION.getAttribute('value')).toEqual('10');
+   //   expect(locator.TASK_COMPLETE.getAttribute('value')).toEqual('false');   //FIXME
+  }); 
 });

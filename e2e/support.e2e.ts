@@ -107,23 +107,36 @@ export class FlexagendaCliPage {
     var timeFormatted = this.timeNowAdjustedText(0, adjustMinutes);
     this.locator.AGENDA_START_TIME_INPUT.sendKeys(timeFormatted);
 
-    // //change focus to save
-    // this.locator.TASK_TITLE.click();
-
     return timeFormatted;
   }
 
-  timeNowAdjustedText(hours: number, minutes: number) {
+  timeNowAdjustedText(hours: number, minutes: number) {   //not sure if it's working properly
     var time = this.timeNowAdjusted(hours, minutes);
     var timeFormatted = this.addZero(time.getHours()) + ':' + this.addZero(time.getMinutes());
 
     return timeFormatted;
   }
 
-  timeNowAdjusted(hours: number, minutes: number) {
+  timeNowAdjusted(hours: number, minutes: number) {      //not sure if it's working properly
     var time = new Date();
     time.setHours(time.getHours() + hours);
     time.setMinutes(time.getMinutes() + minutes);
+
+    return time;
+  }
+
+  timeAdjustedTextBy(timeFormatted: string, minutes: number) { 
+    var time = this.timeAdjustedBy(timeFormatted, minutes);
+    var timeText = this.addZero(time.getHours()) + ':' + this.addZero(time.getMinutes());
+
+    return timeText;
+  }
+
+  timeAdjustedBy(timeFormatted: string, minutes: number) {
+    var timeSplit = timeFormatted.split(':');
+    var time = new Date();
+    time.setHours(+timeSplit[0]);
+    time.setMinutes(+timeSplit[1] + minutes);
 
     return time;
   }
