@@ -98,7 +98,7 @@ export class FlexagendaCliPage {
   updateTaskToDone() {     //fixme
     this.locator.TASK_COMPLETE.click();
     browser.refresh();      //Workaround to see the checkbox is clicked
-    browser.wait(this.ec.presenceOf(this.locator.TASK_COMPLETE)); //wait for checkbo to appear before it is checked by test
+    browser.wait(this.ec.presenceOf(this.locator.TASK_COMPLETE)); //wait for checkbox to appear before it is checked by test
   }
 
   updateTaskToNotDone() {  //fixme

@@ -147,13 +147,15 @@ describe('Flexagenda', function() {
 
   // });
 
-  // it('should move up arrow NOT show for first task', () => {
-    
-  // });
+  it('should only show arrow to move down for first task', () => {
+    expect(agenda.allTasks().first().element(by.id('taskMoveDown')).isPresent()).toBeTruthy();
+    expect(agenda.allTasks().first().element(by.id('taskMoveUp')).isPresent()).toBeFalsy();
+  });
 
-  // it('should move down arrow NOT show for last task', () => {
-    //fix checking last item before this one can be implemented
-  // });
+  it('should only show arrow to move up for last task', () => {
+    expect(agenda.allTasks().last().element(by.id('taskMoveUp')).isPresent()).toBeTruthy();
+    expect(agenda.allTasks().last().element(by.id('taskMoveDown')).isPresent()).toBeFalsy();
+  });
 
   it('should be able to delete all tasks leaving one empty', () => {
       agenda.allTasks().count().then(function(count) {
@@ -168,6 +170,6 @@ describe('Flexagenda', function() {
       expect(locator.TASK_TITLE.getAttribute('value')).toEqual('');
       expect(locator.TASK_DESCRIPTION.getAttribute('value')).toEqual('');
       expect(locator.TASK_DURATION.getAttribute('value')).toEqual('10');
-   //   expect(locator.TASK_COMPLETE.getAttribute('value')).toEqual('false');   //FIXME
+      expect(locator.TASK_COMPLETE.getAttribute('ng-reflect-checked')).toBeNull();
   }); 
 });
