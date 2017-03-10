@@ -95,8 +95,10 @@ export class FlexagendaCliPage {
     return element.all(this.locator.TASK_DURATION.getAttribute('value'));
   }
 
-  updateTaskToDone() {  //fixme
+  updateTaskToDone() {     //fixme
     this.locator.TASK_COMPLETE.click();
+    browser.refresh();      //Workaround to see the checkbox is clicked
+    browser.wait(this.ec.presenceOf(this.locator.TASK_COMPLETE)); //wait for checkbo to appear before it is checked by test
   }
 
   updateTaskToNotDone() {  //fixme

@@ -92,7 +92,7 @@ describe('Flexagenda', function() {
     var tasksCount = agenda.countTasks();   //promise; assumption: last task is the final (END) task
 
     tasksCount.then(function(count) {
-      var agendaDuration = (count - 1) * 10;      //TODO: remove -1 when final (END) task is added
+      var agendaDuration = (count - 1) * 10;   //TODO: remove -1 when final (END) task is added
       console.log('--------- agedaDuration: ' + agendaDuration);
 
       startTime.then(function(time) {
@@ -124,17 +124,17 @@ describe('Flexagenda', function() {
     expect(locator.TASK_DURATION.getAttribute('value')).toEqual(duration);
   });
 
-  // it('should be able to mark task as done', () =>{   //FIXME: make me independent
-  //   agenda.updateTaskToDone();
+  it('should be able to mark task as done', () => {   //FIXME: make me independent
+    var successful = agenda.updateTaskToDone();
+    
+    expect(locator.TASK_COMPLETE.getAttribute('ng-reflect-checked')).toEqual('true');
+  });
 
-  //   expect(locator.TASK_COMPLETE.getAttribute('ng-reflect-checked')).toEqual('true');
-  // });
+  it('should be able to unmark task from done', () => {  //FIXME: make me independent
+    agenda.updateTaskToNotDone();
 
-  // it('should be able to unmark task from done', () => {  //FIXME: make me independent
-  //   agenda.updateTaskToNotDone();
-
-  //   expect(locator.TASK_COMPLETE.getAttribute('ng-reflect-checked')).toEqual('false');
-  // });
+    expect(locator.TASK_COMPLETE.getAttribute('ng-reflect-checked')).toBeNull();
+  });
 
   // it('should be able to move task up', () => {
   //   // secondTask = ....locator.TASK_MOVE_UP.click();
