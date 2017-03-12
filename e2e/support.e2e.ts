@@ -30,6 +30,10 @@ export class FlexagendaCliPage {
     return browser.wait(this.ec.presenceOf(this.locator.AGENDA_ADD_NEW));
   }
 
+  addEmptyTaskFirst() {
+    this.locator.TASK_ADD_NEW_ABOVE.click();
+  }
+
   addEmptyTask() {
     this.locator.TASK_ADD_NEW_LAST.click();
   }

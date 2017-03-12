@@ -6,6 +6,7 @@ export class FlexAgendaLocators {
     TASK_DURATION           = element(by.id('taskDuration'));
     TASK_COMPLETE           = element(by.id('taskComplete'));
     TASK_ADD_NEW_LAST       = element(by.id('taskAddNewLast'));
+    TASK_ADD_NEW_ABOVE      = element(by.id('taskAddAbove'));
     TASK_MOVE_UP            = element(by.id('taskMoveUp'));
     TASK_MOVE_DOWN          = element(by.id('taskMoveDown'));
     TASK_START_TIME         = element(by.id('taskStart'));

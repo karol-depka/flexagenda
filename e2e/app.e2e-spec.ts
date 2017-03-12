@@ -40,11 +40,15 @@ describe('Flexagenda', function() {
     var initialTaskCountPromise = agenda.countTasks();
     initialTaskCountPromise.then(function(value) {
       initialTaskCount = value;
-      agenda.addEmptyTask();
+      agenda.addEmptyTaskFirst();
 
       expect(agenda.countTasks()).toEqual(initialTaskCount+1);
-      //TODO: add expect for task to be empty
     })
+      
+      expect(locator.TASK_TITLE.getAttribute('value')).toEqual('');
+      expect(locator.TASK_DESCRIPTION.getAttribute('value')).toEqual('');
+      expect(locator.TASK_DURATION.getAttribute('value')).toEqual('10');
+      expect(locator.TASK_COMPLETE.getAttribute('ng-reflect-checked')).toBeNull();
   });
 
   it('should be able to delete a task', () => {
@@ -86,10 +90,10 @@ describe('Flexagenda', function() {
       i++;
     }
 
-    agenda.updateStartTime(0);    //just a workaround a bug with displaying task start time
+    agenda.updateStartTime(0);    //just a workaround for a bug with displaying task start time
 
     var startTime = locator.AGENDA_START_TIME_INPUT.getAttribute('value');
-    var tasksCount = agenda.countTasks();   //promise; assumption: last task is the final (END) task
+    var tasksCount = agenda.countTasks();   //assumption: last task is the final (END) task
 
     tasksCount.then(function(count) {
       var agendaDuration = (count - 1) * 10;   //TODO: remove -1 when final (END) task is added
