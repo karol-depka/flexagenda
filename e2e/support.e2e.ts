@@ -1,5 +1,5 @@
 // import { ElementFinder } from 'protractor/built/element';
-import { browser, element, by, protractor } from 'protractor';
+import { browser, element, by, protractor, $ } from 'protractor';
 
 import { WaitHelpers }        from './waits.e2e' 
 import { FlexAgendaLocators } from './elementLocators.e2e'
@@ -17,9 +17,9 @@ export class FlexagendaCliPage {
   }
 
   loginAndDisplayAgenda(agendaId: string) {
-    this.locator.LOGIN_INPUT.sendKeys(this.userLogin);
-    this.locator.LOGIN_PASSWORD.sendKeys(this.userPassword);
-    this.locator.LOGIN_BUTTON.click(); 
+    $(this.locator.LOGIN_INPUT_CSS).sendKeys(this.userLogin);
+    $(this.locator.LOGIN_PASSWORD_CSS).sendKeys(this.userPassword);
+    $(this.locator.LOGIN_BUTTON_CSS).click(); 
     this.waitForPageToLoadAfterLogin();
 
     browser.get('/agendas/' + agendaId);
@@ -27,22 +27,23 @@ export class FlexagendaCliPage {
   }
 
   private waitForPageToLoadAfterLogin() {
-    return browser.wait(this.ec.presenceOf(this.locator.AGENDA_ADD_NEW));
+    return browser.wait(this.ec.presenceOf($(this.locator.AGENDA_ADD_NEW_CSS)));
   }
 
   addEmptyTaskFirst() {
-    this.locator.TASK_ADD_NEW_ABOVE.click();
+    $(this.locator.TASK_ADD_NEW_ABOVE_CSS).click();
   }
 
   addEmptyTask() {
-    this.locator.TASK_ADD_NEW_LAST.click();
+    $(this.locator.TASK_ADD_NEW_LAST_CSS).click();
   }
 
   deleteTask() {
-    this.locator.TASK_DELETE.click();
+    $(this.locator.TASK_DELETE_CSS).click();
     
-    browser.wait(this.ec.presenceOf(this.locator.TASK_DELETE_CONFIRM));
-    this.locator.TASK_DELETE_CONFIRM.click();
+    var confirmDelete = $(this.locator.TASK_DELETE_CONFIRM_CSS);
+    browser.wait(this.ec.presenceOf(confirmDelete));
+    confirmDelete.click();
   }
 
   countTasks() {
@@ -61,11 +62,12 @@ export class FlexagendaCliPage {
     var miliseconds = new Date().getMilliseconds();
     var newTitle = 'This is my new title at ' + miliseconds + ' miliseconds';
 
-    this.locator.TASK_TITLE.clear();
-    this.locator.TASK_TITLE.sendKeys(newTitle);
+    var title = $(this.locator.TASK_TITLE_CSS);
+    title.clear();
+    title.sendKeys(newTitle);
     
     //change focus to save
-    this.locator.TASK_DESCRIPTION.click();
+    $(this.locator.TASK_DESCRIPTION_CSS).click();
 
     return newTitle;
   }
@@ -74,35 +76,37 @@ export class FlexagendaCliPage {
     var miliseconds = new Date().getMilliseconds();
     var newDescription = 'This is my new description at ' + miliseconds + ' miliseconds';
     
-    this.locator.TASK_DESCRIPTION.clear();
-    this.locator.TASK_DESCRIPTION.sendKeys(newDescription);
+    var description = $(this.locator.TASK_DESCRIPTION_CSS);
+    description.clear();
+    description.sendKeys(newDescription);
     
     //change focus to save
-    this.locator.TASK_TITLE.click();
+    $(this.locator.TASK_TITLE_CSS).click();
 
     return newDescription;
   }
 
   updateTaskDuration() {
     var minutes = new Date().getMinutes();
-    var taskDuration = this.locator.TASK_DURATION;
+    var taskDuration = $(this.locator.TASK_DURATION_CSS);
     taskDuration.clear();
     taskDuration.sendKeys(minutes);
     
     //change focus to save
-    this.locator.TASK_TITLE.click();
+    $(this.locator.TASK_TITLE_CSS).click();
 
     return minutes.toString();
   }
 
   allDurations() {
-    return element.all(this.locator.TASK_DURATION.getAttribute('value'));
+    return element.all($(this.locator.TASK_DURATION_CSS).getAttribute('value'));
   }
 
   updateTaskToDone() {     //fixme
-    this.locator.TASK_COMPLETE.click();
+    var taskComplete = $(this.locator.TASK_COMPLETE_CSS);
+    taskComplete.click();
     browser.refresh();      //Workaround to see the checkbox is clicked
-    browser.wait(this.ec.presenceOf(this.locator.TASK_COMPLETE)); //wait for checkbox to appear before it is checked by test
+    browser.wait(this.ec.presenceOf(taskComplete)); //wait for checkbox to appear before it is checked by test
   }
 
   updateTaskToNotDone() {  //fixme
@@ -111,7 +115,7 @@ export class FlexagendaCliPage {
 
   updateStartTime(adjustMinutes: number) {
     var timeFormatted = this.timeNowAdjustedText(0, adjustMinutes);
-    this.locator.AGENDA_START_TIME_INPUT.sendKeys(timeFormatted);
+    $(this.locator.AGENDA_START_TIME_INPUT_CSS).sendKeys(timeFormatted);
 
     return timeFormatted;
   }
