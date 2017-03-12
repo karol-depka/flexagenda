@@ -83,6 +83,63 @@ describe('Flexagenda', function() {
     expect(locator.TASK_START_TIME.getText()).toEqual(startTime);
   });
 
+  it('should be able to update task title', () => {
+    var title = agenda.updateTaskTitle();
+
+    expect(locator.TASK_TITLE.getAttribute('value')).toEqual(title);
+  });
+
+  it('should be able to update task description', () => {
+    var description = agenda.updateTaskDescription();
+
+    expect(locator.TASK_DESCRIPTION.getAttribute('value')).toEqual(description);
+  });
+
+  it('should be able to update task duration', () => {
+    var duration = agenda.updateTaskDuration();
+
+    expect(locator.TASK_DURATION.getAttribute('value')).toEqual(duration);
+  });
+
+  it('should be able to mark task as done', () => {   //FIXME: make me independent
+    var successful = agenda.updateTaskToDone();
+    
+    expect(locator.TASK_COMPLETE.getAttribute('ng-reflect-checked')).toEqual('true');
+  });
+
+  it('should be able to unmark task from done', () => {  //FIXME: make me independent
+    agenda.updateTaskToNotDone();
+
+    expect(locator.TASK_COMPLETE.getAttribute('ng-reflect-checked')).toBeNull();
+  });
+
+  it('should be able to move task down', () => {
+    agenda.addEmptyTaskFirst();
+    var title = agenda.updateTaskTitle();
+    locator.TASK_MOVE_DOWN.click();
+
+    expect(locator.TASK_TITLE.getAttribute('value')).not.toEqual(title);
+    expect(agenda.allTasks().last().element(by.id('taskTitle')).getAttribute('value')).toEqual(title);
+  });
+
+  it('should be able to move task up', () => {
+    var title = agenda.updateTaskTitle();
+    agenda.allTasks().last().element(by.id('taskMoveUp')).click();
+
+    expect(locator.TASK_TITLE.getAttribute('value')).not.toEqual(title);
+    expect(agenda.allTasks().last().element(by.id('taskTitle')).getAttribute('value')).toEqual(title);
+  });
+
+  it('should only show arrow to move down for first task', () => {
+    expect(agenda.allTasks().first().element(by.id('taskMoveDown')).isPresent()).toBeTruthy();
+    expect(agenda.allTasks().first().element(by.id('taskMoveUp')).isPresent()).toBeFalsy();
+  });
+
+  it('should only show arrow to move up for last task', () => {
+    expect(agenda.allTasks().last().element(by.id('taskMoveUp')).isPresent()).toBeTruthy();
+    expect(agenda.allTasks().last().element(by.id('taskMoveDown')).isPresent()).toBeFalsy();
+  });
+
   it('should be able calculate end time of all tasks based on duration', () => {
     var i = 0;
     while (i <= 10) {
@@ -108,57 +165,6 @@ describe('Flexagenda', function() {
           expect(agenda.allTaskStartTimes().last().getText()).toEqual(expectedEndTime);
       });
     });
-  });
-
-  it('should be able to edit task title to a text', () => {
-    var title = agenda.updateTaskTitle();
-
-    expect(locator.TASK_TITLE.getAttribute('value')).toEqual(title);
-  });
-
-  it('should be able to edit task description to a text', () => {
-    var title = agenda.updateTaskDescription();
-
-    expect(locator.TASK_DESCRIPTION.getAttribute('value')).toEqual(title);
-  });
-
-  it('should be able to edit task duration', () => {
-    var duration = agenda.updateTaskDuration();
-
-    expect(locator.TASK_DURATION.getAttribute('value')).toEqual(duration);
-  });
-
-  it('should be able to mark task as done', () => {   //FIXME: make me independent
-    var successful = agenda.updateTaskToDone();
-    
-    expect(locator.TASK_COMPLETE.getAttribute('ng-reflect-checked')).toEqual('true');
-  });
-
-  it('should be able to unmark task from done', () => {  //FIXME: make me independent
-    agenda.updateTaskToNotDone();
-
-    expect(locator.TASK_COMPLETE.getAttribute('ng-reflect-checked')).toBeNull();
-  });
-
-  // it('should be able to move task up', () => {
-  //   // secondTask = ....locator.TASK_MOVE_UP.click();
-  //   // secondTask.click();
-
-  // });
-
-  // it('should be able to move task down', () => {
-  //   // locator.TASK_MOVE_DOWN.click();
-
-  // });
-
-  it('should only show arrow to move down for first task', () => {
-    expect(agenda.allTasks().first().element(by.id('taskMoveDown')).isPresent()).toBeTruthy();
-    expect(agenda.allTasks().first().element(by.id('taskMoveUp')).isPresent()).toBeFalsy();
-  });
-
-  it('should only show arrow to move up for last task', () => {
-    expect(agenda.allTasks().last().element(by.id('taskMoveUp')).isPresent()).toBeTruthy();
-    expect(agenda.allTasks().last().element(by.id('taskMoveDown')).isPresent()).toBeFalsy();
   });
 
   it('should be able to delete all tasks leaving one empty', () => {
