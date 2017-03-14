@@ -11,6 +11,7 @@
   This is gonna be task tree with drag and drop
   <tree-root [nodes]="nodes"
         [options]="customTemplateStringOptions"
+        (onEvent)="onEvent($event)"
   ></tree-root>
   <template ngFor let-task [ngForOf]="tasks | async" let-i="index" [ngForTrackBy]="trackById"
     let-isFirst="first" let-isLast="last" >

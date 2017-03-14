@@ -68,4 +68,8 @@ export class TaskTreeComponent extends TasksListComponent {
     super(tasksService, dialog, snackBar);
   }
 
+  onEvent(event) {
+    console.log(event);
+  }
+
 }
