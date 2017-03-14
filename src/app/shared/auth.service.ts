@@ -5,22 +5,36 @@ import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/ro
 @Injectable()
 export class AuthService {
 
-  constructor(public af: AngularFire,
-              public router: Router) {}
+  public uid;
 
-  redirectUrl: string='/agendas';  
+  authObserver = (auth)=>{
+      if(auth) {
+        this.uid = auth.uid;
+        this.router.navigate([this.redirectUrl]);
+      }
+  }
+
+  constructor(
+      public af: AngularFire,
+      public router: Router) {
+    this.af.auth.subscribe(this.authObserver);
+  }
+
+  redirectUrl: string='/agendas';
   login(uEmail,uPassword) {
+; // TODO: remove coode duplication with email login
     if (uEmail) {
       this.af.auth.login({
         email: uEmail,
         password: uPassword
-      }).then(()=>{this.router.navigate([this.redirectUrl])});
+      }).then(this.authObserver);
+      // TODO: if we press the login button twice, will this happen multiple times?
     }
     else {
       this.af.auth.login({
         provider: AuthProviders.Google,
         method: AuthMethods.Popup
-      }).then(()=>this.router.navigate([this.redirectUrl]))
+      }).then(this.authObserver);
     }
   }
   logOut() {

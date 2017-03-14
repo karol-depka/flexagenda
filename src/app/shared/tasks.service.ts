@@ -1,3 +1,4 @@
+import { AuthService } from './auth.service';
 import { Injectable, ViewContainerRef } from '@angular/core';
 import { AngularFire,
          FirebaseListObservable,
@@ -10,9 +11,12 @@ export class TasksService {
   taskOrder: FirebaseObjectObservable<any[]>;
   TasksCount: number;
 
-  constructor(public af:AngularFire) {
+  constructor(
+      public af:AngularFire,
+      public authService : AuthService
+      ) {
     //this.af.auth.subscribe(auth => console.log(auth));
-    this.AGENDAS = af.database.list('/agendas');
+    this.AGENDAS = af.database.list('/agendas/' + this.authService.uid); // FIXME: use agendas list service
   }
 
   /*

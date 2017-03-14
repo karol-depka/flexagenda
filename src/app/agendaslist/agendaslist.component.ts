@@ -5,6 +5,7 @@ import { TasksListComponent } from '../taskslist/taskslist.component';
 import { TasksService } from '../shared/tasks.service';
 import { SnackBarComponent } from '../shared/snackbar/snackbar.component';
 import { ConfirmationDialog } from '../shared/confirmationdialog/confirmationdialog.component';
+import { AuthService } from '../shared/auth.service';
 
 
 @Component({
@@ -17,7 +18,9 @@ export class AgendasListComponent implements OnInit {
   agendas;
   dialogRef: MdDialogRef<ConfirmationDialog>;
 
-  constructor( public tasksService: TasksService,
+  constructor(
+    public authService: AuthService,
+    public tasksService: TasksService,
     public dialog: MdDialog,
     public snackBar: SnackBarComponent,
     private router: Router,
@@ -38,7 +41,7 @@ export class AgendasListComponent implements OnInit {
     This function adds newAgenda object to the database.
 
     */
-    var agendasList = this.tasksService.af.database.list('/agendas');
+    var agendasList = this.tasksService.af.database.list('/agendas/' + this.authService.uid /* FIXME */);
     var newAgendaKey: string;
     var newTaskKey: string;
 

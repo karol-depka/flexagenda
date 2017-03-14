@@ -4,6 +4,8 @@
 <button id="agendaAddNew" md-mini-fab color="primary" title="Add New Agenda"
 (click)="addNewAgenda()">
 <md-icon class="md-24">add</md-icon></button></h3>
+
+User uid: {{ authService.uid }}
 <ul #agendasList>
      <!-- each agenda goes here -->
     <li *ngFor="let agenda of agendas | async; trackBy: trackById" id="agenda">
