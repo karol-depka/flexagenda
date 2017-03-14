@@ -22,14 +22,10 @@ export class WaitHelpers {
   }
 
   waitForElementPresent(elementCss) {
-    return browser.wait(this.ec.presenceOf(element(by.css(elementCss))));
+    return browser.wait(this.ec.presenceOf(elementCss));
   }
 
   waitForElement(webElement) {
     return browser.wait(this.ec.presenceOf(webElement));
-  }
-
-  waitForElementPresentById(elementId) {
-    return browser.wait(this.ec.presenceOf(element(by.id(elementId))));
   }
 }

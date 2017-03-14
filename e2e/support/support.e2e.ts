@@ -1,5 +1,5 @@
 // import { ElementFinder } from 'protractor/built/element';
-import { browser, element, by, protractor, $ } from 'protractor';
+import { browser, element, by, protractor, $, $$ } from 'protractor';
 
 import { WaitHelpers }        from './waits.e2e' 
 import { FlexAgendaLocators } from './elementLocators.e2e'
@@ -19,11 +19,11 @@ export class FlexagendaCliPage {
   loginAndDisplayAgenda(agendaId: string) {
     $(this.locator.LOGIN_INPUT_CSS).sendKeys(this.userLogin);
     $(this.locator.LOGIN_PASSWORD_CSS).sendKeys(this.userPassword);
-    $(this.locator.LOGIN_BUTTON_CSS).click(); 
+    $$(this.locator.LOGIN_BUTTON_CSS).first().click(); 
     this.waitForPageToLoadAfterLogin();
 
     browser.get('/agendas/' + agendaId);
-    this.waits.waitForElementPresent('task');
+    this.waits.waitForElementPresent($(this.locator.TASK_CSS));
   }
 
   private waitForPageToLoadAfterLogin() {
@@ -31,7 +31,7 @@ export class FlexagendaCliPage {
   }
 
   addEmptyTaskFirst() {
-    $(this.locator.TASK_ADD_NEW_ABOVE_CSS).click();
+    $$(this.locator.TASK_ADD_NEW_ABOVE_CSS).first().click();
   }
 
   addEmptyTask() {
@@ -39,7 +39,7 @@ export class FlexagendaCliPage {
   }
 
   deleteTask() {
-    $(this.locator.TASK_DELETE_CSS).click();
+    $$(this.locator.TASK_DELETE_CSS).first().click();
     
     var confirmDelete = $(this.locator.TASK_DELETE_CONFIRM_CSS);
     browser.wait(this.ec.presenceOf(confirmDelete));
@@ -51,23 +51,23 @@ export class FlexagendaCliPage {
   }
 
   allTaskStartTimes() {
-    return element.all(by.id('taskStart'));
+    return $$(this.locator.TASK_START_TIME_CSS);
   }
 
   allTasks() {
-    return element.all(by.css('task'));
+    return $$(this.locator.TASK_CSS);
   }
 
   updateTaskTitle() {
     var miliseconds = new Date().getMilliseconds();
     var newTitle = 'This is my new title at ' + miliseconds + ' miliseconds';
 
-    var title = $(this.locator.TASK_TITLE_CSS);
+    var title = $$(this.locator.TASK_TITLE_CSS).first();
     title.clear();
     title.sendKeys(newTitle);
     
     //change focus to save
-    $(this.locator.TASK_DESCRIPTION_CSS).click();
+    $$(this.locator.TASK_DESCRIPTION_CSS).first().click();
 
     return newTitle;
   }
@@ -76,34 +76,34 @@ export class FlexagendaCliPage {
     var miliseconds = new Date().getMilliseconds();
     var newDescription = 'This is my new description at ' + miliseconds + ' miliseconds';
     
-    var description = $(this.locator.TASK_DESCRIPTION_CSS);
+    var description = $$(this.locator.TASK_DESCRIPTION_CSS).first();
     description.clear();
     description.sendKeys(newDescription);
     
     //change focus to save
-    $(this.locator.TASK_TITLE_CSS).click();
+    $$(this.locator.TASK_TITLE_CSS).first().click();
 
     return newDescription;
   }
 
   updateTaskDuration() {
     var minutes = new Date().getMinutes();
-    var taskDuration = $(this.locator.TASK_DURATION_CSS);
+    var taskDuration = $$(this.locator.TASK_DURATION_CSS).first();
     taskDuration.clear();
     taskDuration.sendKeys(minutes);
     
     //change focus to save
-    $(this.locator.TASK_TITLE_CSS).click();
+    $$(this.locator.TASK_TITLE_CSS).first().click();
 
     return minutes.toString();
   }
 
   allDurations() {
-    return element.all($(this.locator.TASK_DURATION_CSS).getAttribute('value'));
+    return $$(this.locator.TASK_DURATION_CSS).getAttribute('value');
   }
 
   updateTaskToDone() {     //fixme
-    var taskComplete = $(this.locator.TASK_COMPLETE_CSS);
+    var taskComplete = $$(this.locator.TASK_COMPLETE_CSS).first();
     taskComplete.click();
     browser.refresh();      //Workaround to see the checkbox is clicked
     browser.wait(this.ec.presenceOf(taskComplete)); //wait for checkbox to appear before it is checked by test

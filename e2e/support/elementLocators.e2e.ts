@@ -1,6 +1,7 @@
 import { element, by } from 'protractor'
 
 export class FlexAgendaLocators {
+    TASK_CSS                    = 'task';
     TASK_TITLE_CSS              = '#taskTitle';
     TASK_DESCRIPTION_CSS        = '#taskDescription';
     TASK_DURATION_CSS           = '#taskDuration';
@@ -16,6 +17,7 @@ export class FlexAgendaLocators {
     LOGIN_INPUT_CSS             = '#md-input-0-input';
     LOGIN_PASSWORD_CSS          = '#md-input-1-input';
     LOGIN_BUTTON_CSS            = '#login';
+    LOGOUT_BUTTON_CSS           = '#logout';
 
     AGENDA_START_TIME_INPUT_CSS = '#agendaStartTime';
     AGENDA_START_TIME_NOW_CSS   = '#agendaSetTimeToNow';

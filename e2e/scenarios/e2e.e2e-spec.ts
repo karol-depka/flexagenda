@@ -1,37 +1,36 @@
 import { browser, by, $ } from 'protractor';
 
-import { FlexagendaCliPage }  from './support.e2e';
-import { WaitHelpers }        from './waits.e2e'
-import { FlexAgendaLocators } from './elementLocators.e2e'
+import { FlexagendaCliPage }  from '../support/support.e2e';
+import { WaitHelpers }        from '../support/waits.e2e'
+import { FlexAgendaLocators } from '../support/elementLocators.e2e'
 
 browser.ignoreSynchronization = true;
 
-describe('Flexagenda', function() {
-  var agendaId = '-KdSBN0xRC0A62t_TzNm';
+describe('User', function() {
+  var agendaId = '-KfBt0kJmWlouYn8Mdjn';     //'-KdSBN0xRC0A62t_TzNm';
   var agenda: FlexagendaCliPage;
-  var waits: WaitHelpers;
+  var wait: WaitHelpers;
   var locator: FlexAgendaLocators;
 
-//  beforeEach(() => {
+  beforeAll(() => {
     agenda = new FlexagendaCliPage();
-    waits = new WaitHelpers();
+    wait = new WaitHelpers();
     locator = new FlexAgendaLocators();
-
-//});
+  });
 
   it('should display message saying to login', () => {
     agenda.navigateToLogin();
 
-    expect(waits.waitForExpectedTextInElement('Please login', 'app-login > p'))
+    expect(wait.waitForExpectedTextInElement('Please login', 'app-login > p'))
         .toEqual(true);
   });
 
   it('should login', () => {
     agenda.loginAndDisplayAgenda(agendaId);
 
-    expect(waits.waitForElementNotPresent('app-login > p'))
+    expect(wait.waitForElementNotPresent('app-login > p'))
         .toEqual(true);
-    expect(waits.waitForExpectedTextInElement('Logged in as ' + agenda.userLogin, 'flexagenda-app > span'))
+    expect(wait.waitForExpectedTextInElement('Logged in as ' + agenda.userLogin, 'flexagenda-app > span'))
         .toEqual(true);
   });
 
@@ -182,4 +181,8 @@ describe('Flexagenda', function() {
       expect($(locator.TASK_DURATION_CSS).getAttribute('value')).toEqual('10');
       expect($(locator.TASK_COMPLETE_CSS).getAttribute('ng-reflect-checked')).toBeNull();
   }); 
+
+  afterAll(() => {
+    $(locator.LOGOUT_BUTTON_CSS).click();
+  });
 });
