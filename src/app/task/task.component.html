@@ -6,7 +6,7 @@
         (click)="tasksListComponent.addNewTask(task, isFirst)"
         title="Add task above"><md-icon>add</md-icon></button>
     <span class="badge">
-    order: {{task.order}}
+    <!--order: {{task.order}}-->
     <md-checkbox id="taskComplete" color="primary" [checked]="task.completed"
             (change)="updateObject(task.$key, 'completed', !(task.completed), 'boolean')">
             {{taskIndex+1}}</md-checkbox></span>
@@ -14,7 +14,8 @@
     <input #duration id="taskDuration" type="number" class="duration" size="3" min="1"
         value="{{task.duration}}"
         (change)="updateObject(task.$key, 'duration', duration.value, 'number')"/>
-    <textarea #title id="taskTitle" type="text" class="title" rows="1" maxlength="60"
+    <!--<textarea #title id="taskTitle" type="text" class="title" rows="1" maxlength="60"-->
+    <textarea #title id="taskTitle" type="text" class="title"
             placeholder="New title" value="{{task.title}}"
             (change)="updateObject(task.$key, 'title', title.value, 'string')"></textarea>
     <button id="taskDelete" md-icon-button color="primary" class="trash"
