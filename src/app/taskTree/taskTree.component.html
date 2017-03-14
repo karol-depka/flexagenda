@@ -9,6 +9,9 @@
   </li>-->
 
   This is gonna be task tree with drag and drop
+  <tree-root [nodes]="nodes"
+        [options]="customTemplateStringOptions"
+  ></tree-root>
   <template ngFor let-task [ngForOf]="tasks | async" let-i="index" [ngForTrackBy]="trackById"
     let-isFirst="first" let-isLast="last" >
       <task [isFirst]="isFirst" [isLast]="isLast" [taskIndex]=i [task]=task [tasksListComponent]="this">
