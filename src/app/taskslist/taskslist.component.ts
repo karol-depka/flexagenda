@@ -36,7 +36,6 @@ import {FirebaseListObservable} from "angularfire2";
   ],
   providers: [TasksService]
 })
-
 export class TasksListComponent implements OnInit {
   tasks: FirebaseListObservable<any[]>;
   selectedTask;

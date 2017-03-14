@@ -1,0 +1,23 @@
+<ul #generalTasksUl class="tasks"
+(keyup.control.enter)="addNewTask(null, false)">
+  <!-- Test for crlf -->
+  <!--<li>
+  <span class="column-header">ID</span>
+  <span class="column-header">start</span>
+  <span class="column-header">duration</span>
+  <span class="column-header">title</span>
+  </li>-->
+
+  This is gonna be task tree with drag and drop
+  <template ngFor let-task [ngForOf]="tasks | async" let-i="index" [ngForTrackBy]="trackById"
+    let-isFirst="first" let-isLast="last" >
+      <task [isFirst]="isFirst" [isLast]="isLast" [taskIndex]=i [task]=task [tasksListComponent]="this">
+      </task>
+  </template>
+  <button md-icon-button id="taskAddNewLast"
+  (click)="addNewTask(null, false)">
+    <md-icon>add</md-icon></button>
+</ul>
+<div *ngIf="selectedTask">
+  <h2>ID:{{selectedTask.id}} task details!</h2>
+</div>

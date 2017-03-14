@@ -9,7 +9,6 @@ import { TasksListComponent } from "../taskslist/taskslist.component";
   styleUrls: ['./task.component.css'],
   providers: [TasksService, TasksListComponent]
 })
-
 export class TaskComponent implements OnInit {
   tasks;
   tasksService: TasksService;

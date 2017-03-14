@@ -1,3 +1,5 @@
+import { TaskTreeComponent } from './taskTree/taskTree.component';
+import { TaskListNoDragComponent } from './taskListNoDrag/taskListNoDrag.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
@@ -43,8 +45,10 @@ const firebaseAuthConfig = {
     TestComponent,
     AgendasListComponent,
     TaskComponent,
+    TaskTreeComponent,
     TasksListComponent,
     SnackBarComponent,
+    TaskListNoDragComponent,
     ConfirmationDialog,
     AgendaComponent,
     LoginComponent
