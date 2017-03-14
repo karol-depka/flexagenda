@@ -52,7 +52,8 @@ export class TasksListComponent implements OnInit {
 
   constructor(public tasksService: TasksService,
               public dialog: MdDialog,
-              public snackBar: SnackBarComponent) {}
+              public snackBar: SnackBarComponent,
+              /*private dragulaService: DragulaService*/) {}
 
   ngOnInit(): void {
     this.getTasks();

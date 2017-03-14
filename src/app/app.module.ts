@@ -21,13 +21,15 @@ import { AuthService } from './shared/auth.service';
 import { RouterGuardService } from './shared/router-guard.service';
 import { TasksService } from './shared/tasks.service';
 import { LoginComponent } from './shared/login/login.component';
+import { TreeModule } from 'angular-tree-component';
+
 
 export const firebaseConfig ={
-  apiKey: "AIzaSyAY3ksN18uBrFPJ60EjCrQbm41lcBUqDkA",
-  authDomain: "flexagendatests.firebaseapp.com",
-  databaseURL: "https://flexagendatests.firebaseio.com",
-  storageBucket: "flexagendatests.appspot.com",
-  messagingSenderId: "118818375162"
+  apiKey: "AIzaSyCUkZPJQS8aOMDBNi0gDmC8XGM9-BC-BxI",
+  authDomain: "flexagenda-1782e.firebaseapp.com",
+  databaseURL: "https://flexagenda-1782e.firebaseio.com",
+  storageBucket: "flexagenda-1782e.appspot.com",
+  messagingSenderId: "994212923829"
 }
 
 const firebaseAuthConfig = {
@@ -53,6 +55,7 @@ const firebaseAuthConfig = {
   imports: [
     BrowserModule,
     HttpModule,
+    TreeModule,
     MaterialModule.forRoot(),
     AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig),
     RouterModule.forRoot([
@@ -84,6 +87,6 @@ const firebaseAuthConfig = {
     ])
   ],
   providers: [AuthService, RouterGuardService, TasksService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent] // TODO: add AuthService as singleton to bootstrap?
 })
 export class AppModule { }
