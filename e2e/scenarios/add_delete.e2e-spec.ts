@@ -17,9 +17,9 @@ describe('User', function() {
 
     agenda.navigateToLogin();
 
-    wait.waitForExpectedTextInElement('Please login', 'app-login > p');
+    wait.waitForExpectedTextInElement('Please login', locator.LOGIN_TEXT_ELEMENT_CSS);
     agenda.loginAndDisplayAgenda(agendaId);
-    wait.waitForElementNotPresent('app-login > p');
+    wait.waitForElementNotPresent(locator.LOGIN_TEXT_ELEMENT_CSS);
   });
 
   it('should be able to add one task', () => {

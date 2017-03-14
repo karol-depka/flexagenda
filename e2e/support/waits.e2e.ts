@@ -1,16 +1,14 @@
-import { By } from 'protractor/built';
-import { ElementFinder } from 'protractor/built/element';
-import { element, by, browser, protractor } from 'protractor';
+import { element, by, browser, protractor, $, ElementFinder } from 'protractor';
 
 export class WaitHelpers {
   ec = protractor.ExpectedConditions;
 
-  waitForExpectedTextInElement(text: string, locator: string) {
-    return this.waitForElementText(element(by.css(locator)), text);
+  waitForExpectedTextInElement(text: string, elementCss: string) {
+    return this.waitForElementText($(elementCss), text);
   }
 
-  waitForExpectedTextInElementById(text: string, locator: string) {
-    return this.waitForElementText(element(by.id(locator)), text);
+  waitForExpectedTextInElementById(text: string, elementCss: string) {
+    return this.waitForElementText($(elementCss), text);
   }
 
   waitForElementText(element: ElementFinder, text: string) {
@@ -18,7 +16,7 @@ export class WaitHelpers {
   }
 
   waitForElementNotPresent(elementCss) {
-    return browser.wait(this.ec.not(this.ec.presenceOf(element(by.css(elementCss)))));
+    return browser.wait(this.ec.not(this.ec.presenceOf($(elementCss))));
   }
 
   waitForElementPresent(elementCss) {

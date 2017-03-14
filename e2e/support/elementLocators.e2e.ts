@@ -18,6 +18,7 @@ export class FlexAgendaLocators {
     LOGIN_PASSWORD_CSS          = '#md-input-1-input';
     LOGIN_BUTTON_CSS            = '#login';
     LOGOUT_BUTTON_CSS           = '#logout';
+    LOGIN_TEXT_ELEMENT_CSS      = 'app-login > p';
 
     AGENDA_START_TIME_INPUT_CSS = '#agendaStartTime';
     AGENDA_START_TIME_NOW_CSS   = '#agendaSetTimeToNow';
