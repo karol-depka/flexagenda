@@ -10,7 +10,7 @@
     <md-checkbox id="taskComplete" color="primary" [checked]="task.completed"
             (change)="updateObject(task.$key, 'completed', !(task.completed), 'boolean')">
             {{taskIndex+1}}</md-checkbox></span>
-    <span #start class="start">{{tasksListComponent.tasksStartTimes ? tasksListComponent.tasksStartTimes[taskIndex] : null}}</span>
+    <span #start id="taskStart" class="start">{{tasksListComponent.tasksStartTimes ? tasksListComponent.tasksStartTimes[taskIndex] : null}}</span>
     <input #duration id="taskDuration" type="number" class="duration" size="3" min="1"
         value="{{task.duration}}"
         (change)="updateObject(task.$key, 'duration', duration.value, 'number')"/>
