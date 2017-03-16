@@ -7,7 +7,7 @@ import { AngularFire,
 @Injectable()
 export class TasksService {
   TASKS: FirebaseListObservable<any[]>;
-  AGENDAS: FirebaseListObservable<any[]>;
+  AGENDAS_: FirebaseListObservable<any[]>; // lazy
   taskOrder: FirebaseObjectObservable<any[]>;
   TasksCount: number;
 
@@ -16,7 +16,10 @@ export class TasksService {
       public authService : AuthService
       ) {
     //this.af.auth.subscribe(auth => console.log(auth));
-    this.AGENDAS = af.database.list('/agendas/' + this.authService.uid); // FIXME: use agendas list service
+    var uid = this.authService.uid
+    // if ( ! uid ) {
+      console.log(" ! this.authService.uid ",  uid );
+    // }
   }
 
   /*
@@ -33,12 +36,21 @@ export class TasksService {
   }
 
   public getAgendas(): FirebaseListObservable<any[]> {
-    return this.AGENDAS;
+    var uid = this.authService.uid
+    if ( ! uid ) {
+      throw new Error("uid cannot be: " + uid);
+    }
+    // if ( ! uid ) {
+      console.log(" ! this.authService.uid ", uid );
+    if( ! this.AGENDAS_ ) {
+      this.AGENDAS_ = this.af.database.list('/agendas/' + uid); // FIXME: use agendas list service
+    }
+    return this.AGENDAS_;
   }
 
   public getAgenda(agendaKey : string): FirebaseObjectObservable<any[]> {
     var agenda: FirebaseObjectObservable<any[]>;
-    agenda = this.af.database.object('/agendas/' + agendaKey);
+    agenda = this.af.database.object('/agendas/' + this.authService.uid + "/" + agendaKey); // FIXME: duplication
 
     return agenda;
   }
@@ -90,7 +102,7 @@ export class TasksService {
           console.log(task.key)}
         )
        });
-       // FIXME: RACE CONDITION: ordersArray might not yet be initialized 
+       // FIXME: RACE CONDITION: ordersArray might not yet be initialized
        orderSubscription.unsubscribe();
        if (task) {
          return this.calculateNewTaskOrder(ordersArray,isFirst);
@@ -188,18 +200,18 @@ export class TasksService {
 
     return this.TasksCount;
   }
-  
+
   updateObject(object, key, updateKey, updateValue, type): void {
     if (type == 'number') updateValue = this.guardPositiveValue(updateValue,type);
 
     console.log("tasks list for agenda: " + this.TASKS)
-
+    console.log("updateObject: this.getAgendas().$ref.toString(): ", this.getAgendas().$ref.toString());
     switch (object) {
       case 'task':
           this.TASKS.update(key, {[updateKey]:updateValue}).then(_ => console.log('Task updated!'));
           break;
       case 'agenda':
-          this.AGENDAS.update(key, {[updateKey]:updateValue}).then(_ => console.log('Agenda updated!'));
+          this.getAgendas().update(key, {[updateKey]:updateValue}).then(_ => console.log('Agenda updated!'));
           break;
     }
   }
@@ -220,4 +232,5 @@ export class TasksService {
   addZero(input): string {
     return input < 10 ? ("0" + input) : input;
   }
+
 }
