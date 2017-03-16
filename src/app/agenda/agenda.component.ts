@@ -1,3 +1,4 @@
+import { TaskTreeComponent } from './../taskTree/taskTree.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { Router, ActivatedRoute, Params } from '@angular/router';
@@ -18,7 +19,7 @@ import { ConfirmationDialog } from '../shared/confirmationdialog/confirmationdia
 export class AgendaComponent implements OnInit {
   agendaKey: string = this._route.snapshot.params['agendaKey'];
   agenda;
-  @ViewChild(TasksListComponent) taskListComponent: TasksListComponent
+  @ViewChild('taskTree') taskListComponent: TasksListComponent
 
   constructor(private _route: ActivatedRoute,
               private _tasksService: TasksService,

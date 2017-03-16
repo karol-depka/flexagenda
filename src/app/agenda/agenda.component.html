@@ -8,6 +8,6 @@
       (click) = "updateTimeToNow()">Start Now</button>
       <input #agendaTitle id="agendaTitle" class="agenda-title" type="text" value="{{(agenda | async)?.title}}"
       (change) = "updateTitle(agendaTitle.value)"/>
-      <task-tree *ngIf='agenda | async' [agendaKey]='this.agendaKey'
+      <task-tree #taskTree *ngIf='agenda | async' [agendaKey]='this.agendaKey'
       [activeAgenda]='true' [agendaStartTime]='(agenda | async)?.startTime'></task-tree>
 </div>
