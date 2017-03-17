@@ -12,7 +12,6 @@ export class FlexAgendaLocators {
     TASK_MOVE_DOWN_CSS          = '#taskMoveDown';
     TASK_START_TIME_CSS         = '#taskStart';
     TASK_DELETE_CSS             = '#taskDelete';
-    TASK_DELETE_CONFIRM_CSS     = '#confirmDelete';
 
     LOGIN_INPUT_CSS             = '#md-input-0-input';
     LOGIN_PASSWORD_CSS          = '#md-input-1-input';
@@ -20,7 +19,12 @@ export class FlexAgendaLocators {
     LOGOUT_BUTTON_CSS           = '#logout';
     LOGIN_TEXT_ELEMENT_CSS      = 'app-login > p';
 
+    AGENDA_CSS                  = '#agenda';
+    AGENDA_TITLE_CSS            = '#agendaTitle'
     AGENDA_START_TIME_INPUT_CSS = '#agendaStartTime';
     AGENDA_START_TIME_NOW_CSS   = '#agendaSetTimeToNow';
     AGENDA_ADD_NEW_CSS          = '#agendaAddNew';
+    AGENDA_DELETE_CSS           = '#agendaDelete';
+
+    DELETE_CONFIRM_CSS          = '#confirmDelete';
 }

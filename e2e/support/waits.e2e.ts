@@ -7,10 +7,6 @@ export class WaitHelpers {
     return this.waitForElementText($(elementCss), text);
   }
 
-  waitForExpectedTextInElementById(text: string, elementCss: string) {
-    return this.waitForElementText($(elementCss), text);
-  }
-
   waitForElementText(element: ElementFinder, text: string) {
     return browser.wait(this.ec.textToBePresentInElement(element, text));
   }
@@ -19,11 +15,11 @@ export class WaitHelpers {
     return browser.wait(this.ec.not(this.ec.presenceOf($(elementCss))));
   }
 
-  waitForElementPresent(elementCss) {
-    return browser.wait(this.ec.presenceOf(elementCss));
+  waitForElementPresent(elementFinder: ElementFinder) {
+    return browser.wait(this.ec.presenceOf(elementFinder));
   }
 
-  waitForElement(webElement) {
-    return browser.wait(this.ec.presenceOf(webElement));
+  waitForElement(elementFinder: ElementFinder) {
+    return browser.wait(this.ec.presenceOf(elementFinder));
   }
 }

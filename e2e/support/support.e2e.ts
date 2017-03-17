@@ -4,7 +4,8 @@ import { browser, element, by, protractor, $, $$ } from 'protractor';
 import { WaitHelpers }        from './waits.e2e' 
 import { FlexAgendaLocators } from './elementLocators.e2e'
 
-export class FlexagendaCliPage {
+export class Support {
+  agendaId = '-KfBt0kJmWlouYn8Mdjn';    //add dynamic agenda ID: create agenda, get the ID, use the ID
   userLogin = 'anna.bckwabb@gmail.com';
   userPassword = 'T3st3r!';
 
@@ -12,22 +13,48 @@ export class FlexagendaCliPage {
   waits = new WaitHelpers();
   locator = new FlexAgendaLocators();
 
-  navigateToLogin() {
-    browser.get('/');
+  loginIfNeeded() {
+    !$(this.locator.TASK_CSS).isPresent().then(() => {
+      this.navigateToLogin();
+      this.login();
+    });
   }
 
-  loginAndDisplayAgenda(agendaId: string) {
+  navigateToLogin() {
+    browser.get('/');
+    this.waitForPageToLoadLoginPage();
+  }
+
+  login() {
     $(this.locator.LOGIN_INPUT_CSS).sendKeys(this.userLogin);
     $(this.locator.LOGIN_PASSWORD_CSS).sendKeys(this.userPassword);
     $$(this.locator.LOGIN_BUTTON_CSS).first().click(); 
     this.waitForPageToLoadAfterLogin();
+  }
 
-    browser.get('/agendas/' + agendaId);
+  logout() {
+    $(this.locator.LOGOUT_BUTTON_CSS).click();
+  }
+
+  displayTestAgenda() {
+    browser.get('/agendas/' + this.agendaId);
     this.waits.waitForElementPresent($(this.locator.TASK_CSS));
   }
 
-  private waitForPageToLoadAfterLogin() {
-    return browser.wait(this.ec.presenceOf($(this.locator.AGENDA_ADD_NEW_CSS)));
+  deleteAllTasksFromCurrentAgenda() {
+    this.allTasks().count().then((count) => {
+      var i = count;
+      while (i > 0) {
+        this.deleteFirstTaskOnAList();
+        i--;
+      }
+    });
+  }
+  
+  deleteFirstTaskOnAList() {
+    $$(this.locator.TASK_DELETE_CSS).first().click();
+    
+    this.confirmDelete();
   }
 
   addEmptyTaskFirst() {
@@ -38,16 +65,32 @@ export class FlexagendaCliPage {
     $(this.locator.TASK_ADD_NEW_LAST_CSS).click();
   }
 
-  deleteTask() {
-    $$(this.locator.TASK_DELETE_CSS).first().click();
-    
-    var confirmDelete = $(this.locator.TASK_DELETE_CONFIRM_CSS);
-    browser.wait(this.ec.presenceOf(confirmDelete));
-    confirmDelete.click();
+  addNewAgenda() {
+    $(this.locator.AGENDA_ADD_NEW_CSS).click();
+  }
+
+  deleteAllAgendas() {
+    this.allAgendas().count().then((count) => {   //TODO: refactor to a new method?
+      var i = count;
+      while (i > 0) {
+        this.deleteFirstAgendaOnTheList();
+        i--;
+      }
+    });
+  }
+
+  deleteFirstAgendaOnTheList() {
+    $$(this.locator.AGENDA_DELETE_CSS).first().click();
+
+    this.confirmDelete();
   }
 
   countTasks() {
    return this.allTasks().count();
+  }
+
+  countAgendas() {
+    return this.allAgendas().count();
   }
 
   allTaskStartTimes() {
@@ -56,6 +99,15 @@ export class FlexagendaCliPage {
 
   allTasks() {
     return $$(this.locator.TASK_CSS);
+  }
+
+  allAgendasStartTimes() {
+    return $$(this.locator.AGENDA_START_TIME_INPUT_CSS);
+  }
+
+  //TODO: check how it will behave when no agendas present
+  allAgendas() {
+    return $$(this.locator.AGENDA_CSS);
   }
 
   updateTaskTitle() {
@@ -113,21 +165,21 @@ export class FlexagendaCliPage {
     this.updateTaskToDone();
   }
 
-  updateStartTime(adjustMinutes: number) {
+  updateStartTime(adjustMinutes: number):string {
     var timeFormatted = this.timeNowAdjustedText(0, adjustMinutes);
     $(this.locator.AGENDA_START_TIME_INPUT_CSS).sendKeys(timeFormatted);
 
     return timeFormatted;
   }
 
-  timeNowAdjustedText(hours: number, minutes: number) {   //not sure if it's working properly
+  timeNowAdjustedText(hours: number, minutes: number): string {   //not sure if it's working properly
     var time = this.timeNowAdjusted(hours, minutes);
     var timeFormatted = this.addZero(time.getHours()) + ':' + this.addZero(time.getMinutes());
 
     return timeFormatted;
   }
 
-  timeNowAdjusted(hours: number, minutes: number) {      //not sure if it's working properly
+  timeNowAdjusted(hours: number, minutes: number): Date {      //not sure if it's working properly
     var time = new Date();
     time.setHours(time.getHours() + hours);
     time.setMinutes(time.getMinutes() + minutes);
@@ -135,14 +187,14 @@ export class FlexagendaCliPage {
     return time;
   }
 
-  timeAdjustedTextBy(timeFormatted: string, minutes: number) { 
+  timeAdjustedTextBy(timeFormatted: string, minutes: number): string { 
     var time = this.timeAdjustedBy(timeFormatted, minutes);
     var timeText = this.addZero(time.getHours()) + ':' + this.addZero(time.getMinutes());
 
     return timeText;
   }
 
-  timeAdjustedBy(timeFormatted: string, minutes: number) {
+  timeAdjustedBy(timeFormatted: string, minutes: number): Date {
     var timeSplit = timeFormatted.split(':');
     var time = new Date();
     time.setHours(+timeSplit[0]);
@@ -153,6 +205,20 @@ export class FlexagendaCliPage {
 
   addZero(input): string {
     return input < 10 ? ("0" + input) : input;
+  }
+
+  private waitForPageToLoadAfterLogin() {
+    return browser.wait(this.ec.presenceOf($(this.locator.AGENDA_ADD_NEW_CSS)));
+  }
+
+  private waitForPageToLoadLoginPage() {
+    return browser.wait(this.ec.presenceOf($(this.locator.LOGIN_INPUT_CSS)));
+  }
+
+  private confirmDelete() {
+    var confirmDelete = $(this.locator.DELETE_CONFIRM_CSS);
+    browser.wait(this.ec.presenceOf(confirmDelete));
+    confirmDelete.click();
   }
 }
 
