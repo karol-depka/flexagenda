@@ -1,2 +1,7 @@
-ng build && cp -r assets dist && firebase deploy
+
+# TODO: add protractor.sh &&, once tests are reliable
+
+ng build \
+  && cp -r assets dist \
+  && firebase deploy
 
