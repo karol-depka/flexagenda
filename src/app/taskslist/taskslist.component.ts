@@ -59,6 +59,7 @@ export class TasksListComponent implements OnInit {
     //this.tasksArray.
     this.tasks.subscribe(tasks => {
       this.tasksArray = tasks
+      this.calculateStartTimes(this.agendaStartTime);   //FIXME
     });
     this.calculateStartTimes(this.agendaStartTime);   //FIXME
     console.log("AgendaStartTime: " + this.agendaStartTime);
@@ -76,10 +77,10 @@ export class TasksListComponent implements OnInit {
 
     this.dialogRef.afterClosed().subscribe(result => {
       // console.log(result);
-      if (result) { 
+      if (result) {
         this.deleteTask(taskKey, onlyTask);
         this.snackBar.showSnackBar(message)
-     }
+      }
       else { console.log('Task ' + taskKey + ' not deleted!') }
       this.dialogRef = null;
     });
