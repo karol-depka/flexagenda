@@ -13,7 +13,8 @@
     <span #start id="taskStart" class="start">{{tasksListComponent.tasksStartTimes ? tasksListComponent.tasksStartTimes[taskIndex] : null}}</span>
     <input #duration id="taskDuration" type="number" class="duration" size="3" min="1"
         value="{{task.duration}}"
-        (change)="updateObject(task.$key, 'duration', duration.value, 'number')"/>
+        (change)="updateObject(task.$key, 'duration', duration.value, 'number')"
+        (keyup)="updateObject(task.$key, 'duration', duration.value, 'number')"/>
     <!--<textarea #title id="taskTitle" type="text" class="title" rows="1" maxlength="60"-->
     <textarea #title id="taskTitle" type="text" class="title"
             placeholder="New title" value="{{task.title}}"
