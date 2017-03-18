@@ -1,11 +1,12 @@
-// import { ElementFinder } from 'protractor/built/element';
+import { isSuccess } from '@angular/http/src/http_utils';
 import { browser, element, by, protractor, $, $$ } from 'protractor';
 
 import { WaitHelpers }        from './waits.e2e' 
 import { FlexAgendaLocators } from './elementLocators.e2e'
 
 export class Support {
-  agendaId = '-KfBt0kJmWlouYn8Mdjn';    //add dynamic agenda ID: create agenda, get the ID, use the ID
+  //agendaId = '-KfBt0kJmWlouYn8Mdjn';    //add dynamic agenda ID: create agenda, get the ID, use the ID
+  agendaId;
   userLogin = 'anna.bckwabb@gmail.com';
   userPassword = 'T3st3r!';
 
@@ -14,15 +15,18 @@ export class Support {
   locator = new FlexAgendaLocators();
 
   loginIfNeeded() {
-    !$(this.locator.TASK_CSS).isPresent().then(() => {
-      this.navigateToLogin();
-      this.login();
+   return this.navigateToLogin().then(() => {
+      $(this.locator.LOGIN_BUTTON_CSS).isPresent().then((present) => {
+        if(present) {
+          this.login();
+        }
+      });
     });
   }
 
   navigateToLogin() {
     browser.get('/');
-    this.waitForPageToLoadLoginPage();
+     return this.waitForPageToLoadLoginPage();
   }
 
   login() {
@@ -34,11 +38,6 @@ export class Support {
 
   logout() {
     $(this.locator.LOGOUT_BUTTON_CSS).click();
-  }
-
-  displayTestAgenda() {
-    browser.get('/agendas/' + this.agendaId);
-    this.waits.waitForElementPresent($(this.locator.TASK_CSS));
   }
 
   deleteAllTasksFromCurrentAgenda() {
@@ -58,7 +57,7 @@ export class Support {
   }
 
   addEmptyTaskFirst() {
-    $$(this.locator.TASK_ADD_NEW_ABOVE_CSS).first().click();
+    return $$(this.locator.TASK_ADD_NEW_ABOVE_CSS).first().click();
   }
 
   addEmptyTask() {
@@ -66,8 +65,38 @@ export class Support {
   }
 
   addNewAgenda() {
-    $(this.locator.AGENDA_ADD_NEW_CSS).click();
+    this.countAgendas().then((count) => {
+      $(this.locator.AGENDA_ADD_NEW_CSS).click();   
+
+      //expect(this.countAgendas()).toEqual(count+1);
+    });
   }
+
+  displayNewTestAgenda(done?) {
+    this.addNewAgenda();
+    return this.waits.waitForElementPresent($(this.locator.AGENDA_OPEN_CSS)).then(() => {
+      console.log('before it clicks to open new agenda');
+      $$(this.locator.AGENDA_OPEN_CSS).last().click().then(() => {
+        console.log('after opening agenda, before wait for element not prersent');
+        this.waits.waitForElementPresent($(this.locator.TASK_CSS)).then(() => {
+          console.log('Not on agendas list, single agenda view');
+          if (done) done();
+        });
+      });
+    });
+
+  }
+
+  // grabAgendaIdFromUrl() {
+  //   var deferred = protractor.promise.defer();
+  //   var url = browser.getCurrentUrl();
+  //   return url;
+  // }
+  // grabAgendaIdFromUrl() {
+  //   return browser.getCurrentUrl().then((url) => {
+  //     return url.split("/")[url.length-1];
+  //   });
+  // }
 
   deleteAllAgendas() {
     this.allAgendas().count().then((count) => {   //TODO: refactor to a new method?

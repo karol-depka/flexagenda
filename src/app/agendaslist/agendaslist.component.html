@@ -38,7 +38,7 @@ User uid: {{ authService.uid }}
                                'Agenda updated.')"/>
                                
 <!-- Button opens specific agenda with URL-->
-<button md-mini-fab color="primary" title="Open Agenda"
+<button md-mini-fab color="primary" id="openAgenda" title="Open Agenda"
   (click)="gotoAgenda(agenda.$key)">
   <md-icon class="md-24">forward</md-icon></button>              
 <tasks-list *ngIf="agenda.active==true"

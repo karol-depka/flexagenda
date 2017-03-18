@@ -26,15 +26,15 @@ describe('It', function() {
 
   it('should login', () => {
     support.login();
-    support.displayTestAgenda();
 
-    expect(wait.waitForElementNotPresent('app-login > p'))
+    expect(wait.waitForElementNotPresent($('app-login > p')))
         .toEqual(true);
     expect(wait.waitForExpectedTextInElement('Logged in as ' + support.userLogin, 'flexagenda-app > span'))
         .toEqual(true);
   });
 
   it('should be able to add an empty task', () => {
+    support.displayNewTestAgenda();
     var initialTaskCount = 0;
     var initialTaskCountPromise = support.countTasks();
     initialTaskCountPromise.then((value) => {

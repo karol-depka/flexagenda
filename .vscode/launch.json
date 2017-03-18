@@ -16,6 +16,14 @@
             "port": 9222,
             "sourceMaps": true,
             "webRoot": "${workspaceRoot}"
+        },
+        {
+            "name": "Protractor",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceRoot}/node_modules/protractor/bin",
+            "stopOnEntry": false,
+            "args": ["${workspaceRoot}/protractor.conf.js"]
         }
     ]
 }

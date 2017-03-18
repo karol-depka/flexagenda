@@ -25,6 +25,7 @@ export class FlexAgendaLocators {
     AGENDA_START_TIME_NOW_CSS   = '#agendaSetTimeToNow';
     AGENDA_ADD_NEW_CSS          = '#agendaAddNew';
     AGENDA_DELETE_CSS           = '#agendaDelete';
+    AGENDA_OPEN_CSS             = '#openAgenda';
 
     DELETE_CONFIRM_CSS          = '#confirmDelete';
 }

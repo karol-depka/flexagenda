@@ -12,7 +12,7 @@ export class WaitHelpers {
   }
 
   waitForElementNotPresent(elementCss) {
-    return browser.wait(this.ec.not(this.ec.presenceOf($(elementCss))));
+    return browser.wait(this.ec.not(this.ec.presenceOf(elementCss)));
   }
 
   waitForElementPresent(elementFinder: ElementFinder) {

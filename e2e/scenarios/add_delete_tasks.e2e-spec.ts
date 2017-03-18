@@ -1,41 +1,66 @@
-import { $, browser } from 'protractor'
+import { $, $$, browser } from 'protractor'
 
 import { FlexAgendaLocators } from '../support/elementLocators.e2e';
-import { Support }            from '../support/support.e2e';
-import { WaitHelpers }        from '../support/waits.e2e';
+import { Support } from '../support/support.e2e';
+import { WaitHelpers } from '../support/waits.e2e';
 
-describe('User', function() {
+//fdescribe
+describe('This is my test', () => {
   var support: Support;
   var locator: FlexAgendaLocators;
   var wait: WaitHelpers;
 
-  beforeAll(() => {
+  beforeAll((done) => {
+    console.log('Before all sie zaczal');
     support = new Support();
     wait = new WaitHelpers();
     locator = new FlexAgendaLocators();
-
-    support.loginIfNeeded();
-    support.displayTestAgenda();
+    console.log('Przed logowaniem');
+    browser.get('/');
+    support.loginIfNeeded().then(() => {
+      support.displayNewTestAgenda(done);
+    });
+    // console.log('Before all sie skonczyl');
   });
 
-  it('should be able to add one task', () => {
-    var initialTaskCount = 0;
-    var initialTaskCountPromise = support.countTasks();
-    initialTaskCountPromise.then((value) => {
-      initialTaskCount = value;
-      support.addEmptyTaskFirst();
+  // it('logs in if needed', () => {
+  //   console.log('Before logging in');
+  // });
 
-      expect(support.countTasks()).toEqual(initialTaskCount+1);
+//fit
+  it('should be able to add one task', () => {
+    console.log('Started test: should be able to add one task');
+    support.countTasks().then((count) => {
+      console.log('initial count: ' + count);
+      support.addEmptyTaskFirst().then(() => {
+        var count_two = count + 1;
+        console.log('initial count after adding task: ' + count_two);
+
+        function waitForCount(elementArrayFinder, expectedCount) {
+          console.log('start waiting for count');
+          return () => {
+            return elementArrayFinder.count().then((actualCount) => {
+              console.log('before condition is checked; expected: ' + expectedCount + ' actual count: ' + actualCount);
+              return expectedCount === actualCount;  // or <= instead of ===, depending on the use case
+            });
+          };
+        };
+
+        var tasks = $$(locator.TASK_CSS);
+        browser.wait(waitForCount(tasks, 2), 10000);
+
+        expect(support.countTasks()).toEqual(count+1);
+      });
     })
   });
 
-  it('should be able to delete all tasks leaving one empty', () => {
-    support.deleteAllTasksFromCurrentAgenda();
+  // it('should be able to delete all tasks leaving one empty', () => {
+  //   support.deleteAllTasksFromCurrentAgenda();
 
-    expect(support.allTasks().count()).toEqual(1);
-  }); 
+  //   expect(support.allTasks().count()).toEqual(1);
+  // });
 
-  afterAll(() => {
-    support.logout();
-  });
+  // afterAll(() => {
+  //   support.logout();
+  // });
 });
