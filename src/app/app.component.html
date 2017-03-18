@@ -1,5 +1,7 @@
 <!--<h2 class="labels">{{title}}</h2>-->
-<div *ngIf="!(authService.af.auth | async)">
+<template [ngIf]="!(authService.af.auth | async)" >
+
+<div>
 <span>
   <md-icon>email</md-icon>
   <md-input required #uEmail
@@ -22,15 +24,22 @@
   Login</button>
   <button id="login" md-raised-button color="primary"
   (click)="authService.login()">
-  Login with Google</button>  
+  Login with Google</button>
 </span>
 </div>
+<br />
 
-<img src="https://raw.githubusercontent.com/karol-depka/FlexAgendaPublic/master/assets/FlexAgenda_Logo.png"
+</template>
+
+<!--<img src="https://raw.githubusercontent.com/karol-depka/FlexAgendaPublic/master/assets/FlexAgenda_Logo.png"
+      (click) = "authService.router.navigate(['/'])" />-->
+<img src="./assets/FlexAgenda_Logo.svg" style="height: 20px; cursor: pointer;"
       (click) = "authService.router.navigate(['/'])" />
       <!-- TODO: make this an svg -->
       <!-- TODO: make this a link with click-cursor -->
 Early access alpha version.
+User uid: {{ authService.uid }}
+
 <button *ngIf="authService.af.auth | async"
       id="home"
       md-icon-button color="primary"
@@ -42,4 +51,4 @@ Early access alpha version.
   (click)="authService.logOut()">
   Logout</button>
 </span>
-<router-outlet></router-outlet>  
+<router-outlet></router-outlet>
