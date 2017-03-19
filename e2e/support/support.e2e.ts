@@ -3,23 +3,20 @@ import { browser, element, by, protractor, $, $$ } from 'protractor';
 
 import { WaitHelpers }        from './waits.e2e' 
 import { FlexAgendaLocators } from './elementLocators.e2e'
+import { TestData }           from './testData.e2e'
 
 export class Support {
-  //agendaId = '-KfBt0kJmWlouYn8Mdjn';    //add dynamic agenda ID: create agenda, get the ID, use the ID
-  agendaId;
-  userLogin = 'anna.bckwabb@gmail.com';
-  userPassword = 'T3st3r!';
-
   ec = protractor.ExpectedConditions;
   waits = new WaitHelpers();
   locator = new FlexAgendaLocators();
+  data = new TestData();
 
   loginIfNeeded() {
    return this.navigateToLogin().then(() => {
      browser.sleep(2000);
       $(this.locator.LOGIN_BUTTON_CSS).isPresent().then((isPresent) => {
         if(isPresent) {
-          console.log('is user logged in: ' + isPresent);
+          // console.log('is user logged in: ' + isPresent);
           this.login();
         }
       });
@@ -32,8 +29,8 @@ export class Support {
   }
 
   login() {
-    $(this.locator.LOGIN_INPUT_CSS).sendKeys(this.userLogin);
-    $(this.locator.LOGIN_PASSWORD_CSS).sendKeys(this.userPassword);
+    $(this.locator.LOGIN_INPUT_CSS).sendKeys(this.data.USER_LOGIN);
+    $(this.locator.LOGIN_PASSWORD_CSS).sendKeys(this.data.USER_PASSWORD);
     $$(this.locator.LOGIN_BUTTON_CSS).first().click(); 
     this.waitForPageToLoadAfterLogin();
   }
@@ -88,17 +85,6 @@ export class Support {
     });
 
   }
-
-  // grabAgendaIdFromUrl() {
-  //   var deferred = protractor.promise.defer();
-  //   var url = browser.getCurrentUrl();
-  //   return url;
-  // }
-  // grabAgendaIdFromUrl() {
-  //   return browser.getCurrentUrl().then((url) => {
-  //     return url.split("/")[url.length-1];
-  //   });
-  // }
 
   deleteAllAgendas() {
     this.allAgendas().count().then((count) => {   //TODO: refactor to a new method?

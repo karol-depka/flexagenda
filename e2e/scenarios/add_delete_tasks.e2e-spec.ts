@@ -5,7 +5,7 @@ import { Support } from '../support/support.e2e';
 import { WaitHelpers } from '../support/waits.e2e';
 
 //fdescribe
-describe('Add delete tasks', () => {
+describe('User', () => {
   var support: Support;
   var locator: FlexAgendaLocators;
   var wait: WaitHelpers;

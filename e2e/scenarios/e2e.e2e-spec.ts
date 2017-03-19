@@ -1,8 +1,9 @@
 import { browser, by, $, $$ } from 'protractor';
 
-import { Support }  from '../support/support.e2e';
+import { Support }            from '../support/support.e2e';
 import { WaitHelpers }        from '../support/waits.e2e'
 import { FlexAgendaLocators } from '../support/elementLocators.e2e'
+import { TestData }           from '../support/testData.e2e'
 
 browser.ignoreSynchronization = true;
 
@@ -10,11 +11,13 @@ describe('It', function() {
   var support: Support;
   var wait: WaitHelpers;
   var locator: FlexAgendaLocators;
+  var data: TestData;
 
   beforeAll(() => {
     support = new Support();
     wait = new WaitHelpers();
     locator = new FlexAgendaLocators();
+    data = new TestData();
   });
 
   it('should display message saying to login', () => {
@@ -29,7 +32,7 @@ describe('It', function() {
 
     expect(wait.waitForElementNotPresent($('app-login > p')))
         .toEqual(true);
-    expect(wait.waitForExpectedTextInElement('Logged in as ' + support.userLogin, 'flexagenda-app > span'))
+    expect(wait.waitForExpectedTextInElement('Logged in as ' + data.USER_LOGIN, 'flexagenda-app > span'))
         .toEqual(true);
   });
 
@@ -124,20 +127,20 @@ describe('It', function() {
 
   it('should be able to move task up', () => {
     var title = support.updateTaskTitle();
-    support.allTasks().last().element(by.id('taskMoveUp')).click().then(() => {
+    support.allTasks().last().$(locator.TASK_MOVE_UP_CSS).click().then(() => {
       expect($$(locator.TASK_TITLE_CSS).first().getAttribute('value')).not.toEqual(title);
-      expect(support.allTasks().last().$('#taskTitle').getAttribute('value')).toEqual(title);
+      expect(support.allTasks().last().$(locator.TASK_TITLE_CSS).getAttribute('value')).toEqual(title);
     });
   });
 
   it('should only show arrow to move down for first task', () => {
-    expect(support.allTasks().first().$('#taskMoveDown').isPresent()).toBeTruthy();
-    expect(support.allTasks().first().$('#taskMoveUp').isPresent()).toBeFalsy();
+    expect(support.allTasks().first().$(locator.TASK_MOVE_DOWN_CSS).isPresent()).toBeTruthy();
+    expect(support.allTasks().first().$(locator.TASK_MOVE_UP_CSS).isPresent()).toBeFalsy();
   });
 
   it('should only show arrow to move up for last task', () => {
-    expect(support.allTasks().last().$('#taskMoveUp').isPresent()).toBeTruthy();
-    expect(support.allTasks().last().$('#taskMoveDown').isPresent()).toBeFalsy();
+    expect(support.allTasks().last().$(locator.TASK_MOVE_UP_CSS).isPresent()).toBeTruthy();
+    expect(support.allTasks().last().$(locator.TASK_MOVE_DOWN_CSS).isPresent()).toBeFalsy();
   });
 
   it('should be able to calculate end time of all tasks based on duration', () => {
