@@ -11,11 +11,11 @@ describe('Add delete tasks', () => {
   var wait: WaitHelpers;
 
   beforeAll((done) => {
-    console.log('Before all starting');
+    // console.log('Before all starting');
     support = new Support();
     wait = new WaitHelpers();
     locator = new FlexAgendaLocators();
-    console.log('Before login');
+    // console.log('Before login');
     browser.get('/');
     support.loginIfNeeded().then(() => {
       support.displayNewTestAgenda(done);
@@ -24,18 +24,18 @@ describe('Add delete tasks', () => {
 
 //fit
   it('should be able to add one task', () => {
-    console.log('Started test: should be able to add one task');
+    // console.log('Started test: should be able to add one task');
     support.countTasks().then((count) => {
-      console.log('initial count: ' + count);
+      // console.log('initial count: ' + count);
       support.addEmptyTaskFirst().then(() => {
         var count_two = count + 1;
-        console.log('initial count after adding task: ' + count_two);
+        // console.log('initial count after adding task: ' + count_two);
 
         function waitForCount(elementArrayFinder, expectedCount) {
-          console.log('start waiting for count');
+          // console.log('start waiting for count');
           return () => {
             return elementArrayFinder.count().then((actualCount) => {
-              console.log('before condition is checked; expected: ' + expectedCount + ' actual count: ' + actualCount);
+              // console.log('before condition is checked; expected: ' + expectedCount + ' actual count: ' + actualCount);
               return expectedCount === actualCount;  // or <= instead of ===, depending on the use case
             });
           };

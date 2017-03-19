@@ -15,7 +15,7 @@ describe('User', () => {
     locator = new FlexAgendaLocators();
 
     support.loginIfNeeded().then(() => {
-      console.log('login if needed in agenda tests');
+      // console.log('login if needed in agenda tests');
       done();
     });
   });

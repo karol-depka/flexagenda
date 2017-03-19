@@ -116,16 +116,16 @@ describe('It', function() {
   it('should be able to move task down', () => {
     support.addEmptyTask();
     var title = support.updateTaskTitle();
-    $(locator.TASK_MOVE_DOWN_CSS).click();
+    $$(locator.TASK_MOVE_DOWN_CSS).first().click();
 
-    expect($(locator.TASK_TITLE_CSS).getAttribute('value')).not.toEqual(title);
+    expect($$(locator.TASK_TITLE_CSS).first().getAttribute('value')).not.toEqual(title);
     expect(support.allTasks().last().$(locator.TASK_TITLE_CSS).getAttribute('value')).toEqual(title);
   });
 
   it('should be able to move task up', () => {
     var title = support.updateTaskTitle();
     support.allTasks().last().element(by.id('taskMoveUp')).click().then(() => {
-      expect($(locator.TASK_TITLE_CSS).getAttribute('value')).not.toEqual(title);
+      expect($$(locator.TASK_TITLE_CSS).first().getAttribute('value')).not.toEqual(title);
       expect(support.allTasks().last().$('#taskTitle').getAttribute('value')).toEqual(title);
     });
   });
@@ -140,7 +140,7 @@ describe('It', function() {
     expect(support.allTasks().last().$('#taskMoveDown').isPresent()).toBeFalsy();
   });
 
-  it('should be able calculate end time of all tasks based on duration', () => {
+  it('should be able to calculate end time of all tasks based on duration', () => {
     var i = 0;
     while (i <= 10) {
       support.addEmptyTask();
@@ -148,19 +148,22 @@ describe('It', function() {
     }
 
     var startTime = $(locator.AGENDA_START_TIME_INPUT_CSS).getAttribute('value');
-    var tasksCount = support.countTasks();   //assumption: last task is the final (END) task
 
-    tasksCount.then((count) => {
-      var agendaDuration = (count - 1) * 10;   //TODO: remove -1 when final (END) task is added
-      console.log('--------- agedaDuration: ' + agendaDuration);
+    support.countTasks().then((count) => {
+      support.sumOfDurations().then((agendaDuration) => {
+        // console.log('duration in min: ' + agendaDuration);
 
-      startTime.then((time) => {
+        agendaDuration -= 10;   //workaround as we don't have the END row to show the end time, yet
+
+        startTime.then((time) => {
           var agendaStartTime = support.timeAdjustedTextBy(time, 0);
-          console.log('agendaStartTime: ' + agendaStartTime);
+          // console.log('agendaStartTime: ' + agendaStartTime);
+
           var expectedEndTime = support.timeAdjustedTextBy(agendaStartTime, agendaDuration);
-          console.log('expectedEndTime: ' + expectedEndTime);
+          // console.log('expectedEndTime: ' + expectedEndTime);
 
           expect(support.allTaskStartTimes().last().getText()).toEqual(expectedEndTime);
+        });
       });
     });
   });

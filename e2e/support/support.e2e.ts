@@ -77,11 +77,11 @@ export class Support {
   displayNewTestAgenda(done?) {
     this.addNewAgenda();
     return this.waits.waitForElementPresent($(this.locator.AGENDA_OPEN_CSS)).then(() => {
-      console.log('before it clicks to open new agenda');
+      // console.log('before it clicks to open new agenda');
       $$(this.locator.AGENDA_OPEN_CSS).last().click().then(() => {
-        console.log('after opening agenda, before wait for element not prersent');
+        // console.log('after opening agenda, before wait for element not prersent');
         this.waits.waitForElementPresent($(this.locator.TASK_CSS)).then(() => {
-          console.log('Not on agendas list, single agenda view');
+          // console.log('Not on agendas list, single agenda view');
           if (done) done();
         });
       });
@@ -181,8 +181,13 @@ export class Support {
     return minutes.toString();
   }
 
-  allDurations() {
-    return $$(this.locator.TASK_DURATION_CSS).getAttribute('value');
+  sumOfDurations() {
+    var overallDuration = 0;
+    return $$(this.locator.TASK_DURATION_CSS).getAttribute('value').then((valuesString) => {
+      valuesString = valuesString + '';
+      var values = valuesString.split(',').map(Number); 
+      return values.reduce((a, b) => { return a + b; });
+    });
   }
 
   markFirstTaskAsDone() {     //fixme
