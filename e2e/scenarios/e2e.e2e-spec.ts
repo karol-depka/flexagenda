@@ -44,10 +44,10 @@ describe('It', function() {
       expect(support.countTasks()).toEqual(initialTaskCount+1);
     })
       
-      expect($(locator.TASK_TITLE_CSS).getAttribute('value')).toEqual('');
-      expect($(locator.TASK_DESCRIPTION_CSS).getAttribute('value')).toEqual('');
-      expect($(locator.TASK_DURATION_CSS).getAttribute('value')).toEqual('10');
-      expect($(locator.TASK_COMPLETE_CSS).getAttribute('ng-reflect-checked')).toBeNull();
+      expect($$(locator.TASK_TITLE_CSS).first().getAttribute('value')).toEqual('');
+      expect($$(locator.TASK_DESCRIPTION_CSS).first().getAttribute('value')).toEqual('');
+      expect($$(locator.TASK_DURATION_CSS).first().getAttribute('value')).toEqual('10');
+      expect($$(locator.TASK_COMPLETE_CSS).first().getAttribute('ng-reflect-checked')).toBeNull();
   });
 
   it('should be able to delete a task', () => {
@@ -102,15 +102,15 @@ describe('It', function() {
   });
 
   it('should be able to mark task as done', () => {   //FIXME: make me independent
-    var successful = support.updateTaskToDone();
+    var successful = support.markFirstTaskAsDone();
     
-    expect($(locator.TASK_COMPLETE_CSS).getAttribute('ng-reflect-checked')).toEqual('true');
+    expect($$(locator.TASK_COMPLETE_CSS).first().getAttribute('ng-reflect-checked')).toEqual('true');
   });
 
   it('should be able to unmark task from done', () => {  //FIXME: make me independent
-    support.updateTaskToNotDone();
+    support.unmarkFirstTaskAsDone();
 
-    expect($(locator.TASK_COMPLETE_CSS).getAttribute('ng-reflect-checked')).toBeNull();
+    expect($$(locator.TASK_COMPLETE_CSS).first().getAttribute('ng-reflect-checked')).toBeNull();
   });
 
   it('should be able to move task down', () => {
@@ -124,10 +124,10 @@ describe('It', function() {
 
   it('should be able to move task up', () => {
     var title = support.updateTaskTitle();
-    support.allTasks().last().element(by.id('taskMoveUp')).click();
-
-    expect($(locator.TASK_TITLE_CSS).getAttribute('value')).not.toEqual(title);
-    expect(support.allTasks().last().$('#taskTitle').getAttribute('value')).toEqual(title);
+    support.allTasks().last().element(by.id('taskMoveUp')).click().then(() => {
+      expect($(locator.TASK_TITLE_CSS).getAttribute('value')).not.toEqual(title);
+      expect(support.allTasks().last().$('#taskTitle').getAttribute('value')).toEqual(title);
+    });
   });
 
   it('should only show arrow to move down for first task', () => {
@@ -146,8 +146,6 @@ describe('It', function() {
       support.addEmptyTask();
       i++;
     }
-
-    support.updateStartTime(0);    //just a workaround for a bug with displaying task start time
 
     var startTime = $(locator.AGENDA_START_TIME_INPUT_CSS).getAttribute('value');
     var tasksCount = support.countTasks();   //assumption: last task is the final (END) task

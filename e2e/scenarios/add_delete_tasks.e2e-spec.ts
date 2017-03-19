@@ -5,27 +5,22 @@ import { Support } from '../support/support.e2e';
 import { WaitHelpers } from '../support/waits.e2e';
 
 //fdescribe
-describe('This is my test', () => {
+describe('Add delete tasks', () => {
   var support: Support;
   var locator: FlexAgendaLocators;
   var wait: WaitHelpers;
 
   beforeAll((done) => {
-    console.log('Before all sie zaczal');
+    console.log('Before all starting');
     support = new Support();
     wait = new WaitHelpers();
     locator = new FlexAgendaLocators();
-    console.log('Przed logowaniem');
+    console.log('Before login');
     browser.get('/');
     support.loginIfNeeded().then(() => {
       support.displayNewTestAgenda(done);
     });
-    // console.log('Before all sie skonczyl');
   });
-
-  // it('logs in if needed', () => {
-  //   console.log('Before logging in');
-  // });
 
 //fit
   it('should be able to add one task', () => {
@@ -54,13 +49,13 @@ describe('This is my test', () => {
     })
   });
 
-  // it('should be able to delete all tasks leaving one empty', () => {
-  //   support.deleteAllTasksFromCurrentAgenda();
+  it('should be able to delete all tasks leaving one empty', () => {
+    support.deleteAllTasksFromCurrentAgenda();
 
-  //   expect(support.allTasks().count()).toEqual(1);
-  // });
+    expect(support.allTasks().count()).toEqual(1);
+  });
 
-  // afterAll(() => {
-  //   support.logout();
-  // });
+  afterAll(() => {
+    support.logout();
+  });
 });

@@ -16,8 +16,10 @@ export class Support {
 
   loginIfNeeded() {
    return this.navigateToLogin().then(() => {
-      $(this.locator.LOGIN_BUTTON_CSS).isPresent().then((present) => {
-        if(present) {
+     browser.sleep(2000);
+      $(this.locator.LOGIN_BUTTON_CSS).isPresent().then((isPresent) => {
+        if(isPresent) {
+          console.log('is user logged in: ' + isPresent);
           this.login();
         }
       });
@@ -183,15 +185,16 @@ export class Support {
     return $$(this.locator.TASK_DURATION_CSS).getAttribute('value');
   }
 
-  updateTaskToDone() {     //fixme
+  markFirstTaskAsDone() {     //fixme
     var taskComplete = $$(this.locator.TASK_COMPLETE_CSS).first();
-    taskComplete.click();
-    browser.refresh();      //Workaround to see the checkbox is clicked
+    taskComplete.click().then(() => {
+      browser.refresh();      //Workaround to see the checkbox is clicked
+    });
     browser.wait(this.ec.presenceOf(taskComplete)); //wait for checkbox to appear before it is checked by test
   }
 
-  updateTaskToNotDone() {  //fixme
-    this.updateTaskToDone();
+  unmarkFirstTaskAsDone() {  //fixme
+    this.markFirstTaskAsDone();
   }
 
   updateStartTime(adjustMinutes: number):string {

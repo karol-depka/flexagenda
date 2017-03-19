@@ -9,13 +9,16 @@ describe('User', () => {
   var wait: WaitHelpers;
   var locator: FlexAgendaLocators;
   
-  // beforeAll((done) => {
-  //   support = new Support();
-  //   wait = new WaitHelpers();
-  //   locator = new FlexAgendaLocators();
+  beforeAll((done) => {
+    support = new Support();
+    wait = new WaitHelpers();
+    locator = new FlexAgendaLocators();
 
-  //   support.loginIfNeeded(done);
-  // });
+    support.loginIfNeeded().then(() => {
+      console.log('login if needed in agenda tests');
+      done();
+    });
+  });
 
   it('should be able to add a new agenda to the list', () => {
     wait.waitForElementPresent($(locator.AGENDA_CSS)).then(() => {
@@ -38,15 +41,15 @@ describe('User', () => {
   });
 
   it('should be able to rename agenda', () => {
-    console.log('In preparation');
+    console.log('Test in preparation');
   });
 
   it('should be able to change start time of an agenda', () => {
-    console.log('In preparation');
+    console.log('Test in preparation');
   });
   
   it('should be able to enter agenda', () => {
-    console.log('In preparation');
+    console.log('Test in preparation');
   });
 
   it('should be able to delete all agendas from the list', () => {
