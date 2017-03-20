@@ -5,11 +5,11 @@ import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/ro
 @Injectable()
 export class AuthService {
 
-  public uid;
+  public static uid;
 
   authObserver = (auth)=>{
       if(auth) {
-        this.uid = auth.uid;
+        AuthService.uid = auth.uid;
         this.router.navigate([this.redirectUrl]);
       }
   }
@@ -45,6 +45,13 @@ export class AuthService {
   test() {
     this.router.navigate(['/test']);
     console.log("test");
+  }
+
+  getUidOrThrow() {
+    if (! AuthService.uid) {
+      throw new Error("Uid not ready: " + AuthService.uid)
+    }
+    return AuthService.uid;
   }
 
 }

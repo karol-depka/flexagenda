@@ -6,43 +6,54 @@
 <md-icon class="md-24">add</md-icon></button></h3>
 
 User uid: {{ authService.uid }}
+Agendas:
+<ul>
+      <li *ngFor="let userHasAgenda of agendasService.userHasAgendasRaw | async" id="agendaXX">
+      Agenda: {{userHasAgenda?.$key}}
+    </li>
+
+</ul>
 <ul #agendasList>
      <!-- each agenda goes here -->
-    <li *ngFor="let agenda of agendas | async; trackBy: trackById" id="agenda">
-      <button *ngIf="!agenda.active"
+    <li *ngFor="let userHasAgenda of agendas | async; trackBy: trackById" id="agenda">
+      Agenda: {{userHasAgenda?.agenda?.title }}
+    </li>
+    <li *ngFor="let uha of agendas | async" id="agenda">
+      <!--Title: {{agenda?.title | async}}-->
+      <button *ngIf="!uha.agenda?.active"
       id="agendaShow"
       md-icon-button color="accent"
-      (click) = "updateObject(agenda.$key,
+      (click) = "updateObject(uha.agenda?.$key,
                               'active',
                               true);">
       <md-icon>list</md-icon></button>
-      <button *ngIf="agenda.active"
+      <button *ngIf="uha.agenda?.active"
       id="agendaHide"
       md-icon-button color="accent"
-      (click) = "updateObject(agenda.$key,
+      (click) = "updateObject(uah.agenda?.$key,
                               'active',
                               false)">
       <md-icon>undo</md-icon></button>
       <button id="agendaDelete" md-icon-button color="accent" class="trash"
-      (click)="confirmAgendaDelete(agenda.$key, 'Agenda deleted')">
+      (click)="confirmAgendaDelete(uha.agenda?.$key, 'Agenda deleted')">
       <md-icon>delete</md-icon></button>Start time:
-      <input #agendaStartTime id="agendaStartTime" type="time" value="{{agenda.startTime}}"
-      (change) = "updateObject(agenda.$key,
+      <input #agendaStartTime id="agendaStartTime" type="time" value="{{uha.agenda?.startTime}}"
+      (change) = "updateObject(uha.agenda?.$key,
                                'startTime',
                                agendaStartTime.value,
                                'Agenda updated.')"/>
-      <input #agendaTitle id="agendaTitle" class="agenda-title" type="text" value="{{agenda.title}}"
-      (change) = "updateObject(agenda.$key,
+      <input #agendaTitle id="agendaTitle" class="agenda-title" type="text" value="{{uha.agenda?.title }}"
+      (change) = "updateObject(uha.agenda?.$key,
                                'title',
                                agendaTitle.value,
                                'Agenda updated.')"/>
-                               
+
 <!-- Button opens specific agenda with URL-->
 <button md-mini-fab color="primary" id="openAgenda" title="Open Agenda"
-  (click)="gotoAgenda(agenda.$key)">
-  <md-icon class="md-24">forward</md-icon></button>              
-<tasks-list *ngIf="agenda.active==true"
-[agendaKey]='agenda.$key' [activeAgenda]='agenda.active' [agendaStartTime]='agenda.startTime'></tasks-list>
+  (click)="gotoAgenda(uha.agenda?.$key)">
+  <md-icon class="md-24">forward</md-icon></button>
+<tasks-list *ngIf="agenda?.active==true"
+[agendaKey]='uha.agenda?.$key' [activeAgenda]='uha.agenda?.active' [agendaStartTime]='uha.agenda?.startTime'></tasks-list>
 </li>
 </ul>
 </div>

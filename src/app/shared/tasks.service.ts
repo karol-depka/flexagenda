@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Observable';
 import { AuthService } from './auth.service';
 import { Injectable, ViewContainerRef } from '@angular/core';
 import { AngularFire,
@@ -16,9 +17,9 @@ export class TasksService {
       public authService : AuthService
       ) {
     //this.af.auth.subscribe(auth => console.log(auth));
-    var uid = this.authService.uid
+    // var uid = this.authService.getUidOrThrow()
     // if ( ! uid ) {
-      console.log(" ! this.authService.uid ",  uid );
+      // console.log(" ! this.authService.uid ",  uid );
     // }
   }
 
@@ -35,22 +36,9 @@ export class TasksService {
     return this.TASKS;
   }
 
-  public getAgendas(): FirebaseListObservable<any[]> {
-    var uid = this.authService.uid
-    if ( ! uid ) {
-      throw new Error("uid cannot be: " + uid);
-    }
-    // if ( ! uid ) {
-      console.log(" ! this.authService.uid ", uid );
-    if( ! this.AGENDAS_ ) {
-      this.AGENDAS_ = this.af.database.list('/agendas/' + uid); // FIXME: use agendas list service
-    }
-    return this.AGENDAS_;
-  }
-
   public getAgenda(agendaKey : string): FirebaseObjectObservable<any[]> {
     var agenda: FirebaseObjectObservable<any[]>;
-    agenda = this.af.database.object('/agendas/' + this.authService.uid + "/" + agendaKey); // FIXME: duplication
+    agenda = this.af.database.object('/agendas/' + this.authService.getUidOrThrow() + "/" + agendaKey); // FIXME: duplication
 
     return agenda;
   }
@@ -205,13 +193,14 @@ export class TasksService {
     if (type == 'number') updateValue = this.guardPositiveValue(updateValue,type);
 
     console.log("tasks list for agenda: " + this.TASKS)
-    console.log("updateObject: this.getAgendas().$ref.toString(): ", this.getAgendas().$ref.toString());
+    // console.log("updateObject: this.getAgendas().$ref.toString(): ", this.getAgendas().$ref.toString());
     switch (object) {
       case 'task':
           this.TASKS.update(key, {[updateKey]:updateValue}).then(_ => console.log('Task updated!'));
           break;
       case 'agenda':
-          this.getAgendas().update(key, {[updateKey]:updateValue}).then(_ => console.log('Agenda updated!'));
+      // FIXME
+          // this.getAgendas().update(key, {[updateKey]:updateValue}).then(_ => console.log('Agenda updated!'));
           break;
     }
   }

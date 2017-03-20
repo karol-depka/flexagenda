@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Observable';
 import { AgendasService } from './../shared/agendas.service';
 import { Component, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
@@ -16,7 +17,8 @@ import { AuthService } from '../shared/auth.service';
   providers: [TasksService]
 })
 export class AgendasListComponent implements OnInit {
-  agendas;
+  agendas : Observable<any[]>;
+  agendas2: any;
   dialogRef: MdDialogRef<ConfirmationDialog>;
 
   constructor(
@@ -35,7 +37,8 @@ export class AgendasListComponent implements OnInit {
   }
 
   getAgendas(): void {
-    this.agendas=this.tasksService.getAgendas();
+    this.agendas=this.agendasService.getAgendas();
+    this.agendas2 =this.agendas.map(val => val.map(val2 => {val2.agenda}));
   }
 
   public addNewAgenda() {
@@ -44,8 +47,9 @@ export class AgendasListComponent implements OnInit {
 
   public deleteAgenda(agendaKey): void {
     var agenda = this.tasksService.af.database.list('/agenda_tasks/');
-    agenda.remove(agendaKey);
-    this.agendas.remove(agendaKey).then(_ => console.log('Agenda '+agendaKey+' deleted!'));
+    // FIXME: fix after UserHasAgenda:
+    // agenda.remove(agendaKey);
+    // this.agendas.remove(agendaKey).then(_ => console.log('Agenda '+agendaKey+' deleted!'));
 
   }
   public confirmAgendaDelete(agendaKey, message): string {

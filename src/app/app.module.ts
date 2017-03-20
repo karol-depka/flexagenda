@@ -1,3 +1,4 @@
+import { AgendasService } from './shared/agendas.service';
 import { TaskTreeComponent } from './taskTree/taskTree.component';
 import { TaskListNoDragComponent } from './taskListNoDrag/taskListNoDrag.component';
 import { BrowserModule } from '@angular/platform-browser';
@@ -90,7 +91,7 @@ const firebaseAuthConfig = {
       },
     ])
   ],
-  providers: [AuthService, RouterGuardService, TasksService],
+  providers: [AuthService, RouterGuardService, TasksService, AgendasService],
   bootstrap: [AppComponent] // TODO: add AuthService as singleton to bootstrap?
 })
 export class AppModule { }

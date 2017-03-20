@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Observable';
 import { TasksService } from './tasks.service';
 import { AuthService } from './auth.service';
 import { Injectable, ViewContainerRef } from '@angular/core';
@@ -8,50 +9,27 @@ import { AngularFire,
 @Injectable()
 export class AgendasService {
   AGENDAS_: FirebaseListObservable<any[]>; // lazy
+  userHasAgendas: Observable<any[]>;
+  userHasAgendasRaw: Observable<any[]>;
 
   constructor(
       public af:AngularFire,
       public authService : AuthService,
       public tasksService : TasksService
+
       ) {
+    af.auth.subscribe(auth => {
+      if ( auth ) {
+        var userHasAgendaPath = '/UserHasAgenda/' + auth.uid;
+        console.log("getAgendas", userHasAgendaPath)
+        this.userHasAgendasRaw = this.af.database.list(userHasAgendaPath);
+      }
+    });
     //this.af.auth.subscribe(auth => console.log(auth));
-    var uid = this.authService.uid
+    // var uid = this.authService.getUidOrThrow();
     // if ( ! uid ) {
-      console.log(" ! this.authService.uid ",  uid );
+      // console.log(" ! this.authService.uid ",  uid );
     // }
-  }
-
-
-
-  public getAgendas(): FirebaseListObservable<any[]> {
-    var uid = this.authService.uid
-    if ( ! uid ) {
-      throw new Error("uid cannot be: " + uid);
-    }
-    // if ( ! uid ) {
-      console.log(" ! this.authService.uid ", uid );
-    if( ! this.AGENDAS_ ) {
-      this.AGENDAS_ = this.af.database.list('/agendas/' + uid); // FIXME: use agendas list service
-    }
-    return this.AGENDAS_;
-  }
-
-  public getAgenda(agendaKey : string): FirebaseObjectObservable<any[]> {
-    var agenda: FirebaseObjectObservable<any[]>;
-    agenda = this.af.database.object('/agendas/' + this.authService.uid + "/" + agendaKey); // FIXME: duplication
-
-    return agenda;
-  }
-
-  updateObject(object, key, updateKey, updateValue, type): void {
-    // if (type == 'number') updateValue = this.guardPositiveValue(updateValue,type);
-
-    console.log("updateObject: this.getAgendas().$ref.toString(): ", this.getAgendas().$ref.toString());
-    switch (object) {
-      case 'agenda':
-          this.getAgendas().update(key, {[updateKey]:updateValue}).then(_ => console.log('Agenda updated!'));
-          break;
-    }
   }
 
   public addNewAgenda() {
@@ -59,7 +37,7 @@ export class AgendasService {
     This function adds newAgenda object to the database.
 
     */
-    var userHasAgendasList = this.af.database.list('/UserHasAgenda/' + this.authService.uid /* FIXME */);
+    var userHasAgendasList = this.af.database.list('/UserHasAgenda/' + this.authService.getUidOrThrow() /* FIXME */);
     var agendasList = this.af.database.list('/Agenda/');
     var newAgendaKey: string;
     var newTaskKey: string;
@@ -71,7 +49,7 @@ export class AgendasService {
       startTime:this.tasksService.timeNow()
     }).key;
     console.log('In agenda: ' + newAgendaKey);
-    userHasAgendasList.update(newAgendaKey, true);
+    userHasAgendasList.update(newAgendaKey, {"read" : true});
 
     // var newAgenda = this.tasksService.af.database.list('/agenda_tasks/'+newAgendaKey);
     // newTaskKey = newAgenda.push({
@@ -83,5 +61,47 @@ export class AgendasService {
     //   completed:false
     // }).key;
     // console.log('new task added: '+newTaskKey);
+  }
+
+  public getAgendas(): Observable<any[]> {
+
+    var uid = this.authService.getUidOrThrow();
+    var userHasAgendaPath = '/UserHasAgenda/' + this.authService.getUidOrThrow();
+    console.log("getAgendas", userHasAgendaPath)
+
+    const userHasAgendaList = this.af.database.list(userHasAgendaPath);
+    userHasAgendaList.subscribe((lll) => {
+      console.log("userHasAgendaList.subscribe", lll);
+    });
+
+    // userHasAgendaList.switchMap(u => {
+    //   console.log("switchMap", u);
+
+    //   return "dafd"
+    // }).subscribe(k => {});
+    this.userHasAgendas = userHasAgendaList.map(userHasAgendas => {
+      console.log("list(userHasAgendaPath).map(userHasAgendas: ", userHasAgendas);
+      userHasAgendas.map(userHasAgenda => {
+        console.log("userHasAgenda: ", userHasAgenda)
+        var itemPath = '/Agenda/' + userHasAgenda.$key
+        console.log("itemPath: ", itemPath);
+        this.af.database.object(itemPath)
+          .subscribe(agenda => {
+            console.log("agenda", agenda)
+            userHasAgenda.agenda = agenda;
+          })
+        return userHasAgenda;
+      })
+      return userHasAgendas;
+    });
+    return this.userHasAgendas;
+    // this.userHasAgendas.subscribe(kk=>{});
+
+    // if ( ! uid ) {
+      // console.log(" ! this.authService.uid ", uid );
+    // if( ! this.AGENDAS_ ) {
+    //   this.AGENDAS_ = this.af.database.list('/agendas/' + uid); // FIXME: use agendas list service
+    // }
+    // return this.AGENDAS_;
   }
 }
