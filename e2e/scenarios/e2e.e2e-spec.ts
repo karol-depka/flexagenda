@@ -8,6 +8,7 @@ import { FlexAgendaAssertions } from '../support/assertions.e2e';
 import { TaskListTest }         from '../view_objects/tasks_list.view_object';
 import { AgendaTest }           from '../view_objects/agenda.view_object';
 import { AgendasListTest }      from '../view_objects/agendas_list.view_object'
+import { TaskTest }             from "../view_objects/task.view_object";
 
 browser.ignoreSynchronization = true;
 
@@ -17,6 +18,7 @@ describe('It', function() {
   var locator: FlexAgendaLocators;
   var data: TestData;
   var assert: FlexAgendaAssertions;
+  var task: TaskTest;
   var taskList: TaskListTest;
   var agenda: AgendaTest;
   var agendasList: AgendasListTest;
@@ -27,6 +29,7 @@ describe('It', function() {
     locator = new FlexAgendaLocators();
     data = new TestData();
     assert = new FlexAgendaAssertions();
+    task = new TaskTest();
     taskList = new TaskListTest();
     agenda = new AgendaTest();
     agendasList = new AgendasListTest();
@@ -92,25 +95,25 @@ describe('It', function() {
   });
 
   it('should be able to update task title', () => {
-    var title = taskList.updateTaskTitle();
+    var title = task.updateTaskTitle();
 
     assert.taskTitleSetTo(title);
   });
 
   it('should be able to update task description', () => {
-    var description = taskList.updateTaskDescription();
+    var description = task.updateTaskDescription();
 
     assert.taskDescriptionSetTo(description);
   });
 
   it('should be able to update task duration', () => {
-    var duration = taskList.updateTaskDuration();
+    var duration = task.updateTaskDuration();
 
     assert.taskDurationSetTo(duration);
   });
 
   it('should be able to mark task as done', () => {   //FIXME: make me independent
-    var successful = taskList.markFirstTaskAsDone();
+    taskList.markFirstTaskAsDone();
 
     assert.firstTaskMarkedAsDone(true);
   });
@@ -123,14 +126,14 @@ describe('It', function() {
 
   it('should be able to move task down', () => {
     taskList.addEmptyTask();
-    var title = taskList.updateTaskTitle();
+    var title = task.updateTaskTitle();
     taskList.moveFirstTaskDown();
 
     assert.taskMoved(title);
   });
 
   it('should be able to move task up', () => {
-    var title = taskList.updateTaskTitle();
+    var title = task.updateTaskTitle();
     taskList.moveSecondTaskUp();
 
     assert.taskMoved(title);
@@ -152,17 +155,15 @@ describe('It', function() {
 
     var startTime = agenda.agendaStartTime();
 
-    taskList.countTasks().then((count) => {
-      taskList.sumOfDurations().then((agendaDuration) => {
-        // console.log('duration in min: ' + agendaDuration);
-        agendaDuration -= 10;   //workaround as we don't have the END row to show the end time, yet
+    taskList.sumOfDurations().then((agendaDuration) => {
+      // console.log('duration in min: ' + agendaDuration);
+      agendaDuration -= 10;   //workaround as we don't have the END row to show the end time, yet
 
-        startTime.then((time) => {
-          var agendaStartTime = support.timeAdjustedTextBy(time, 0);
-          var expectedEndTime = support.timeAdjustedTextBy(agendaStartTime, agendaDuration);
+      startTime.then((time) => {
+        var agendaStartTime = support.timeAdjustedTextBy(time, 0);
+        var expectedEndTime = support.timeAdjustedTextBy(agendaStartTime, agendaDuration);
 
-          assert.agendaEndTimeIsEqualTo(expectedEndTime);
-        });
+        assert.agendaEndTimeIsEqualTo(expectedEndTime);
       });
     });
   });

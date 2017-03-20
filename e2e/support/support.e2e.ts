@@ -1,12 +1,10 @@
 import { browser, protractor, $, $$ } from 'protractor';
 
-import { WaitHelpers }        from './waits.e2e'
 import { FlexAgendaLocators } from './elementLocators.e2e'
 import { TestData }           from './testData.e2e'
 
 export class Support {
   ec = protractor.ExpectedConditions;
-  waits = new WaitHelpers();
   locator = new FlexAgendaLocators();
   data = new TestData();
 

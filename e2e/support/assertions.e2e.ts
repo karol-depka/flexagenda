@@ -111,8 +111,11 @@ export class FlexAgendaAssertions {
     }
 
     taskMoved(title: string) {
-        expect($$(this.locator.TASK_TITLE_SELECTOR).first().getAttribute('value')).not.toEqual(title);
-        expect(this.taskList.allTasks().last().$(this.locator.TASK_TITLE_SELECTOR).getAttribute('value')).toEqual(title);
+        expect($$(this.locator.TASK_TITLE_SELECTOR).first()
+          .getAttribute('value')).not.toEqual(title);
+
+        expect(this.taskList.allTasks().last().$(this.locator.TASK_TITLE_SELECTOR)
+          .getAttribute('value')).toEqual(title);
     }
 
     agendaEndTimeIsEqualTo(expectedEndTime: string) {

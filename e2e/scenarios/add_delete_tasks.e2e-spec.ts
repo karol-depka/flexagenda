@@ -37,7 +37,7 @@ describe('User', () => {
       taskList.addEmptyTaskFirst().then(() => {
         // console.log('initial count after adding task: ' + count_two);
         var tasks = $$(locator.TASK_SELECTOR);
-        wait.waitForCount(tasks, 2).then(() => {
+        wait.forElementCount(tasks, 2).then(() => {
           expect(taskList.countTasks()).toEqual(count+1);
         });
       });
