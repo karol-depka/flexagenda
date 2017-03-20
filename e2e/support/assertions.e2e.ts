@@ -1,10 +1,11 @@
-import { $, $$ } from 'protractor'
+import { $, $$ } from 'protractor';
 
 import { WaitHelpers }          from './waits.e2e';
-import { TestData }             from '../support/testData.e2e'
-import { FlexAgendaLocators }   from '../support/elementLocators.e2e'
-import { Support }              from '../support/support.e2e'
-import { TaskListTest }         from '../view_objects/tasks_list.view_object'
+import { TestData }             from '../support/testData.e2e';
+import { FlexAgendaLocators }   from '../support/elementLocators.e2e';
+import { Support }              from '../support/support.e2e';
+import { TaskListTest }         from '../view_objects/tasks_list.view_object';
+import { AgendasListTest } from '../view_objects/agendas_list.view_object';
 
 export class FlexAgendaAssertions {
     wait: WaitHelpers;
@@ -12,6 +13,7 @@ export class FlexAgendaAssertions {
     locator: FlexAgendaLocators;
     support: Support;
     taskList: TaskListTest;
+    agendasList: AgendasListTest;
 
     constructor() {
         this.wait = new WaitHelpers();
@@ -19,6 +21,7 @@ export class FlexAgendaAssertions {
         this.locator = new FlexAgendaLocators();
         this.support = new Support();
         this.taskList = new TaskListTest();
+        this.agendasList = new AgendasListTest();
     }
 
     onLoginPage() {
@@ -48,7 +51,7 @@ export class FlexAgendaAssertions {
     }
 
     agendasListEmpty() {
-        expect(this.support.allAgendas().count()).toEqual(0);
+        expect(this.agendasList.allAgendas().count()).toEqual(0);
     }
 
     startTimeIsSetTo(time: string) {

@@ -1,4 +1,4 @@
-import { $, $$, browser, protractor }  from 'protractor'
+import { $, $$, browser, protractor }  from 'protractor';
 
 import { FlexAgendaLocators } from "../support/elementLocators.e2e";
 import { Support }            from "../support/support.e2e";

@@ -38,68 +38,6 @@ export class Support {
     $(this.locator.LOGOUT_BUTTON_SELECTOR).click();
   }
 
-  addNewAgenda() {
-    this.countAgendas().then((count) => {
-      $(this.locator.AGENDA_ADD_NEW_SELECTOR).click();
-
-      //expect(this.countAgendas()).toEqual(count+1);
-    });
-  }
-
-  displayNewTestAgenda(done?) {
-    this.addNewAgenda();
-    return this.waits.forElementPresent($(this.locator.AGENDA_OPEN_SELECTOR)).then(() => {
-      // console.log('before it clicks to open new agenda');
-      $$(this.locator.AGENDA_OPEN_SELECTOR).last().click().then(() => {
-        // console.log('after opening agenda, before wait for element not prersent');
-        this.waits.forElementPresent($(this.locator.TASK_SELECTOR)).then(() => {
-          // console.log('Not on agendas list, single agenda view');
-          if (done) done();
-        });
-      });
-    });
-  }
-
-  deleteAllAgendas() {
-    this.allAgendas().count().then((count) => {   //TODO: refactor to a new method?
-      var i = count;
-      while (i > 0) {
-        this.deleteFirstAgendaOnTheList();
-        i--;
-      }
-    });
-  }
-
-  deleteFirstAgendaOnTheList() {
-    $$(this.locator.AGENDA_DELETE_SELECTOR).first().click();
-
-    this.confirmDelete();
-  }
-
-  countAgendas() {
-    return this.allAgendas().count();
-  }
-
-  allAgendasStartTimes() {
-    return $$(this.locator.AGENDA_START_TIME_INPUT_SELECTOR);
-  }
-
-  agendaStartTime() {
-    return $(this.locator.AGENDA_START_TIME_INPUT_SELECTOR).getAttribute('value');
-  }
-
-  //TODO: check how it will behave when no agendas present
-  allAgendas() {
-    return $$(this.locator.AGENDA_SELECTOR);
-  }
-
-  updateStartTime(adjustMinutes: number):string {
-    var timeFormatted = this.timeNowAdjustedText(0, adjustMinutes);
-    $(this.locator.AGENDA_START_TIME_INPUT_SELECTOR).sendKeys(timeFormatted);
-
-    return timeFormatted;
-  }
-
   timeNowAdjustedText(hours: number, minutes: number): string {   //not sure if it's working properly
     var time = this.timeNowAdjusted(hours, minutes);
     var timeFormatted = this.addZero(time.getHours()) + ':' + this.addZero(time.getMinutes());
@@ -131,14 +69,6 @@ export class Support {
     return time;
   }
 
-  clickStartNow() {
-    $(this.locator.AGENDA_START_TIME_NOW_SELECTOR).click();
-  }
-
-  addZero(input): string {
-    return input < 10 ? ("0" + input) : input;
-  }
-
   waitForPageToLoadAfterLogin() {
     return browser.wait(this.ec.presenceOf($(this.locator.AGENDA_ADD_NEW_SELECTOR)));
   }
@@ -152,8 +82,8 @@ export class Support {
     browser.wait(this.ec.presenceOf(confirmDelete));
     confirmDelete.click();
   }
+
+  addZero(input): string {
+    return input < 10 ? ("0" + input) : input;
+  }
 }
-
-
-
-

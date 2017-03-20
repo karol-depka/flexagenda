@@ -3,7 +3,8 @@ import { $$, browser } from 'protractor'
 import { FlexAgendaLocators } from '../support/elementLocators.e2e';
 import { Support }            from '../support/support.e2e';
 import { WaitHelpers }        from '../support/waits.e2e';
-import { TaskListTest }       from '../view_objects/tasks_list.view_object'
+import { TaskListTest }       from '../view_objects/tasks_list.view_object';
+import { AgendasListTest }    from '../view_objects/agendas_list.view_object';
 
 //fdescribe
 describe('User', () => {
@@ -11,6 +12,7 @@ describe('User', () => {
   var locator: FlexAgendaLocators;
   var wait: WaitHelpers;
   var taskList: TaskListTest;
+  var agendasList: AgendasListTest;
 
   beforeAll((done) => {
     // console.log('Before all starting');
@@ -18,11 +20,12 @@ describe('User', () => {
     wait = new WaitHelpers();
     locator = new FlexAgendaLocators();
     taskList = new TaskListTest();
+    agendasList = new AgendasListTest();
 
     // console.log('Before login');
     browser.get('/');
     support.loginIfNeeded().then(() => {
-      support.displayNewTestAgenda(done);
+      agendasList.displayNewTestAgenda(done);
     });
   });
 

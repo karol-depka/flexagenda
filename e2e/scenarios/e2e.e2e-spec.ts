@@ -1,11 +1,13 @@
 import { browser } from 'protractor';
 
 import { Support }              from '../support/support.e2e';
-import { WaitHelpers }          from '../support/waits.e2e'
-import { FlexAgendaLocators }   from '../support/elementLocators.e2e'
-import { TestData }             from '../support/testData.e2e'
-import { FlexAgendaAssertions } from '../support/assertions.e2e'
-import { TaskListTest }         from '../view_objects/tasks_list.view_object'
+import { WaitHelpers }          from '../support/waits.e2e';
+import { FlexAgendaLocators }   from '../support/elementLocators.e2e';
+import { TestData }             from '../support/testData.e2e';
+import { FlexAgendaAssertions } from '../support/assertions.e2e';
+import { TaskListTest }         from '../view_objects/tasks_list.view_object';
+import { AgendaTest }           from '../view_objects/agenda.view_object';
+import { AgendasListTest }      from '../view_objects/agendas_list.view_object'
 
 browser.ignoreSynchronization = true;
 
@@ -16,6 +18,8 @@ describe('It', function() {
   var data: TestData;
   var assert: FlexAgendaAssertions;
   var taskList: TaskListTest;
+  var agenda: AgendaTest;
+  var agendasList: AgendasListTest;
 
   beforeAll(() => {
     support = new Support();
@@ -24,6 +28,8 @@ describe('It', function() {
     data = new TestData();
     assert = new FlexAgendaAssertions();
     taskList = new TaskListTest();
+    agenda = new AgendaTest();
+    agendasList = new AgendasListTest();
   });
 
   it('should display message saying to login', () => {
@@ -41,7 +47,7 @@ describe('It', function() {
 
   it('should be able to add a default task', () => {
     //arrange
-    support.displayNewTestAgenda();
+    agendasList.displayNewTestAgenda();
 
     //add and assert task added
     var initialTaskCountPromise = taskList.countTasks();
@@ -67,20 +73,20 @@ describe('It', function() {
   });
 
   it('should be able to show start time for all tasks', () => {
-    support.agendaStartTime().then((startTime) => {
+    agenda.agendaStartTime().then((startTime) => {
        assert.startTimeSetForTasks(startTime);
     });
   });
 
   it('should be able to see updated agenda start time in first task', () => {
-    var startTime = support.updateStartTime(3);
+    var startTime = agenda.updateStartTime(3);
 
     assert.startTimeIsSetTo(startTime);
   });
 
   it('should be able to set time to Now', () => {
-    var startTime = support.updateStartTime(0);
-    support.clickStartNow();
+    var startTime = agenda.updateStartTime(0);
+    agenda.clickStartNow();
 
     assert.startTimeIsSetTo(startTime);
   });
@@ -144,7 +150,7 @@ describe('It', function() {
   it('should be able to calculate end time of all tasks based on duration', () => {
     taskList.addTasks(10);
 
-    var startTime = support.agendaStartTime();
+    var startTime = agenda.agendaStartTime();
 
     taskList.countTasks().then((count) => {
       taskList.sumOfDurations().then((agendaDuration) => {
