@@ -1,3 +1,4 @@
+import { AgendasService } from './../shared/agendas.service';
 import { Component, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { Router }   from '@angular/router';
@@ -21,6 +22,7 @@ export class AgendasListComponent implements OnInit {
   constructor(
     public authService: AuthService,
     public tasksService: TasksService,
+    public agendasService: AgendasService,
     public dialog: MdDialog,
     public snackBar: SnackBarComponent,
     private router: Router,
@@ -37,33 +39,7 @@ export class AgendasListComponent implements OnInit {
   }
 
   public addNewAgenda() {
-    /*
-    This function adds newAgenda object to the database.
-
-    */
-    var agendasList = this.tasksService.af.database.list('/agendas/' + this.authService.uid /* FIXME */);
-    var newAgendaKey: string;
-    var newTaskKey: string;
-
-    newAgendaKey = agendasList.push({
-      title: "NEW AGENDA TITLE - click to edit",
-      users: "",
-      active: true,
-      startTime:this.tasksService.timeNow()
-    }).key;
-    console.log('In agenda: ' + newAgendaKey);
-    this.snackBar.showSnackBar('New Agenda added.')
-
-    var newAgenda = this.tasksService.af.database.list('/agenda_tasks/'+newAgendaKey);
-    newTaskKey = newAgenda.push({
-      order:1,
-      type:"general",
-      duration:10,
-      title:"FIRST TASK",
-      description:"This is your first task in this agenda. You can edit it as you please.",
-      completed:false
-    }).key;
-    console.log('new task added: '+newTaskKey);
+    this.agendasService.addNewAgenda();
   }
 
   public deleteAgenda(agendaKey): void {
