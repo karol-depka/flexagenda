@@ -23,7 +23,7 @@ describe('It', function() {
   var agenda: AgendaTest;
   var agendasList: AgendasListTest;
 
-  beforeAll(() => {
+  beforeAll((done) => {
     support = new Support();
     wait = new WaitHelpers();
     locator = new FlexAgendaLocators();
@@ -33,19 +33,11 @@ describe('It', function() {
     taskList = new TaskListTest();
     agenda = new AgendaTest();
     agendasList = new AgendasListTest();
-  });
 
-  it('should display message saying to login', () => {
-    support.navigateToLogin();
-
-    assert.onLoginPage();
-  });
-
-  it('should login', () => {
-    support.login();
-
-    assert.notOnLoginPage();
-    assert.userIsLoggedIn();
+    browser.get('/');
+    support.loginIfNeeded().then(() => {
+      done();
+    });
   });
 
   it('should be able to add a default task', () => {
