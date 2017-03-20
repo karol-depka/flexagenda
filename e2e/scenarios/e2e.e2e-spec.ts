@@ -1,10 +1,11 @@
-import { browser, by, $, $$ } from 'protractor';
+import { browser } from 'protractor';
 
 import { Support }              from '../support/support.e2e';
 import { WaitHelpers }          from '../support/waits.e2e'
 import { FlexAgendaLocators }   from '../support/elementLocators.e2e'
 import { TestData }             from '../support/testData.e2e'
 import { FlexAgendaAssertions } from '../support/assertions.e2e'
+import { TaskListTest }         from '../view_objects/tasks_list.view_object'
 
 browser.ignoreSynchronization = true;
 
@@ -14,6 +15,7 @@ describe('It', function() {
   var locator: FlexAgendaLocators;
   var data: TestData;
   var assert: FlexAgendaAssertions;
+  var taskList: TaskListTest;
 
   beforeAll(() => {
     support = new Support();
@@ -21,6 +23,7 @@ describe('It', function() {
     locator = new FlexAgendaLocators();
     data = new TestData();
     assert = new FlexAgendaAssertions();
+    taskList = new TaskListTest();
   });
 
   it('should display message saying to login', () => {
@@ -41,12 +44,12 @@ describe('It', function() {
     support.displayNewTestAgenda();
 
     //add and assert task added
-    var initialTaskCountPromise = support.countTasks();
+    var initialTaskCountPromise = taskList.countTasks();
     initialTaskCountPromise.then((value) => {
       var initialTaskCount = value;
-      support.addEmptyTaskFirst();
+      taskList.addEmptyTaskFirst();
 
-      expect(support.countTasks()).toEqual(initialTaskCount+1);
+      expect(taskList.countTasks()).toEqual(initialTaskCount+1);
     })
 
     assert.firstTaskEmpty();
@@ -54,12 +57,12 @@ describe('It', function() {
 
   it('should be able to delete a task', () => {   //pass add/delete task and expected count
     var initialTaskCount = 0;
-    var initialTaskCountPromise = support.countTasks();
+    var initialTaskCountPromise = taskList.countTasks();
     initialTaskCountPromise.then((value) => {
       initialTaskCount = value;
-      support.deleteFirstTaskOnAList();
+      taskList.deleteFirstTaskOnAList();
 
-      expect(support.countTasks()).toEqual(initialTaskCount-1);
+      expect(taskList.countTasks()).toEqual(initialTaskCount-1);
     })
   });
 
@@ -83,46 +86,46 @@ describe('It', function() {
   });
 
   it('should be able to update task title', () => {
-    var title = support.updateTaskTitle();
+    var title = taskList.updateTaskTitle();
 
     assert.taskTitleSetTo(title);
   });
 
   it('should be able to update task description', () => {
-    var description = support.updateTaskDescription();
+    var description = taskList.updateTaskDescription();
 
     assert.taskDescriptionSetTo(description);
   });
 
   it('should be able to update task duration', () => {
-    var duration = support.updateTaskDuration();
+    var duration = taskList.updateTaskDuration();
 
     assert.taskDurationSetTo(duration);
   });
 
   it('should be able to mark task as done', () => {   //FIXME: make me independent
-    var successful = support.markFirstTaskAsDone();
+    var successful = taskList.markFirstTaskAsDone();
 
     assert.firstTaskMarkedAsDone(true);
   });
 
   it('should be able to unmark task from done', () => {  //FIXME: make me independent
-    support.unmarkFirstTaskAsDone();
+    taskList.unmarkFirstTaskAsDone();
 
     assert.firstTaskMarkedAsDone(false);
   });
 
   it('should be able to move task down', () => {
-    support.addEmptyTask();
-    var title = support.updateTaskTitle();
-    support.moveFirstTaskDown();
+    taskList.addEmptyTask();
+    var title = taskList.updateTaskTitle();
+    taskList.moveFirstTaskDown();
 
     assert.taskMoved(title);
   });
 
   it('should be able to move task up', () => {
-    var title = support.updateTaskTitle();
-    support.moveSecondTaskUp();
+    var title = taskList.updateTaskTitle();
+    taskList.moveSecondTaskUp();
 
     assert.taskMoved(title);
 
@@ -139,12 +142,12 @@ describe('It', function() {
   });
 
   it('should be able to calculate end time of all tasks based on duration', () => {
-    support.addTasks(10);
+    taskList.addTasks(10);
 
     var startTime = support.agendaStartTime();
 
-    support.countTasks().then((count) => {
-      support.sumOfDurations().then((agendaDuration) => {
+    taskList.countTasks().then((count) => {
+      taskList.sumOfDurations().then((agendaDuration) => {
         // console.log('duration in min: ' + agendaDuration);
         agendaDuration -= 10;   //workaround as we don't have the END row to show the end time, yet
 
@@ -159,7 +162,7 @@ describe('It', function() {
   });
 
   it('should be able to delete all tasks leaving one empty', () => {
-      support.deleteAllTasksFromCurrentAgenda();
+      taskList.deleteAllTasksFromCurrentAgenda();
 
       assert.tasksCount(1);
       assert.firstTaskEmpty();

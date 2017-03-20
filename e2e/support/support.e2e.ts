@@ -1,7 +1,6 @@
-import { isSuccess } from '@angular/http/src/http_utils';
-import { browser, element, by, protractor, $, $$ } from 'protractor';
+import { browser, protractor, $, $$ } from 'protractor';
 
-import { WaitHelpers }        from './waits.e2e' 
+import { WaitHelpers }        from './waits.e2e'
 import { FlexAgendaLocators } from './elementLocators.e2e'
 import { TestData }           from './testData.e2e'
 
@@ -31,7 +30,7 @@ export class Support {
   login() {
     $(this.locator.LOGIN_INPUT_SELECTOR).sendKeys(this.data.USER_LOGIN);
     $(this.locator.LOGIN_PASSWORD_SELECTOR).sendKeys(this.data.USER_PASSWORD);
-    $$(this.locator.LOGIN_BUTTON_SELECTOR).first().click(); 
+    $$(this.locator.LOGIN_BUTTON_SELECTOR).first().click();
     this.waitForPageToLoadAfterLogin();
   }
 
@@ -39,41 +38,9 @@ export class Support {
     $(this.locator.LOGOUT_BUTTON_SELECTOR).click();
   }
 
-  addTasks(count: number) {
-    var i = 0;
-    while (i <= count) {
-      this.addEmptyTask();
-      i++;
-    }
-  }
-
-  deleteAllTasksFromCurrentAgenda() {
-    this.allTasks().count().then((count) => {
-      var i = count;
-      while (i > 0) {
-        this.deleteFirstTaskOnAList();
-        i--;
-      }
-    });
-  }
-  
-  deleteFirstTaskOnAList() {
-    $$(this.locator.TASK_DELETE_SELECTOR).first().click();
-    
-    this.confirmDelete();
-  }
-
-  addEmptyTaskFirst() {
-    return $$(this.locator.TASK_ADD_NEW_ABOVE_SELECTOR).first().click();
-  }
-
-  addEmptyTask() {
-    $(this.locator.TASK_ADD_NEW_LAST_SELECTOR).click();
-  }
-
   addNewAgenda() {
     this.countAgendas().then((count) => {
-      $(this.locator.AGENDA_ADD_NEW_SELECTOR).click();   
+      $(this.locator.AGENDA_ADD_NEW_SELECTOR).click();
 
       //expect(this.countAgendas()).toEqual(count+1);
     });
@@ -91,7 +58,6 @@ export class Support {
         });
       });
     });
-
   }
 
   deleteAllAgendas() {
@@ -110,20 +76,8 @@ export class Support {
     this.confirmDelete();
   }
 
-  countTasks() {
-   return this.allTasks().count();
-  }
-
   countAgendas() {
     return this.allAgendas().count();
-  }
-
-  allTaskStartTimes() {
-    return $$(this.locator.TASK_START_TIME_SELECTOR);
-  }
-
-  allTasks() {
-    return $$(this.locator.TASK_SELECTOR);
   }
 
   allAgendasStartTimes() {
@@ -137,67 +91,6 @@ export class Support {
   //TODO: check how it will behave when no agendas present
   allAgendas() {
     return $$(this.locator.AGENDA_SELECTOR);
-  }
-
-  updateTaskTitle() {
-    var miliseconds = new Date().getMilliseconds();
-    var newTitle = 'This is my new title at ' + miliseconds + ' miliseconds';
-
-    var title = $$(this.locator.TASK_TITLE_SELECTOR).first();
-    title.clear();
-    title.sendKeys(newTitle);
-    
-    //change focus to save
-    $$(this.locator.TASK_DESCRIPTION_SELECTOR).first().click();
-
-    return newTitle;
-  }
-
-  updateTaskDescription() {
-    var miliseconds = new Date().getMilliseconds();
-    var newDescription = 'This is my new description at ' + miliseconds + ' miliseconds';
-    
-    var description = $$(this.locator.TASK_DESCRIPTION_SELECTOR).first();
-    description.clear();
-    description.sendKeys(newDescription);
-    
-    //change focus to save
-    $$(this.locator.TASK_TITLE_SELECTOR).first().click();
-
-    return newDescription;
-  }
-
-  updateTaskDuration() {
-    var minutes = new Date().getMinutes();
-    var taskDuration = $$(this.locator.TASK_DURATION_SELECTOR).first();
-    taskDuration.clear();
-    taskDuration.sendKeys(minutes);
-    
-    //change focus to save
-    $$(this.locator.TASK_TITLE_SELECTOR).first().click();
-
-    return minutes.toString();
-  }
-
-  sumOfDurations() {
-    var overallDuration = 0;
-    return $$(this.locator.TASK_DURATION_SELECTOR).getAttribute('value').then((valuesString) => {
-      valuesString = valuesString + '';
-      var values = valuesString.split(',').map(Number); 
-      return values.reduce((a, b) => { return a + b; });
-    });
-  }
-
-  markFirstTaskAsDone() {     //fixme
-    var taskComplete = $$(this.locator.TASK_COMPLETE_SELECTOR).first();
-    taskComplete.click().then(() => {
-      browser.refresh();      //Workaround to see the checkbox is clicked
-    });
-    browser.wait(this.ec.presenceOf(taskComplete)); //wait for checkbox to appear before it is checked by test
-  }
-
-  unmarkFirstTaskAsDone() {  //fixme
-    this.markFirstTaskAsDone();
   }
 
   updateStartTime(adjustMinutes: number):string {
@@ -222,7 +115,7 @@ export class Support {
     return time;
   }
 
-  timeAdjustedTextBy(timeFormatted: string, minutes: number): string { 
+  timeAdjustedTextBy(timeFormatted: string, minutes: number): string {
     var time = this.timeAdjustedBy(timeFormatted, minutes);
     var timeText = this.addZero(time.getHours()) + ':' + this.addZero(time.getMinutes());
 
@@ -242,27 +135,19 @@ export class Support {
     $(this.locator.AGENDA_START_TIME_NOW_SELECTOR).click();
   }
 
-  moveFirstTaskDown() {
-    $$(this.locator.TASK_MOVE_DOWN_SELECTOR).first().click();
-  }
-
-  moveSecondTaskUp() {
-    this.allTasks().last().$(this.locator.TASK_MOVE_UP_SELECTOR).click()
-  }
-
   addZero(input): string {
     return input < 10 ? ("0" + input) : input;
   }
 
-  private waitForPageToLoadAfterLogin() {
+  waitForPageToLoadAfterLogin() {
     return browser.wait(this.ec.presenceOf($(this.locator.AGENDA_ADD_NEW_SELECTOR)));
   }
 
-  private waitForPageToLoadLoginPage() {
+  waitForPageToLoadLoginPage() {
     return browser.wait(this.ec.presenceOf($(this.locator.LOGIN_INPUT_SELECTOR)));
   }
 
-  private confirmDelete() {
+  confirmDelete() {
     var confirmDelete = $(this.locator.DELETE_CONFIRM_SELECTOR);
     browser.wait(this.ec.presenceOf(confirmDelete));
     confirmDelete.click();

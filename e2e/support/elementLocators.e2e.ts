@@ -1,5 +1,3 @@
-import { element, by } from 'protractor'
-
 export class FlexAgendaLocators {
     TASK_SELECTOR                    = 'task';
     TASK_TITLE_SELECTOR              = '#taskTitle';
@@ -16,8 +14,11 @@ export class FlexAgendaLocators {
     LOGIN_INPUT_SELECTOR             = '#md-input-0-input';
     LOGIN_PASSWORD_SELECTOR          = '#md-input-1-input';
     LOGIN_BUTTON_SELECTOR            = '#login';
-    LOGOUT_BUTTON_SELECTOR           = '#logout';
     LOGIN_TEXT_ELEMENT_SELECTOR      = 'app-login > p';
+
+    LOGOUT_BUTTON_SELECTOR           = '#logout';
+
+    LOGGED_IN_USER_TEXT_SELECTOR     = 'flexagenda-app > span';
 
     AGENDA_SELECTOR                  = '#agenda';
     AGENDA_TITLE_SELECTOR            = '#agendaTitle'

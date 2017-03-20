@@ -1,36 +1,39 @@
 import { $, $$ } from 'protractor'
 
-import { WaitHelpers } from './waits.e2e';
-import { TestData } from '../support/testData.e2e'
-import { FlexAgendaLocators } from '../support/elementLocators.e2e'
-import { Support } from '../support/support.e2e'
+import { WaitHelpers }          from './waits.e2e';
+import { TestData }             from '../support/testData.e2e'
+import { FlexAgendaLocators }   from '../support/elementLocators.e2e'
+import { Support }              from '../support/support.e2e'
+import { TaskListTest }         from '../view_objects/tasks_list.view_object'
 
 export class FlexAgendaAssertions {
     wait: WaitHelpers;
     data: TestData;
     locator: FlexAgendaLocators;
     support: Support;
+    taskList: TaskListTest;
 
     constructor() {
         this.wait = new WaitHelpers();
         this.data = new TestData();
         this.locator = new FlexAgendaLocators();
         this.support = new Support();
+        this.taskList = new TaskListTest();
     }
 
     onLoginPage() {
-        expect(this.wait.forExpectedTextInElement('Please login', 'app-login > p'))
+        expect(this.wait.forExpectedTextInElement('Please login', this.locator.LOGIN_TEXT_ELEMENT_SELECTOR))
             .toEqual(true);
     }
 
     notOnLoginPage() {
-        expect(this.wait.forElementNotPresent($('app-login > p')))
+        expect(this.wait.forElementNotPresent($(this.locator.LOGIN_TEXT_ELEMENT_SELECTOR)))
             .toEqual(true);
     }
 
     userIsLoggedIn() {
         expect(this.wait.forExpectedTextInElement('Logged in as ' + this.data.USER_LOGIN,
-            'flexagenda-app > span')).toEqual(true);
+            this.locator.LOGGED_IN_USER_TEXT_SELECTOR)).toEqual(true);
     }
 
     firstTaskEmpty() {
@@ -55,26 +58,26 @@ export class FlexAgendaAssertions {
     }
 
     tasksCount(count: number) {
-        expect(this.support.countTasks()).toEqual(count);
+        expect(this.taskList.countTasks()).toEqual(count);
     }
 
     lastTaskHasMoveUpArrow() {
-        expect(this.support.allTasks().last().$(this.locator.TASK_MOVE_UP_SELECTOR)
+        expect(this.taskList.allTasks().last().$(this.locator.TASK_MOVE_UP_SELECTOR)
             .isPresent()).toBeTruthy();
     }
 
     lastTaskDoesntHaveMoveDownArrow() {
-        expect(this.support.allTasks().last().$(this.locator.TASK_MOVE_DOWN_SELECTOR)
+        expect(this.taskList.allTasks().last().$(this.locator.TASK_MOVE_DOWN_SELECTOR)
             .isPresent()).toBeFalsy();
     }
 
     firstTaskHasMoveDownArrow() {
-        expect(this.support.allTasks().first().$(this.locator.TASK_MOVE_DOWN_SELECTOR)
+        expect(this.taskList.allTasks().first().$(this.locator.TASK_MOVE_DOWN_SELECTOR)
             .isPresent()).toBeTruthy();
     }
 
     firstTaskDoesntHaveMoveUpArrow() {
-        expect(this.support.allTasks().first().$(this.locator.TASK_MOVE_UP_SELECTOR)
+        expect(this.taskList.allTasks().first().$(this.locator.TASK_MOVE_UP_SELECTOR)
             .isPresent()).toBeFalsy();
     }
 
@@ -106,10 +109,10 @@ export class FlexAgendaAssertions {
 
     taskMoved(title: string) {
         expect($$(this.locator.TASK_TITLE_SELECTOR).first().getAttribute('value')).not.toEqual(title);
-        expect(this.support.allTasks().last().$(this.locator.TASK_TITLE_SELECTOR).getAttribute('value')).toEqual(title);
+        expect(this.taskList.allTasks().last().$(this.locator.TASK_TITLE_SELECTOR).getAttribute('value')).toEqual(title);
     }
 
     agendaEndTimeIsEqualTo(expectedEndTime: string) {
-        expect(this.support.allTaskStartTimes().last().getText()).toEqual(expectedEndTime);
+        expect(this.taskList.allTaskStartTimes().last().getText()).toEqual(expectedEndTime);
     }
 }

@@ -1,20 +1,24 @@
-import { $, $$, browser } from 'protractor'
+import { $$, browser } from 'protractor'
 
 import { FlexAgendaLocators } from '../support/elementLocators.e2e';
-import { Support } from '../support/support.e2e';
-import { WaitHelpers } from '../support/waits.e2e';
+import { Support }            from '../support/support.e2e';
+import { WaitHelpers }        from '../support/waits.e2e';
+import { TaskListTest }       from '../view_objects/tasks_list.view_object'
 
 //fdescribe
 describe('User', () => {
   var support: Support;
   var locator: FlexAgendaLocators;
   var wait: WaitHelpers;
+  var taskList: TaskListTest;
 
   beforeAll((done) => {
     // console.log('Before all starting');
     support = new Support();
     wait = new WaitHelpers();
     locator = new FlexAgendaLocators();
+    taskList = new TaskListTest();
+
     // console.log('Before login');
     browser.get('/');
     support.loginIfNeeded().then(() => {
@@ -25,23 +29,22 @@ describe('User', () => {
 //fit
   it('should be able to add one task', () => {
     // console.log('Started test: should be able to add one task');
-    support.countTasks().then((count) => {
+    taskList.countTasks().then((count) => {
       // console.log('initial count: ' + count);
-      support.addEmptyTaskFirst().then(() => {
-        var count_two = count + 1;
+      taskList.addEmptyTaskFirst().then(() => {
         // console.log('initial count after adding task: ' + count_two);
         var tasks = $$(locator.TASK_SELECTOR);
         wait.waitForCount(tasks, 2).then(() => {
-          expect(support.countTasks()).toEqual(count+1);
+          expect(taskList.countTasks()).toEqual(count+1);
         });
       });
     })
   });
 
   it('should be able to delete all tasks leaving one empty', () => {
-    support.deleteAllTasksFromCurrentAgenda();
+    taskList.deleteAllTasksFromCurrentAgenda();
 
-    expect(support.allTasks().count()).toEqual(1);
+    expect(taskList.allTasks().count()).toEqual(1);
   });
 
   afterAll(() => {
