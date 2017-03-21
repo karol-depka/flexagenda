@@ -19,10 +19,6 @@ export class WaitHelpers {
     return browser.wait(this.ec.presenceOf(elementFinder));
   }
 
-  forElement(elementFinder: ElementFinder) {
-    return browser.wait(this.ec.presenceOf(elementFinder));
-  }
-
   forElementCount(elementArrayFinder, expectedCount) {
     // console.log('start waiting for count');
     return browser.wait(() =>

@@ -1,3 +1,4 @@
+import { AgendaTest } from '../view_objects/agenda.view_object';
 import { $, $$ } from 'protractor';
 
 import { WaitHelpers }          from './waits.e2e';
@@ -13,6 +14,7 @@ export class FlexAgendaAssertions {
     locator: FlexAgendaLocators;
     support: Support;
     taskList: TaskListTest;
+    agenda: AgendaTest;
     agendasList: AgendasListTest;
 
     constructor() {
@@ -21,6 +23,7 @@ export class FlexAgendaAssertions {
         this.locator = new FlexAgendaLocators();
         this.support = new Support();
         this.taskList = new TaskListTest();
+        this.agenda = new AgendaTest();
         this.agendasList = new AgendasListTest();
     }
 
@@ -54,7 +57,7 @@ export class FlexAgendaAssertions {
         expect(this.agendasList.allAgendas().count()).toEqual(0);
     }
 
-    startTimeIsSetTo(time: string) {
+    startTimeIs(time: string) {
         expect($(this.locator.AGENDA_START_TIME_INPUT_SELECTOR)
             .getAttribute('value')).toEqual(time);
         this.startTimeSetForTasks(time);
@@ -84,17 +87,17 @@ export class FlexAgendaAssertions {
             .isPresent()).toBeFalsy();
     }
 
-    taskTitleSetTo(title: string) {
+    taskTitleIs(title: string) {
         expect($(this.locator.TASK_TITLE_SELECTOR)
             .getAttribute('value')).toEqual(title);
     }
 
-    taskDescriptionSetTo(description: string) {
+    taskDescriptionIs(description: string) {
         expect($(this.locator.TASK_DESCRIPTION_SELECTOR)
             .getAttribute('value')).toEqual(description);
     }
 
-    taskDurationSetTo(duration: string) {
+    taskDurationIs(duration: string) {
         expect($(this.locator.TASK_DURATION_SELECTOR)
             .getAttribute('value')).toEqual(duration);
     }
@@ -118,7 +121,20 @@ export class FlexAgendaAssertions {
           .getAttribute('value')).toEqual(title);
     }
 
-    agendaEndTimeIsEqualTo(expectedEndTime: string) {
+    agendaEndTimeIs(expectedEndTime: string) {
         expect(this.taskList.allTaskStartTimes().last().getText()).toEqual(expectedEndTime);
+    }
+
+    agendaTitleIs(expectedTitle: string) {
+        expect(this.agenda.grabAgendaTitle()).toEqual(expectedTitle);
+    }
+
+    agendaStartTimeIs(expectedStartTime: string) {
+        expect($(this.locator.AGENDA_START_TIME_INPUT_SELECTOR).getAttribute('value'))
+            .toEqual(expectedStartTime);
+    }
+
+    singleAgendaIsOpen() {
+        expect($$(this.locator.AGENDA_TITLE_SELECTOR).count()).toEqual(1);
     }
 }

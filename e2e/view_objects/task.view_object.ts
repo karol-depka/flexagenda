@@ -3,7 +3,7 @@ import { $$ } from 'protractor';
 import { FlexAgendaLocators } from "../support/elementLocators.e2e";
 
 export class TaskTest {
-  locator: FlexAgendaLocators;
+  private locator: FlexAgendaLocators;
 
   constructor() {
     this.locator = new FlexAgendaLocators();

@@ -10,7 +10,7 @@ export class Support {
 
   loginIfNeeded() {
    return this.navigateToLogin().then(() => {
-     browser.sleep(2000);
+     browser.sleep(2000);   //FIXME
       $(this.locator.LOGIN_BUTTON_SELECTOR).isPresent().then((isPresent) => {
         if(isPresent) {
           // console.log('is user logged in: ' + isPresent);

@@ -27,6 +27,7 @@ export class FlexAgendaLocators {
     AGENDA_ADD_NEW_SELECTOR          = '#agendaAddNew';
     AGENDA_DELETE_SELECTOR           = '#agendaDelete';
     AGENDA_OPEN_SELECTOR             = '#openAgenda';
+    AGENDA_LIST_SELECTOR             = 'agendas-list';
 
     DELETE_CONFIRM_SELECTOR          = '#confirmDelete';
 }

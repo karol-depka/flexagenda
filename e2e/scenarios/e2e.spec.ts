@@ -68,7 +68,7 @@ describe('It', function() {
   });
 
   it('should be able to show start time for all tasks', () => {
-    agenda.agendaStartTime().then((startTime) => {
+    agenda.grabStartTime().then((startTime) => {
        assert.startTimeSetForTasks(startTime);
     });
   });
@@ -76,32 +76,32 @@ describe('It', function() {
   it('should be able to see updated agenda start time in first task', () => {
     var startTime = agenda.updateStartTime(3);
 
-    assert.startTimeIsSetTo(startTime);
+    assert.startTimeIs(startTime);
   });
 
   it('should be able to set time to Now', () => {
     var startTime = agenda.updateStartTime(0);
     agenda.clickStartNow();
 
-    assert.startTimeIsSetTo(startTime);
+    assert.startTimeIs(startTime);
   });
 
   it('should be able to update task title', () => {
     var title = task.updateTaskTitle();
 
-    assert.taskTitleSetTo(title);
+    assert.taskTitleIs(title);
   });
 
   it('should be able to update task description', () => {
     var description = task.updateTaskDescription();
 
-    assert.taskDescriptionSetTo(description);
+    assert.taskDescriptionIs(description);
   });
 
   it('should be able to update task duration', () => {
     var duration = task.updateTaskDuration();
 
-    assert.taskDurationSetTo(duration);
+    assert.taskDurationIs(duration);
   });
 
   it('should be able to mark task as done', () => {   //FIXME: make me independent
@@ -145,7 +145,7 @@ describe('It', function() {
   it('should be able to calculate end time of all tasks based on duration', () => {
     taskList.addTasks(10);
 
-    var startTime = agenda.agendaStartTime();
+    var startTime = agenda.grabStartTime();
 
     taskList.sumOfDurations().then((agendaDuration) => {
       // console.log('duration in min: ' + agendaDuration);
@@ -155,7 +155,7 @@ describe('It', function() {
         var agendaStartTime = support.timeAdjustedTextBy(time, 0);
         var expectedEndTime = support.timeAdjustedTextBy(agendaStartTime, agendaDuration);
 
-        assert.agendaEndTimeIsEqualTo(expectedEndTime);
+        assert.agendaEndTimeIs(expectedEndTime);
       });
     });
   });

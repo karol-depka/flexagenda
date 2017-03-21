@@ -4,9 +4,9 @@ import { FlexAgendaLocators } from "../support/elementLocators.e2e";
 import { Support }            from "../support/support.e2e";
 
 export class TaskListTest {
-  ec = protractor.ExpectedConditions;
-  locator = new FlexAgendaLocators();
-  support = new Support();
+  private ec = protractor.ExpectedConditions;
+  private locator = new FlexAgendaLocators();
+  private support = new Support();
 
   addEmptyTask() {
     $(this.locator.TASK_ADD_NEW_LAST_SELECTOR).click();

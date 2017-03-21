@@ -5,16 +5,15 @@ import { WaitHelpers }        from '../support/waits.e2e';
 import { FlexAgendaLocators } from '../support/elementLocators.e2e';
 
 export class AgendasListTest {
-  waits = new WaitHelpers();
-  locator = new FlexAgendaLocators();
-  support = new Support();
+  private waits = new WaitHelpers();
+  private locator = new FlexAgendaLocators();
+  private support = new Support();
 
   addNewAgenda() {
-    this.countAgendas().then((count) => {
-      $(this.locator.AGENDA_ADD_NEW_SELECTOR).click();
-
+ //   this.countAgendas().then((count) => {
+    $(this.locator.AGENDA_ADD_NEW_SELECTOR).click();
       //expect(this.countAgendas()).toEqual(count+1);
-    });
+ //   });
   }
 
   displayNewTestAgenda(done?) {
