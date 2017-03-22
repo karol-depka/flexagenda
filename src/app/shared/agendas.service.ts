@@ -26,6 +26,8 @@ export class AgendasService {
         this.userHasAgendasRaw = this.af.database.list(userHasAgendaPath);
       }
     });
+    this.agendasList = this.af.database.list('/Agenda/');
+
     //this.af.auth.subscribe(auth => console.log(auth));
     // var uid = this.authService.getUidOrThrow();
     // if ( ! uid ) {
@@ -69,8 +71,6 @@ export class AgendasService {
   public getAgendas(): Observable<any[]> {
 
     var uid = this.authService.getUidOrThrow();
-
-    this.agendasList = this.af.database.list('/Agenda/');
     var userHasAgendaPath = '/UserHasAgenda/' + this.authService.getUidOrThrow();
     console.log("getAgendas", userHasAgendaPath)
     this.userHasAgendaList = this.af.database.list(userHasAgendaPath);
