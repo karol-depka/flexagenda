@@ -66,7 +66,7 @@ export class TasksService {
   }
 
   public getNewTaskOrder(agendaKey : string, task, isFirst : boolean): any {
-    if ( !task ) {
+    if ( !task && isFirst ) {
       return 1;
     }
     /*
