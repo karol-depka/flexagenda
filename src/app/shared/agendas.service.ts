@@ -12,12 +12,12 @@ export class AgendasService {
   userHasAgendas: Observable<any[]>;
   userHasAgendasRaw: Observable<any[]>;
   agendasList : FirebaseListObservable<any[]>;
+  userHasAgendaList : FirebaseListObservable<any[]>;
 
   constructor(
       public af:AngularFire,
       public authService : AuthService,
       public tasksService : TasksService
-
       ) {
     af.auth.subscribe(auth => {
       if ( auth ) {
@@ -31,7 +31,6 @@ export class AgendasService {
     // if ( ! uid ) {
       // console.log(" ! this.authService.uid ",  uid );
     // }
-    this.agendasList = this.af.database.list('/Agenda/');
   }
 
   public addNewAgenda() {
@@ -39,7 +38,6 @@ export class AgendasService {
     This function adds newAgenda object to the database.
 
     */
-    var userHasAgendasList = this.af.database.list('/UserHasAgenda/' + this.authService.getUidOrThrow() /* FIXME */);
     var newAgendaKey: string;
     var newTaskKey: string;
 
@@ -50,7 +48,7 @@ export class AgendasService {
       startTime:this.tasksService.timeNow()
     }).key;
     console.log('In agenda: ' + newAgendaKey);
-    userHasAgendasList.update(newAgendaKey, {"read" : true});
+    this.userHasAgendaList.update(newAgendaKey, {"read" : true});
 
     // var newAgenda = this.tasksService.af.database.list('/agenda_tasks/'+newAgendaKey);
     // newTaskKey = newAgenda.push({
@@ -71,11 +69,13 @@ export class AgendasService {
   public getAgendas(): Observable<any[]> {
 
     var uid = this.authService.getUidOrThrow();
+
+    this.agendasList = this.af.database.list('/Agenda/');
     var userHasAgendaPath = '/UserHasAgenda/' + this.authService.getUidOrThrow();
     console.log("getAgendas", userHasAgendaPath)
+    this.userHasAgendaList = this.af.database.list(userHasAgendaPath);
 
-    const userHasAgendaList = this.af.database.list(userHasAgendaPath);
-    userHasAgendaList.subscribe((lll) => {
+    this.userHasAgendaList.subscribe((lll) => {
       console.log("userHasAgendaList.subscribe", lll);
     });
 
@@ -84,7 +84,7 @@ export class AgendasService {
 
     //   return "dafd"
     // }).subscribe(k => {});
-    this.userHasAgendas = userHasAgendaList.map(userHasAgendas => {
+    this.userHasAgendas = this.userHasAgendaList.map(userHasAgendas => {
       console.log("list(userHasAgendaPath).map(userHasAgendas: ", userHasAgendas);
       userHasAgendas.map(userHasAgenda => {
         console.log("userHasAgenda: ", userHasAgenda)
@@ -112,6 +112,14 @@ export class AgendasService {
 
   updateAgenda(key, updateKey, updateValue, type) {
     this.agendasList.update(key, {[updateKey]:updateValue}).then(_ => console.log('Agenda updated!'));
+  }
+
+  deleteAgenda(agendaKey) {
+    var agenda = this.af.database.list('/agenda_tasks/');
+    // FIXME: fix after UserHasAgenda:
+    agenda.remove(agendaKey);
+    this.agendasList.remove(agendaKey).then(_ => console.log('Agenda '+agendaKey+' deleted!'));
+    this.userHasAgendaList.remove(agendaKey).then(_ => console.log('Agenda '+agendaKey+' deleted!'));
   }
 
 }

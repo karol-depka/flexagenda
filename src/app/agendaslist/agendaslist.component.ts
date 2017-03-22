@@ -44,12 +44,9 @@ export class AgendasListComponent implements OnInit {
   }
 
   public deleteAgenda(agendaKey): void {
-    var agenda = this.tasksService.af.database.list('/agenda_tasks/');
-    // FIXME: fix after UserHasAgenda:
-    // agenda.remove(agendaKey);
-    // this.agendas.remove(agendaKey).then(_ => console.log('Agenda '+agendaKey+' deleted!'));
-
+    this.agendasService.deleteAgenda(agendaKey);
   }
+
   public confirmAgendaDelete(agendaKey, message): string {
     /*
     This function opens 'confirmationdialog' for agenda removal
