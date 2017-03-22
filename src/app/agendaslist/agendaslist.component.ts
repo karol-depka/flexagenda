@@ -18,7 +18,6 @@ import { AuthService } from '../shared/auth.service';
 })
 export class AgendasListComponent implements OnInit {
   agendas : Observable<any[]>;
-  agendas2: any;
   dialogRef: MdDialogRef<ConfirmationDialog>;
 
   constructor(
@@ -38,7 +37,6 @@ export class AgendasListComponent implements OnInit {
 
   getAgendas(): void {
     this.agendas=this.agendasService.getAgendas();
-    this.agendas2 =this.agendas.map(val => val.map(val2 => {val2.agenda}));
   }
 
   public addNewAgenda() {
