@@ -7,17 +7,17 @@
 
 User uid: {{ authService.uid }}
 Agendas:
-<ul>
+<!--<ul>
       <li *ngFor="let userHasAgenda of agendasService.userHasAgendasRaw | async" id="agendaXX">
       Agenda: {{userHasAgenda?.$key}}
     </li>
 
-</ul>
+</ul>-->
 <ul #agendasList>
      <!-- each agenda goes here -->
-    <li *ngFor="let userHasAgenda of agendas | async; trackBy: trackById" id="agenda">
+    <!--<li *ngFor="let userHasAgenda of agendas | async; trackBy: trackById" id="agenda">
       Agenda: {{userHasAgenda?.agenda?.title }}
-    </li>
+    </li>-->
     <li *ngFor="let uha of agendas | async" id="agenda">
       <!--Title: {{agenda?.title | async}}-->
       <button *ngIf="!uha.agenda?.active"

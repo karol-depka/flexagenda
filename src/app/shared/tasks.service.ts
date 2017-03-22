@@ -65,6 +65,9 @@ export class TasksService {
   }
 
   public getNewTaskOrder(agendaKey : string, task, isFirst : boolean): any {
+    if ( !task ) {
+      return 100;
+    }
     /*
     This function prepares existing tasks to compare for 'calculateNewOrder' function.
     */

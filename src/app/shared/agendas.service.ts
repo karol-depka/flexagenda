@@ -61,6 +61,10 @@ export class AgendasService {
     //   completed:false
     // }).key;
     // console.log('new task added: '+newTaskKey);
+
+    // add initial task to the new agenda:
+    this.tasksService.getTasks(newAgendaKey); // FIXME: hack to initialize
+    this.tasksService.addNewTask(newAgendaKey, null, true);
   }
 
   public getAgendas(): Observable<any[]> {
