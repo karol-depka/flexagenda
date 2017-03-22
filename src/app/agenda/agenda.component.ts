@@ -1,3 +1,4 @@
+import { AgendasService } from './../shared/agendas.service';
 import { TaskTreeComponent } from './../taskTree/taskTree.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
@@ -23,6 +24,7 @@ export class AgendaComponent implements OnInit {
 
   constructor(private _route: ActivatedRoute,
               private _tasksService: TasksService,
+              private agendasService: AgendasService,
               public dialog: MdDialog,
               public snackBar: SnackBarComponent) {
   }
@@ -39,7 +41,7 @@ export class AgendaComponent implements OnInit {
   }
 
   updateTime(time): void {
-    this._tasksService.updateObject('agenda', this.agendaKey, 'startTime', time, 'string');
+    this.agendasService.updateAgenda(this.agendaKey, 'startTime', time, 'string');
     this.taskListComponent.calculateStartTimes(time);
     // this.taskListComponent.calculateStartTimes(time); // HACK
     this.snackBar.showSnackBar('Agenda updated.');
@@ -52,7 +54,7 @@ export class AgendaComponent implements OnInit {
   }
 
   updateTitle(title): void {
-    this._tasksService.updateObject('agenda', this.agendaKey, 'title', title, 'string');
+    this.agendasService.updateAgenda(this.agendaKey, 'title', title, 'string');
     this.snackBar.showSnackBar('Agenda updated.')
   }
 }

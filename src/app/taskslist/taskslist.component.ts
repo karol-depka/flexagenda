@@ -155,10 +155,10 @@ export class TasksListComponent implements OnInit {
   }
 
   removeTaskData(taskKey: string): void {
-    this.tasksService.updateObject('task', taskKey, 'title', '', 'string');
-    this.tasksService.updateObject('task', taskKey, 'description', '', 'string');
-    this.tasksService.updateObject('task', taskKey, 'duration', '10', 'string');
-    this.tasksService.updateObject('task', taskKey, 'completed', false, 'boolean');
+    this.tasksService.updateObject(taskKey, 'title', '', 'string');
+    this.tasksService.updateObject(taskKey, 'description', '', 'string');
+    this.tasksService.updateObject(taskKey, 'duration', '10', 'string');
+    this.tasksService.updateObject(taskKey, 'completed', false, 'boolean');
   }
 
   trackById(index: number, item) {

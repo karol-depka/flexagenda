@@ -192,22 +192,12 @@ export class TasksService {
     return this.TasksCount;
   }
 
-  updateObject(object, key, updateKey, updateValue, type): void {
+  updateObject(key, updateKey, updateValue, type): void {
     if (type == 'number') updateValue = this.guardPositiveValue(updateValue,type);
 
     console.log("tasks list for agenda: " + this.TASKS)
     // console.log("updateObject: this.getAgendas().$ref.toString(): ", this.getAgendas().$ref.toString());
-    switch (object) {
-      case 'task':
-          this.TASKS.update(key, {[updateKey]:updateValue}).then(_ => console.log('Task updated!'));
-          break;
-      case 'agenda':
-          throw new Error("deprecated: update agenda here");
-
-      // FIXME
-          // this.getAgendas().update(key, {[updateKey]:updateValue}).then(_ => console.log('Agenda updated!'));
-          // break;
-    }
+    this.TASKS.update(key, {[updateKey]:updateValue}).then(_ => console.log('Task updated!'));
   }
 
   guardPositiveValue(value, type): Number {
