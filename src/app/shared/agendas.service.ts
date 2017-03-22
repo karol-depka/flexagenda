@@ -11,6 +11,7 @@ export class AgendasService {
   AGENDAS_: FirebaseListObservable<any[]>; // lazy
   userHasAgendas: Observable<any[]>;
   userHasAgendasRaw: Observable<any[]>;
+  agendasList : FirebaseListObservable<any[]>;
 
   constructor(
       public af:AngularFire,
@@ -30,6 +31,7 @@ export class AgendasService {
     // if ( ! uid ) {
       // console.log(" ! this.authService.uid ",  uid );
     // }
+    this.agendasList = this.af.database.list('/Agenda/');
   }
 
   public addNewAgenda() {
@@ -38,11 +40,10 @@ export class AgendasService {
 
     */
     var userHasAgendasList = this.af.database.list('/UserHasAgenda/' + this.authService.getUidOrThrow() /* FIXME */);
-    var agendasList = this.af.database.list('/Agenda/');
     var newAgendaKey: string;
     var newTaskKey: string;
 
-    newAgendaKey = agendasList.push({
+    newAgendaKey = this.agendasList.push({
       title: "NEW AGENDA TITLE - click to edit",
       users: "",
       active: true,
@@ -108,4 +109,9 @@ export class AgendasService {
     // }
     // return this.AGENDAS_;
   }
+
+  updateAgenda(key, updateKey, updateValue, type) {
+    this.agendasList.update(key, {[updateKey]:updateValue}).then(_ => console.log('Agenda updated!'));
+  }
+
 }

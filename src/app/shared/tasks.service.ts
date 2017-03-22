@@ -202,9 +202,11 @@ export class TasksService {
           this.TASKS.update(key, {[updateKey]:updateValue}).then(_ => console.log('Task updated!'));
           break;
       case 'agenda':
+          throw new Error("deprecated: update agenda here");
+
       // FIXME
           // this.getAgendas().update(key, {[updateKey]:updateValue}).then(_ => console.log('Agenda updated!'));
-          break;
+          // break;
     }
   }
 
