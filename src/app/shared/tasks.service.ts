@@ -38,12 +38,12 @@ export class TasksService {
 
   public getAgenda(agendaKey : string): FirebaseObjectObservable<any[]> {
     var agenda: FirebaseObjectObservable<any[]>;
-    agenda = this.af.database.object('/agendas/' + this.authService.getUidOrThrow() + "/" + agendaKey); // FIXME: duplication
+    agenda = this.af.database.object('/Agenda/' + agendaKey); // FIXME: duplication
 
     return agenda;
   }
 
-  public addNewTask(agendaKey : string, task, isFirst : boolean) {
+  public addNewTask(agendaKey : string, task, isFirst : boolean) : string {
     /*
     This function adds newTask object to the database.
     If no 'task' is provided newTask is added at the end of TASKS list.
@@ -54,7 +54,7 @@ export class TasksService {
     console.log(`TasksService: addNewTask: ${agendaKey}, ${task}, ${isFirst}`);
 
     newOrder = this.getNewTaskOrder(agendaKey,task,isFirst);
-    this.TASKS.push({
+    var newTaskId = this.TASKS.push({
       order:newOrder,
       type:"general",
       duration:10,
@@ -62,11 +62,12 @@ export class TasksService {
       description:"",
       completed:false
     });
+    return newTaskId.key;
   }
 
   public getNewTaskOrder(agendaKey : string, task, isFirst : boolean): any {
     if ( !task ) {
-      return 100;
+      return 1;
     }
     /*
     This function prepares existing tasks to compare for 'calculateNewOrder' function.
