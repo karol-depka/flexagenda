@@ -1,20 +1,17 @@
-import { isSuccess } from '@angular/http/src/http_utils';
-import { browser, element, by, protractor, $, $$ } from 'protractor';
+import { browser, protractor, $, $$ } from 'protractor';
 
-import { WaitHelpers }        from './waits.e2e' 
 import { FlexAgendaLocators } from './elementLocators.e2e'
 import { TestData }           from './testData.e2e'
 
 export class Support {
   ec = protractor.ExpectedConditions;
-  waits = new WaitHelpers();
   locator = new FlexAgendaLocators();
   data = new TestData();
 
   loginIfNeeded() {
    return this.navigateToLogin().then(() => {
-     browser.sleep(2000);
-      $(this.locator.LOGIN_BUTTON_CSS).isPresent().then((isPresent) => {
+     browser.sleep(2000);   //FIXME
+      $(this.locator.LOGIN_BUTTON_SELECTOR).isPresent().then((isPresent) => {
         if(isPresent) {
           // console.log('is user logged in: ' + isPresent);
           this.login();
@@ -29,170 +26,14 @@ export class Support {
   }
 
   login() {
-    $(this.locator.LOGIN_INPUT_CSS).sendKeys(this.data.USER_LOGIN);
-    $(this.locator.LOGIN_PASSWORD_CSS).sendKeys(this.data.USER_PASSWORD);
-    $$(this.locator.LOGIN_BUTTON_CSS).first().click(); 
+    $(this.locator.LOGIN_INPUT_SELECTOR).sendKeys(this.data.USER_LOGIN);
+    $(this.locator.LOGIN_PASSWORD_SELECTOR).sendKeys(this.data.USER_PASSWORD);
+    $$(this.locator.LOGIN_BUTTON_SELECTOR).first().click();
     this.waitForPageToLoadAfterLogin();
   }
 
   logout() {
-    $(this.locator.LOGOUT_BUTTON_CSS).click();
-  }
-
-  deleteAllTasksFromCurrentAgenda() {
-    this.allTasks().count().then((count) => {
-      var i = count;
-      while (i > 0) {
-        this.deleteFirstTaskOnAList();
-        i--;
-      }
-    });
-  }
-  
-  deleteFirstTaskOnAList() {
-    $$(this.locator.TASK_DELETE_CSS).first().click();
-    
-    this.confirmDelete();
-  }
-
-  addEmptyTaskFirst() {
-    return $$(this.locator.TASK_ADD_NEW_ABOVE_CSS).first().click();
-  }
-
-  addEmptyTask() {
-    $(this.locator.TASK_ADD_NEW_LAST_CSS).click();
-  }
-
-  addNewAgenda() {
-    this.countAgendas().then((count) => {
-      $(this.locator.AGENDA_ADD_NEW_CSS).click();   
-
-      //expect(this.countAgendas()).toEqual(count+1);
-    });
-  }
-
-  displayNewTestAgenda(done?) {
-    this.addNewAgenda();
-    return this.waits.waitForElementPresent($(this.locator.AGENDA_OPEN_CSS)).then(() => {
-      // console.log('before it clicks to open new agenda');
-      $$(this.locator.AGENDA_OPEN_CSS).last().click().then(() => {
-        // console.log('after opening agenda, before wait for element not prersent');
-        this.waits.waitForElementPresent($(this.locator.TASK_CSS)).then(() => {
-          // console.log('Not on agendas list, single agenda view');
-          if (done) done();
-        });
-      });
-    });
-
-  }
-
-  deleteAllAgendas() {
-    this.allAgendas().count().then((count) => {   //TODO: refactor to a new method?
-      var i = count;
-      while (i > 0) {
-        this.deleteFirstAgendaOnTheList();
-        i--;
-      }
-    });
-  }
-
-  deleteFirstAgendaOnTheList() {
-    $$(this.locator.AGENDA_DELETE_CSS).first().click();
-
-    this.confirmDelete();
-  }
-
-  countTasks() {
-   return this.allTasks().count();
-  }
-
-  countAgendas() {
-    return this.allAgendas().count();
-  }
-
-  allTaskStartTimes() {
-    return $$(this.locator.TASK_START_TIME_CSS);
-  }
-
-  allTasks() {
-    return $$(this.locator.TASK_CSS);
-  }
-
-  allAgendasStartTimes() {
-    return $$(this.locator.AGENDA_START_TIME_INPUT_CSS);
-  }
-
-  //TODO: check how it will behave when no agendas present
-  allAgendas() {
-    return $$(this.locator.AGENDA_CSS);
-  }
-
-  updateTaskTitle() {
-    var miliseconds = new Date().getMilliseconds();
-    var newTitle = 'This is my new title at ' + miliseconds + ' miliseconds';
-
-    var title = $$(this.locator.TASK_TITLE_CSS).first();
-    title.clear();
-    title.sendKeys(newTitle);
-    
-    //change focus to save
-    $$(this.locator.TASK_DESCRIPTION_CSS).first().click();
-
-    return newTitle;
-  }
-
-  updateTaskDescription() {
-    var miliseconds = new Date().getMilliseconds();
-    var newDescription = 'This is my new description at ' + miliseconds + ' miliseconds';
-    
-    var description = $$(this.locator.TASK_DESCRIPTION_CSS).first();
-    description.clear();
-    description.sendKeys(newDescription);
-    
-    //change focus to save
-    $$(this.locator.TASK_TITLE_CSS).first().click();
-
-    return newDescription;
-  }
-
-  updateTaskDuration() {
-    var minutes = new Date().getMinutes();
-    var taskDuration = $$(this.locator.TASK_DURATION_CSS).first();
-    taskDuration.clear();
-    taskDuration.sendKeys(minutes);
-    
-    //change focus to save
-    $$(this.locator.TASK_TITLE_CSS).first().click();
-
-    return minutes.toString();
-  }
-
-  sumOfDurations() {
-    var overallDuration = 0;
-    return $$(this.locator.TASK_DURATION_CSS).getAttribute('value').then((valuesString) => {
-      valuesString = valuesString + '';
-      var values = valuesString.split(',').map(Number); 
-      return values.reduce((a, b) => { return a + b; });
-    });
-  }
-
-  markFirstTaskAsDone() {     //fixme
-    var taskComplete = $$(this.locator.TASK_COMPLETE_CSS).first();
-    taskComplete.click().then(() => {
-      browser.refresh();      //Workaround to see the checkbox is clicked
-    });
-    browser.wait(this.ec.presenceOf(taskComplete)); //wait for checkbox to appear before it is checked by test
-  }
-
-  unmarkFirstTaskAsDone() {  //fixme
-    this.markFirstTaskAsDone();
-  }
-
-  updateStartTime(adjustMinutes: number):string {
-    var timeFormatted = this.timeNowAdjustedText(0, adjustMinutes);
-    $(this.locator.AGENDA_START_TIME_INPUT_CSS).sendKeys(timeFormatted);
-
-    return timeFormatted;
+    $(this.locator.LOGOUT_BUTTON_SELECTOR).click();
   }
 
   timeNowAdjustedText(hours: number, minutes: number): string {   //not sure if it's working properly
@@ -210,7 +51,7 @@ export class Support {
     return time;
   }
 
-  timeAdjustedTextBy(timeFormatted: string, minutes: number): string { 
+  timeAdjustedTextBy(timeFormatted: string, minutes: number): string {
     var time = this.timeAdjustedBy(timeFormatted, minutes);
     var timeText = this.addZero(time.getHours()) + ':' + this.addZero(time.getMinutes());
 
@@ -226,25 +67,21 @@ export class Support {
     return time;
   }
 
-  addZero(input): string {
-    return input < 10 ? ("0" + input) : input;
+  waitForPageToLoadAfterLogin() {
+    return browser.wait(this.ec.presenceOf($(this.locator.AGENDA_ADD_NEW_SELECTOR)));
   }
 
-  private waitForPageToLoadAfterLogin() {
-    return browser.wait(this.ec.presenceOf($(this.locator.AGENDA_ADD_NEW_CSS)));
+  waitForPageToLoadLoginPage() {
+    return browser.wait(this.ec.presenceOf($(this.locator.LOGIN_INPUT_SELECTOR)));
   }
 
-  private waitForPageToLoadLoginPage() {
-    return browser.wait(this.ec.presenceOf($(this.locator.LOGIN_INPUT_CSS)));
-  }
-
-  private confirmDelete() {
-    var confirmDelete = $(this.locator.DELETE_CONFIRM_CSS);
+  confirmDelete() {
+    var confirmDelete = $(this.locator.DELETE_CONFIRM_SELECTOR);
     browser.wait(this.ec.presenceOf(confirmDelete));
     confirmDelete.click();
   }
+
+  addZero(input): string {
+    return input < 10 ? ("0" + input) : input;
+  }
 }
-
-
-
-

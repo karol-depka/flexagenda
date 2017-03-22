@@ -1,31 +1,33 @@
-import { element, by } from 'protractor'
-
 export class FlexAgendaLocators {
-    TASK_CSS                    = 'task';
-    TASK_TITLE_CSS              = '#taskTitle';
-    TASK_DESCRIPTION_CSS        = '#taskDescription';
-    TASK_DURATION_CSS           = '#taskDuration';
-    TASK_COMPLETE_CSS           = '#taskComplete';
-    TASK_ADD_NEW_LAST_CSS       = '#taskAddNewLast';
-    TASK_ADD_NEW_ABOVE_CSS      = '#taskAddAbove';
-    TASK_MOVE_UP_CSS            = '#taskMoveUp';
-    TASK_MOVE_DOWN_CSS          = '#taskMoveDown';
-    TASK_START_TIME_CSS         = '#taskStart';
-    TASK_DELETE_CSS             = '#taskDelete';
+    TASK_SELECTOR                    = 'task';
+    TASK_TITLE_SELECTOR              = '#taskTitle';
+    TASK_DESCRIPTION_SELECTOR        = '#taskDescription';
+    TASK_DURATION_SELECTOR           = '#taskDuration';
+    TASK_COMPLETE_SELECTOR           = '#taskComplete';
+    TASK_ADD_NEW_LAST_SELECTOR       = '#taskAddNewLast';
+    TASK_ADD_NEW_ABOVE_SELECTOR      = '#taskAddAbove';
+    TASK_MOVE_UP_SELECTOR            = '#taskMoveUp';
+    TASK_MOVE_DOWN_SELECTOR          = '#taskMoveDown';
+    TASK_START_TIME_SELECTOR         = '#taskStart';
+    TASK_DELETE_SELECTOR             = '#taskDelete';
 
-    LOGIN_INPUT_CSS             = '#md-input-0-input';
-    LOGIN_PASSWORD_CSS          = '#md-input-1-input';
-    LOGIN_BUTTON_CSS            = '#login';
-    LOGOUT_BUTTON_CSS           = '#logout';
-    LOGIN_TEXT_ELEMENT_CSS      = 'app-login > p';
+    LOGIN_INPUT_SELECTOR             = '#md-input-0-input';
+    LOGIN_PASSWORD_SELECTOR          = '#md-input-1-input';
+    LOGIN_BUTTON_SELECTOR            = '#login';
+    LOGIN_TEXT_ELEMENT_SELECTOR      = 'app-login > p';
 
-    AGENDA_CSS                  = '#agenda';
-    AGENDA_TITLE_CSS            = '#agendaTitle'
-    AGENDA_START_TIME_INPUT_CSS = '#agendaStartTime';
-    AGENDA_START_TIME_NOW_CSS   = '#agendaSetTimeToNow';
-    AGENDA_ADD_NEW_CSS          = '#agendaAddNew';
-    AGENDA_DELETE_CSS           = '#agendaDelete';
-    AGENDA_OPEN_CSS             = '#openAgenda';
+    LOGOUT_BUTTON_SELECTOR           = '#logout';
 
-    DELETE_CONFIRM_CSS          = '#confirmDelete';
+    LOGGED_IN_USER_TEXT_SELECTOR     = 'flexagenda-app > span';
+
+    AGENDA_SELECTOR                  = '#agenda';
+    AGENDA_TITLE_SELECTOR            = '#agendaTitle'
+    AGENDA_START_TIME_INPUT_SELECTOR = '#agendaStartTime';
+    AGENDA_START_TIME_NOW_SELECTOR   = '#agendaSetTimeToNow';
+    AGENDA_ADD_NEW_SELECTOR          = '#agendaAddNew';
+    AGENDA_DELETE_SELECTOR           = '#agendaDelete';
+    AGENDA_OPEN_SELECTOR             = '#openAgenda';
+    AGENDA_LIST_SELECTOR             = 'agendas-list';
+
+    DELETE_CONFIRM_SELECTOR          = '#confirmDelete';
 }

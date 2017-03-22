@@ -6,6 +6,8 @@
 // var locator = new FlexAgendaLocators();
 // var waits = new WaitHelpers();
 
+// browser.ignoreSynchronization = true;
+
 // fdescribe('This', () => {
 //     // fit('------element nie istnieje', () => {
 //     //     console.log('start wykonywania testu: element nie istnieje');
