@@ -34,8 +34,15 @@ export class TaskTest {
     return newDescription;
   }
 
-  updateTaskDuration() {
-    var taskDurationField = $$(this.locator.TASK_DURATION_SELECTOR).first();
+  updateTaskDuration(taskElement?: ElementFinder) {
+    var taskDurationField;
+    if(taskElement) {
+      taskDurationField = taskElement;
+    }
+    else {
+      taskDurationField = $$(this.locator.TASK_DURATION_SELECTOR).first();
+    }
+    
     var minutes = this.updateElementNumberValue(taskDurationField);
 
     //change focus to save

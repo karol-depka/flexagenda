@@ -41,15 +41,14 @@ fdescribe('Agenda', () => {
     var startTime = agenda.grabStartTime();
 
     taskList.sumOfDurations().then((agendaDuration) => {
-      // console.log('duration in min: ' + agendaDuration);
       // workaround as we don't have the END row to show the end time, yet
       taskList.allDurationsElements().last().getAttribute('value').then((lastTaskDuration) => {
         agendaDuration -= +lastTaskDuration;
-        console.log('lastTaskDuration '+lastTaskDuration);
+        // console.log('lastTaskDuration '+lastTaskDuration);
         startTime.then((time) => {
           var agendaStartTime = support.timeAdjustedTextBy(time, 0);
           var expectedEndTime = support.timeAdjustedTextBy(agendaStartTime, agendaDuration);
-          console.log('expectedEndTime '+expectedEndTime);
+          // console.log('expectedEndTime '+expectedEndTime);
 
           assert.agendaEndTimeIs(expectedEndTime);
         });    

@@ -66,10 +66,8 @@ export class TaskListTest {
   }
 
   updateAllDurations() {    //FIXME
-    this.allDurations().then((durations) => {
-      durations.forEach(element => {
-        this.task.updateTaskDuration();
-      });
+    this.allDurationsElements().each((duration) => {
+      this.task.updateTaskDuration(duration);
     });
   }
 
