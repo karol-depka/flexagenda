@@ -10,7 +10,7 @@ import { LoginPage }            from '../view_objects/login_page.viw_object';
 
 browser.ignoreSynchronization = true;
 
-fdescribe('User', () => {
+describe('User', () => {
   var support:      Support;
   var wait:         WaitHelpers;
   var locator:      FlexAgendaLocators;
@@ -36,14 +36,11 @@ fdescribe('User', () => {
 
   it('should be able to add a new agenda to the list', () => {
     wait.forElementPresent($(locator.AGENDA_ADD_NEW_SELECTOR)).then(() => {
-      var initialAgendasCount = 0;
-      var initialAgednasCountPromise = agendasList.countAgendas();
-      //add new agenda and check if added
-      initialAgednasCountPromise.then((count) => {
-        initialAgendasCount = count;
+      browser.sleep(3000);    //FIXME: arbitrary waiting; not sure why count is incorrect
+      agendasList.countAgendas().then((count) => {
+       // console.log('c'+count);
         agendasList.addNewAgenda();
-
-        expect(agendasList.countAgendas()).toEqual(initialAgendasCount+1);
+        expect(agendasList.countAgendas()).toEqual(count+1);
       });
 
       expect(agendasList.allAgendasStartTimes().last().getAttribute('value'))

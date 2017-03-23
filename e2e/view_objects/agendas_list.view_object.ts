@@ -10,10 +10,9 @@ export class AgendasListTest {
   private support = new Support();
 
   addNewAgenda() {
- //   this.countAgendas().then((count) => {
-    $(this.locator.AGENDA_ADD_NEW_SELECTOR).click();
-      //expect(this.countAgendas()).toEqual(count+1);
- //   });
+    return $(this.locator.AGENDA_ADD_NEW_SELECTOR).click().then(() => {
+      return this.waits.forElementPresent($(this.locator.AGENDA_TITLE_SELECTOR));
+    });
   }
 
   displayNewTestAgenda(done?) {
@@ -52,7 +51,7 @@ export class AgendasListTest {
   deleteAllAgendas() {
     browser.sleep(3000);
     browser.get('/agendas');
-    this.waits.forElementPresent($(this.locator.AGENDA_SELECTOR));
+    this.waits.forElementPresent($(this.locator.AGENDA_DELETE_SELECTOR));
 
     this.allAgendas().count().then((count) => {
       // console.log('agendas count: ' + count);
