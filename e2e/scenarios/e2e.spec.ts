@@ -9,6 +9,7 @@ import { TaskListTest }         from '../view_objects/tasks_list.view_object';
 import { AgendaTest }           from '../view_objects/agenda.view_object';
 import { AgendasListTest }      from '../view_objects/agendas_list.view_object'
 import { TaskTest }             from "../view_objects/task.view_object";
+import { LoginPage }            from '../view_objects/login_page.viw_object';
 
 browser.ignoreSynchronization = true;
 
@@ -22,6 +23,7 @@ describe('It', function() {
   var taskList: TaskListTest;
   var agenda: AgendaTest;
   var agendasList: AgendasListTest;
+  var loginPage: LoginPage;
 
   beforeAll((done) => {
     support = new Support();
@@ -33,9 +35,10 @@ describe('It', function() {
     taskList = new TaskListTest();
     agenda = new AgendaTest();
     agendasList = new AgendasListTest();
+    loginPage = new LoginPage();
 
     browser.get('/');
-    support.loginIfNeeded().then(() => {
+    loginPage.loginIfNeeded().then(() => {
       done();
     });
   });
@@ -168,6 +171,6 @@ describe('It', function() {
   });
 
   afterAll(() => {
-    support.logout();
+    loginPage.logout();
   });
 });

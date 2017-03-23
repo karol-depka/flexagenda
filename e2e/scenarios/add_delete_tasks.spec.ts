@@ -1,10 +1,11 @@
 import { $$, browser } from 'protractor';
 
-import {FlexAgendaLocators} from '../support/elementLocators.e2e';
+import { FlexAgendaLocators } from '../support/elementLocators.e2e';
 import { Support }            from '../support/support.e2e';
 import { WaitHelpers }        from '../support/waits.e2e';
 import { TaskListTest }       from '../view_objects/tasks_list.view_object';
 import { AgendasListTest }    from '../view_objects/agendas_list.view_object';
+import { LoginPage }          from '../view_objects/login_page.viw_object';
 
 browser.ignoreSynchronization = true;
 
@@ -14,6 +15,7 @@ describe('User', () => {
   var wait: WaitHelpers;
   var taskList: TaskListTest;
   var agendasList: AgendasListTest;
+  var loginPage: LoginPage;
 
   beforeAll((done) => {
     // console.log('Before all starting');
@@ -22,12 +24,13 @@ describe('User', () => {
     locator = new FlexAgendaLocators();
     taskList = new TaskListTest();
     agendasList = new AgendasListTest();
+    loginPage = new LoginPage();
 
     // console.log('Before login');
     browser.get('/').then(() => {
       done();
     });
-    support.loginIfNeeded().then(() => {
+    loginPage.loginIfNeeded().then(() => {
       agendasList.displayNewTestAgenda(done);
     });
   });
@@ -53,6 +56,6 @@ describe('User', () => {
   });
 
   afterAll(() => {
-    support.logout();
+    loginPage.logout();
   });
 });
