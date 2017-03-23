@@ -9,9 +9,9 @@ exports.config = {
   specs: [
             './e2e/scenarios/user_login.spec.ts',
             './e2e/scenarios/add_delete_tasks.spec.ts',
-            './e2e/scenarios/agenda.spec.ts',
+            './e2e/scenarios/durations_calculation.spec.ts',
             './e2e/scenarios/tasks_manipulation.spec.ts',
-            './e2e/scenarios/durations_calculation.spec.ts'
+            './e2e/scenarios/agenda.spec.ts'
         ],
   capabilities: {
     'browserName': 'chrome'

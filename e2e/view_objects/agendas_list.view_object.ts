@@ -15,7 +15,7 @@ export class AgendasListTest {
     });
   }
 
-  displayNewTestAgenda(done?) {
+  addAndDisplayNewTestAgenda(done?) {
     this.addNewAgenda();
     return this.waits.forElementPresent($(this.locator.AGENDA_OPEN_SELECTOR)).then(() => {
       // console.log('before it clicks to open new agenda');

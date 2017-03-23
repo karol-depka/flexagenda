@@ -9,11 +9,11 @@ import { TaskListTest }         from '../view_objects/tasks_list.view_object';
 import { AgendaTest }           from '../view_objects/agenda.view_object';
 import { AgendasListTest }      from '../view_objects/agendas_list.view_object'
 import { TaskTest }             from "../view_objects/task.view_object";
-import { LoginPage }            from '../view_objects/login_page.viw_object';
+import { LoginTest }            from '../view_objects/login.view_object';
 
 browser.ignoreSynchronization = true;
 
-describe('It', function() {
+describe('It', () => {
   var support: Support;
   var wait: WaitHelpers;
   var locator: FlexAgendaLocators;
@@ -23,7 +23,7 @@ describe('It', function() {
   var taskList: TaskListTest;
   var agenda: AgendaTest;
   var agendasList: AgendasListTest;
-  var loginPage: LoginPage;
+  var loginPage: LoginTest;
 
   beforeAll((done) => {
     support = new Support();
@@ -35,21 +35,19 @@ describe('It', function() {
     taskList = new TaskListTest();
     agenda = new AgendaTest();
     agendasList = new AgendasListTest();
-    loginPage = new LoginPage();
+    loginPage = new LoginTest();
 
     browser.get('/');
     loginPage.loginIfNeeded().then(() => {
+      taskList.addTasks(3);
       done();
     });
   });
 
   it('should be able to add a default task', () => {
-    //arrange
-    agendasList.displayNewTestAgenda();
+    agendasList.addAndDisplayNewTestAgenda();
 
-    //add and assert task added
-    var initialTaskCountPromise = taskList.countTasks();
-    initialTaskCountPromise.then((value) => {
+    taskList.countTasks().then((value) => {
       var initialTaskCount = value;
       taskList.addEmptyTaskFirst();
 
@@ -60,13 +58,10 @@ describe('It', function() {
   });
 
   it('should be able to delete a task', () => {   //pass add/delete task and expected count
-    var initialTaskCount = 0;
-    var initialTaskCountPromise = taskList.countTasks();
-    initialTaskCountPromise.then((value) => {
-      initialTaskCount = value;
+    taskList.countTasks().then((count) => {
       taskList.deleteFirstTaskOnAList();
 
-      expect(taskList.countTasks()).toEqual(initialTaskCount-1);
+      expect(taskList.countTasks()).toEqual(count-1);
     })
   });
 
@@ -132,7 +127,6 @@ describe('It', function() {
     taskList.moveSecondTaskUp();
 
     assert.taskMoved(title);
-
   });
 
   it('should only show arrow to move down for first task', () => {
@@ -143,24 +137,6 @@ describe('It', function() {
   it('should only show arrow to move up for last task', () => {
     assert.lastTaskHasMoveUpArrow();
     assert.lastTaskDoesntHaveMoveDownArrow();
-  });
-
-  it('should be able to calculate end time of all tasks based on duration', () => {
-    taskList.addTasks(10);
-
-    var startTime = agenda.grabStartTime();
-
-    taskList.sumOfDurations().then((agendaDuration) => {
-      // console.log('duration in min: ' + agendaDuration);
-      agendaDuration -= 10;   //workaround as we don't have the END row to show the end time, yet
-
-      startTime.then((time) => {
-        var agendaStartTime = support.timeAdjustedTextBy(time, 0);
-        var expectedEndTime = support.timeAdjustedTextBy(agendaStartTime, agendaDuration);
-
-        assert.agendaEndTimeIs(expectedEndTime);
-      });
-    });
   });
 
   it('should be able to delete all tasks leaving one empty', () => {

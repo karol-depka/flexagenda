@@ -2,19 +2,19 @@ import { browser } from 'protractor';
 
 import { FlexAgendaAssertions } from '../support/assertions.e2e';
 import { Support }              from '../support/support.e2e';
-import { LoginPage }            from '../view_objects/login_page.viw_object';
+import { LoginTest }            from '../view_objects/login.view_object';
 
 browser.ignoreSynchronization = true;
 
 describe('User', () => {
   var support: Support;
   var assert: FlexAgendaAssertions;
-  var loginPage: LoginPage;
+  var loginPage: LoginTest;
 
   beforeAll(() => {
     support = new Support();
     assert = new FlexAgendaAssertions();
-    loginPage = new LoginPage();
+    loginPage = new LoginTest();
   });
 
   it('should display message saying to login', (done) => {

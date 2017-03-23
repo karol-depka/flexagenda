@@ -6,7 +6,7 @@ import { Support }              from '../support/support.e2e';
 import { FlexAgendaAssertions } from '../support/assertions.e2e';
 import { AgendasListTest }      from '../view_objects/agendas_list.view_object';
 import { AgendaTest }           from '../view_objects/agenda.view_object';
-import { LoginPage }            from '../view_objects/login_page.viw_object';
+import { LoginTest }            from '../view_objects/login.view_object';
 
 browser.ignoreSynchronization = true;
 
@@ -17,7 +17,7 @@ describe('User', () => {
   var assert:       FlexAgendaAssertions;
   var agenda:       AgendaTest;
   var agendasList:  AgendasListTest;
-  var loginPage:    LoginPage;
+  var loginPage:    LoginTest;
   
   beforeAll((done) => {
     support = new Support();
@@ -26,7 +26,7 @@ describe('User', () => {
     assert = new FlexAgendaAssertions();
     agenda = new AgendaTest();
     agendasList = new AgendasListTest();
-    loginPage = new LoginPage();
+    loginPage = new LoginTest();
 
     loginPage.loginIfNeeded().then(() => {
       // console.log('login if needed in agenda tests');

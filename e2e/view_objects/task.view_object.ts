@@ -1,21 +1,18 @@
+import { ElementFinder } from 'protractor/built/element';
 import { $$ } from 'protractor';
 
-import { FlexAgendaLocators } from "../support/elementLocators.e2e";
+import { FlexAgendaLocators } from '../support/elementLocators.e2e';
+import { TaskListTest }       from '../view_objects/tasks_list.view_object';
 
 export class TaskTest {
-  private locator: FlexAgendaLocators;
-
-  constructor() {
-    this.locator = new FlexAgendaLocators();
-  }
+  private locator = new FlexAgendaLocators();
 
   updateTaskTitle() {
     var milliseconds = new Date().getMilliseconds();
     var newTitle = 'This is my new title at ' + milliseconds + ' milliseconds';
-
     var title = $$(this.locator.TASK_TITLE_SELECTOR).first();
-    title.clear();
-    title.sendKeys(newTitle);
+
+    this.updateElementValue(title, newTitle);
 
     //change focus to save
     $$(this.locator.TASK_DESCRIPTION_SELECTOR).first().click();
@@ -38,14 +35,24 @@ export class TaskTest {
   }
 
   updateTaskDuration() {
-    var minutes = new Date().getMinutes();
-    var taskDuration = $$(this.locator.TASK_DURATION_SELECTOR).first();
-    taskDuration.clear();
-    taskDuration.sendKeys(minutes);
+    var taskDurationField = $$(this.locator.TASK_DURATION_SELECTOR).first();
+    var minutes = this.updateElementNumberValue(taskDurationField);
 
     //change focus to save
     $$(this.locator.TASK_TITLE_SELECTOR).first().click();
 
-    return minutes.toString();
+    return minutes;
+  }
+
+  private updateElementNumberValue(locator: ElementFinder): string {
+    var minutes = new Date().getMinutes().toString();
+    this.updateElementValue(locator, minutes);
+
+    return minutes;
+  }
+
+  private updateElementValue(locator: ElementFinder, text: string) {
+    locator.clear();
+    locator.sendKeys(text);
   }
 }

@@ -2,11 +2,13 @@ import { $, $$, browser, protractor }  from 'protractor';
 
 import { FlexAgendaLocators } from "../support/elementLocators.e2e";
 import { Support }            from "../support/support.e2e";
+import { TaskTest }           from './task.view_object';
 
 export class TaskListTest {
   private ec = protractor.ExpectedConditions;
   private locator = new FlexAgendaLocators();
   private support = new Support();
+  private task = new TaskTest();
 
   addEmptyTask() {
     $(this.locator.TASK_ADD_NEW_LAST_SELECTOR).click();
@@ -48,8 +50,27 @@ export class TaskListTest {
     });
   }
 
-  allTaskStartTimes() {
+  allStartTimes() {
     return $$(this.locator.TASK_START_TIME_SELECTOR);
+  }
+
+  allDurations() {
+    return this.allDurationsElements().getAttribute('value').then((valuesString) => {
+      valuesString = valuesString + '';
+      return valuesString.split(',');
+    });
+  }
+
+  allDurationsElements() {
+    return $$(this.locator.TASK_DURATION_SELECTOR);
+  }
+
+  updateAllDurations() {    //FIXME
+    this.allDurations().then((durations) => {
+      durations.forEach(element => {
+        this.task.updateTaskDuration();
+      });
+    });
   }
 
   sumOfDurations() {

@@ -5,7 +5,7 @@ import { Support }            from '../support/support.e2e';
 import { WaitHelpers }        from '../support/waits.e2e';
 import { TaskListTest }       from '../view_objects/tasks_list.view_object';
 import { AgendasListTest }    from '../view_objects/agendas_list.view_object';
-import { LoginPage }          from '../view_objects/login_page.viw_object';
+import { LoginTest }          from '../view_objects/login.view_object';
 
 browser.ignoreSynchronization = true;
 
@@ -15,7 +15,8 @@ describe('User', () => {
   var wait: WaitHelpers;
   var taskList: TaskListTest;
   var agendasList: AgendasListTest;
-  var loginPage: LoginPage;
+  var loginPage: LoginTest;
+  var agendasList: AgendasListTest;
 
   beforeAll((done) => {
     // console.log('Before all starting');
@@ -24,14 +25,14 @@ describe('User', () => {
     locator = new FlexAgendaLocators();
     taskList = new TaskListTest();
     agendasList = new AgendasListTest();
-    loginPage = new LoginPage();
+    loginPage = new LoginTest();
+    agendasList = new AgendasListTest();
 
     // console.log('Before login');
     browser.get('/').then(() => {
-      done();
-    });
-    loginPage.loginIfNeeded().then(() => {
-      agendasList.displayNewTestAgenda(done);
+      loginPage.loginIfNeeded().then(() => {
+        agendasList.addAndDisplayNewTestAgenda(done);
+      });
     });
   });
 

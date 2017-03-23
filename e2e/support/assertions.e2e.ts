@@ -124,7 +124,7 @@ export class FlexAgendaAssertions {
     }
 
     agendaEndTimeIs(expectedEndTime: string) {
-        expect(this.taskList.allTaskStartTimes().last().getText()).toEqual(expectedEndTime);
+        expect(this.taskList.allStartTimes().last().getText()).toEqual(expectedEndTime);
     }
 
     agendaTitleIs(expectedTitle: string) {

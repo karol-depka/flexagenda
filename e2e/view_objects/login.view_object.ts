@@ -3,7 +3,7 @@ import { browser, protractor, $, $$ } from 'protractor';
 import { FlexAgendaLocators } from '../support/elementLocators.e2e'
 import { TestData }           from '../support/testData.e2e'
 
-export class LoginPage {
+export class LoginTest {
   ec = protractor.ExpectedConditions;
   locator = new FlexAgendaLocators();
   data = new TestData();
