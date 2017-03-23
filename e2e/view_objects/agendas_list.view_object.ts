@@ -1,4 +1,4 @@
-import { $, $$ }  from 'protractor';
+import { $, $$, browser }  from 'protractor';
 
 import { Support }            from '../support/support.e2e';
 import { WaitHelpers }        from '../support/waits.e2e';
@@ -50,7 +50,12 @@ export class AgendasListTest {
   }
 
   deleteAllAgendas() {
-    this.allAgendas().count().then((count) => {   //TODO: refactor to a new method?
+    browser.sleep(3000);
+    browser.get('/agendas');
+    this.waits.forElementPresent($(this.locator.AGENDA_SELECTOR));
+
+    this.allAgendas().count().then((count) => {
+      // console.log('agendas count: ' + count);
       var i = count;
       while (i > 0) {
         this.deleteFirstAgendaOnTheList();

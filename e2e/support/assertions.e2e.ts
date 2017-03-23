@@ -1,12 +1,12 @@
-import { AgendaTest } from '../view_objects/agenda.view_object';
-import { $, $$ } from 'protractor';
+import { $, $$, browser } from 'protractor';
 
 import { WaitHelpers }          from './waits.e2e';
 import { TestData }             from '../support/testData.e2e';
 import { FlexAgendaLocators }   from '../support/elementLocators.e2e';
 import { Support }              from '../support/support.e2e';
 import { TaskListTest }         from '../view_objects/tasks_list.view_object';
-import { AgendasListTest } from '../view_objects/agendas_list.view_object';
+import { AgendasListTest }      from '../view_objects/agendas_list.view_object';
+import { AgendaTest }           from '../view_objects/agenda.view_object';
 
 export class FlexAgendaAssertions {
     wait: WaitHelpers;
@@ -54,6 +54,8 @@ export class FlexAgendaAssertions {
     }
 
     agendasListEmpty() {
+        this.wait.forElementPresent($(this.locator.AGENDA_ADD_NEW_SELECTOR));
+        browser.sleep(3000); //FIXME: agendas are loaded with a delay (firebase); arbitrary wait time
         expect(this.agendasList.allAgendas().count()).toEqual(0);
     }
 

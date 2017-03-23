@@ -10,7 +10,7 @@ import { LoginPage }            from '../view_objects/login_page.viw_object';
 
 browser.ignoreSynchronization = true;
 
-describe('User', () => {
+fdescribe('User', () => {
   var support:      Support;
   var wait:         WaitHelpers;
   var locator:      FlexAgendaLocators;
@@ -35,7 +35,7 @@ describe('User', () => {
   });
 
   it('should be able to add a new agenda to the list', () => {
-    wait.forElementPresent($(locator.AGENDA_SELECTOR)).then(() => {
+    wait.forElementPresent($(locator.AGENDA_ADD_NEW_SELECTOR)).then(() => {
       var initialAgendasCount = 0;
       var initialAgednasCountPromise = agendasList.countAgendas();
       //add new agenda and check if added
