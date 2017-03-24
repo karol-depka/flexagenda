@@ -117,10 +117,14 @@ export class AgendasService {
   deleteAgenda(agendaKey) {
     var agenda = this.af.database.list('/agenda_tasks/');
     // FIXME: fix after UserHasAgenda:
-    agenda.remove(agendaKey);
-    console.log('remove agenda, key: ' + agendaKey);
-    this.agendasList.remove(agendaKey).then(_ => console.log('Agenda '+agendaKey+' deleted!'));
-    this.userHasAgendaList.remove(agendaKey).then(_ => console.log('Agenda '+agendaKey+' deleted!'));
+    if(agendaKey) {
+      agenda.remove(agendaKey);
+      console.log('remove agenda, key: ' + agendaKey);
+      this.agendasList.remove(agendaKey).then(_ => console.log('Agenda '+agendaKey+' deleted!'));
+      this.userHasAgendaList.remove(agendaKey).then(_ => console.log('Agenda '+agendaKey+' deleted!'));
+    }
+    else {
+      throw new Error('agendaKey is: ' + agendaKey);
+    }
   }
-
 }

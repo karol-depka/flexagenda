@@ -34,6 +34,10 @@ export class TaskListTest {
     return $$(this.locator.TASK_SELECTOR);
   }
 
+  allTitles() {
+    return $$(this.locator.TASK_TITLE_SELECTOR);
+  }
+
   countTasks() {
     return this.allTasks().count();
   }
@@ -92,12 +96,12 @@ export class TaskListTest {
   }
 
   moveFirstTaskDownWithKeys() {
-    var taskElement = this.task.allTitles().first();  //needs element to focus on
+    var taskElement = this.allTitles().first();  //needs element to focus on
     taskElement.sendKeys(protractor.Key.chord(protractor.Key.CONTROL, protractor.Key.ARROW_DOWN));
   }
 
   moveLastTaskUpWithKeys() {
-    var taskElement = this.task.allTitles().last();  //needs element to focus on
+    var taskElement = this.allTitles().last();  //needs element to focus on
     taskElement.sendKeys(protractor.Key.chord(protractor.Key.CONTROL, protractor.Key.ARROW_UP));
   }
 
