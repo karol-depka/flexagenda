@@ -5,12 +5,11 @@ import { TestData }           from '../support/testData.e2e'
 
 export class LoginTest {
   ec = protractor.ExpectedConditions;
-  locator = new FlexAgendaLocators();
 
   loginIfNeeded() {
     return this.navigateToLogin().then(() => {
       browser.sleep(2000);   //FIXME
-       $(this.locator.LOGIN_BUTTON_SELECTOR).isPresent().then((isPresent) => {
+       $(FlexAgendaLocators.LOGIN_BUTTON_SELECTOR).isPresent().then((isPresent) => {
          if(isPresent) {
            this.login();
          }
@@ -28,21 +27,21 @@ export class LoginTest {
   }
 
   loginAs(login: string, password: string) {
-    $(this.locator.LOGIN_INPUT_SELECTOR).sendKeys(login);
-    $(this.locator.LOGIN_PASSWORD_SELECTOR).sendKeys(password);
-    $$(this.locator.LOGIN_BUTTON_SELECTOR).first().click();
+    $(FlexAgendaLocators.LOGIN_INPUT_SELECTOR).sendKeys(login);
+    $(FlexAgendaLocators.LOGIN_PASSWORD_SELECTOR).sendKeys(password);
+    $$(FlexAgendaLocators.LOGIN_BUTTON_SELECTOR).first().click();
     this.waitForPageToLoadAfterLogin();
   }
 
   logout() {
-    $(this.locator.LOGOUT_BUTTON_SELECTOR).click();
+    $(FlexAgendaLocators.LOGOUT_BUTTON_SELECTOR).click();
   }
 
   waitForPageToLoadAfterLogin() {
-    return browser.wait(this.ec.presenceOf($(this.locator.AGENDA_ADD_NEW_SELECTOR)));
+    return browser.wait(this.ec.presenceOf($(FlexAgendaLocators.AGENDA_ADD_NEW_SELECTOR)));
   }
   
   waitForPageToLoadLoginPage() {
-    return browser.wait(this.ec.presenceOf($(this.locator.LOGIN_INPUT_SELECTOR)));
+    return browser.wait(this.ec.presenceOf($(FlexAgendaLocators.LOGIN_INPUT_SELECTOR)));
   }
 }

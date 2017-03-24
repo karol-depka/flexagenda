@@ -1,6 +1,5 @@
 import { browser }              from 'protractor';
 
-import { FlexAgendaLocators }   from '../support/elementLocators.e2e';
 import { WaitHelpers }          from '../support/waits.e2e';
 import { Support }              from '../support/support.e2e';
 import { FlexAgendaAssertions } from '../support/assertions.e2e';
@@ -13,7 +12,6 @@ browser.ignoreSynchronization = true;
 describe('Agenda: User', () => {
   var support:      Support;
   var wait:         WaitHelpers;
-  var locator:      FlexAgendaLocators;
   var assert:       FlexAgendaAssertions;
   var agenda:       AgendaTest;
   var agendasList:  AgendasListTest;
@@ -22,7 +20,6 @@ describe('Agenda: User', () => {
   beforeAll((done) => {
     support = new Support();
     wait = new WaitHelpers();
-    locator = new FlexAgendaLocators();
     assert = new FlexAgendaAssertions();
     agenda = new AgendaTest();
     agendasList = new AgendasListTest();
@@ -56,7 +53,7 @@ describe('Agenda: User', () => {
   });
 
   it('should be able to rename agenda', () => {
-    browser.sleep(3000);  //FIXME: title can't receive clear signal although last step is waiting for title field
+    browser.sleep(3000);  //FIXME: title can't receive `clear` signal although last step is waiting for title field
     var expectedTitle = agenda.updateTitle();
 
     assert.agendaTitleIs(expectedTitle);

@@ -1,11 +1,9 @@
 import { browser, protractor, $, $$ } from 'protractor';
 
 import { FlexAgendaLocators } from './elementLocators.e2e'
-import { TestData }           from './testData.e2e'
 
 export class Support {
   ec = protractor.ExpectedConditions;
-  locator = new FlexAgendaLocators();
 
   timeNowAdjustedText(hours: number, minutes: number): string {   //not sure if it's working properly
     var time = this.timeNowAdjusted(hours, minutes);
@@ -39,7 +37,7 @@ export class Support {
   }
 
   confirmDelete() {
-    var confirmDelete = $(this.locator.DELETE_CONFIRM_SELECTOR);
+    var confirmDelete = $(FlexAgendaLocators.DELETE_CONFIRM_SELECTOR);
     browser.wait(this.ec.presenceOf(confirmDelete));
     confirmDelete.click();
   }

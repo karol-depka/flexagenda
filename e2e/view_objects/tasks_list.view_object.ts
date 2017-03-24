@@ -6,17 +6,16 @@ import { TaskTest }           from './task.view_object';
 import { WaitHelpers }        from '../support/waits.e2e';
 
 export class TaskListTest {
-  private locator = new FlexAgendaLocators();
   private support = new Support();
   private task = new TaskTest();
   private wait = new WaitHelpers();
 
   addEmptyTask() {
-    $(this.locator.TASK_ADD_NEW_LAST_SELECTOR).click();
+    $(FlexAgendaLocators.TASK_ADD_NEW_LAST_SELECTOR).click();
   }
 
   addTasks(count: number) {
-    this.wait.forElementPresent($(this.locator.TASK_ADD_NEW_LAST_SELECTOR));
+    this.wait.forElementPresent($(FlexAgendaLocators.TASK_ADD_NEW_LAST_SELECTOR));
     var i = 0;
     while (i <= count) {
       this.addEmptyTask();
@@ -25,17 +24,17 @@ export class TaskListTest {
   }
 
   addEmptyTaskFirst() {
-    var addTask = $$(this.locator.TASK_ADD_NEW_ABOVE_SELECTOR).first();
+    var addTask = $$(FlexAgendaLocators.TASK_ADD_NEW_ABOVE_SELECTOR).first();
     this.wait.forElementPresent(addTask);
     addTask.click();
   }
 
   allTasks() {
-    return $$(this.locator.TASK_SELECTOR);
+    return $$(FlexAgendaLocators.TASK_SELECTOR);
   }
 
   allTitles() {
-    return $$(this.locator.TASK_TITLE_SELECTOR);
+    return $$(FlexAgendaLocators.TASK_TITLE_SELECTOR);
   }
 
   countTasks() {
@@ -43,7 +42,7 @@ export class TaskListTest {
   }
 
   deleteFirstTaskOnAList() {
-    $$(this.locator.TASK_DELETE_SELECTOR).first().click();
+    $$(FlexAgendaLocators.TASK_DELETE_SELECTOR).first().click();
 
     this.support.confirmDelete();
   }
@@ -59,7 +58,7 @@ export class TaskListTest {
   }
 
   allStartTimes() {
-    return $$(this.locator.TASK_START_TIME_SELECTOR);
+    return $$(FlexAgendaLocators.TASK_START_TIME_SELECTOR);
   }
 
   // allDurations() {
@@ -70,7 +69,7 @@ export class TaskListTest {
   // }
 
   allDurationsElements() {
-    return $$(this.locator.TASK_DURATION_SELECTOR);
+    return $$(FlexAgendaLocators.TASK_DURATION_SELECTOR);
   }
 
   updateAllDurations() {    //FIXME
@@ -80,7 +79,7 @@ export class TaskListTest {
   }
 
   sumOfDurations() {
-    return $$(this.locator.TASK_DURATION_SELECTOR).getAttribute('value').then((valuesString) => {
+    return $$(FlexAgendaLocators.TASK_DURATION_SELECTOR).getAttribute('value').then((valuesString) => {
       valuesString = valuesString + '';
       var values = valuesString.split(',').map(Number);
       return values.reduce((a, b) => { return a + b; });
@@ -88,11 +87,11 @@ export class TaskListTest {
   }
 
   moveFirstTaskDown() {
-    $$(this.locator.TASK_MOVE_DOWN_SELECTOR).first().click();
+    $$(FlexAgendaLocators.TASK_MOVE_DOWN_SELECTOR).first().click();
   }
 
   moveLastTaskUp() {
-    this.allTasks().last().$(this.locator.TASK_MOVE_UP_SELECTOR).click()
+    this.allTasks().last().$(FlexAgendaLocators.TASK_MOVE_UP_SELECTOR).click()
   }
 
   moveFirstTaskDownWithKeys() {
@@ -106,7 +105,7 @@ export class TaskListTest {
   }
 
   markFirstTaskAsDone() {     //fixme
-    var taskComplete = $$(this.locator.TASK_COMPLETE_SELECTOR).first();
+    var taskComplete = $$(FlexAgendaLocators.TASK_COMPLETE_SELECTOR).first();
     taskComplete.click().then(() => {
       browser.refresh();      //Workaround to see the checkbox is clicked
       this.wait.forElementPresent(taskComplete); //wait for checkbox to appear before it is checked by test

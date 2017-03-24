@@ -28,13 +28,11 @@ describe('Add delete tasks: User', () => {
 
   it('should be able to add one task', () => {
     taskList.countTasks().then((count) => {
-      // console.log('initial count: ' + count);
-      taskList.addEmptyTaskFirst()//.then(() => {
-        var tasks = taskList.allTasks();
-        wait.forElementCount(tasks, 2).then(() => {
-          expect(taskList.countTasks()).toEqual(count+1);
-        });
-    //  });
+      taskList.addEmptyTaskFirst();
+      var tasks = taskList.allTasks();
+      wait.forElementCount(tasks, 2).then(() => {
+        expect(taskList.countTasks()).toEqual(count+1);
+      });
     })
   });
 

@@ -6,28 +6,27 @@ import { FlexAgendaLocators } from '../support/elementLocators.e2e';
 
 export class AgendasListTest {
   private waits = new WaitHelpers();
-  private locator = new FlexAgendaLocators();
   private support = new Support();
 
   addAgendaButton() {
-    return $(this.locator.AGENDA_ADD_NEW_SELECTOR);
+    return $(FlexAgendaLocators.AGENDA_ADD_NEW_SELECTOR);
   }
 
   addNewAgenda() {
     var addAgendaElement = this.addAgendaButton();
     this.waits.forElementPresent(addAgendaElement);
      addAgendaElement.click().then(() => {
-       this.waits.forElementPresent($(this.locator.AGENDA_TITLE_SELECTOR));
+       this.waits.forElementPresent($(FlexAgendaLocators.AGENDA_TITLE_SELECTOR));
     });
   }
 
   addAndDisplayNewTestAgenda(done?) {
     this.addNewAgenda();
-    return this.waits.forElementPresent($(this.locator.AGENDA_OPEN_SELECTOR)).then(() => {
+    return this.waits.forElementPresent($(FlexAgendaLocators.AGENDA_OPEN_SELECTOR)).then(() => {
       // console.log('before it clicks to open new agenda');
-      $$(this.locator.AGENDA_OPEN_SELECTOR).last().click().then(() => {
+      $$(FlexAgendaLocators.AGENDA_OPEN_SELECTOR).last().click().then(() => {
         // console.log('after opening agenda, before wait for element not prersent');
-        this.waits.forElementPresent($(this.locator.TASK_SELECTOR)).then(() => {
+        this.waits.forElementPresent($(FlexAgendaLocators.TASK_SELECTOR)).then(() => {
           // console.log('Not on agendas list, single agenda view');
           if (done) done();
         });
@@ -36,15 +35,15 @@ export class AgendasListTest {
   }
 
   allStartTimes() {
-    return $$(this.locator.AGENDA_START_TIME_INPUT_SELECTOR);
+    return $$(FlexAgendaLocators.AGENDA_START_TIME_INPUT_SELECTOR);
   }
 
   allAgendas() {
-    return $$(this.locator.AGENDA_SELECTOR);
+    return $$(FlexAgendaLocators.AGENDA_SELECTOR);
   }
 
   allTitleElements() {
-    return $$(this.locator.AGENDA_TITLE_SELECTOR);
+    return $$(FlexAgendaLocators.AGENDA_TITLE_SELECTOR);
   }
 
   countAgendas() {
@@ -52,7 +51,7 @@ export class AgendasListTest {
   }
 
   deleteFirstAgendaOnTheList() {
-    $$(this.locator.AGENDA_DELETE_SELECTOR).first().click();
+    $$(FlexAgendaLocators.AGENDA_DELETE_SELECTOR).first().click();
 
     this.support.confirmDelete();
   }
@@ -60,7 +59,7 @@ export class AgendasListTest {
   deleteAll() {
     browser.sleep(3000);
     browser.get('/agendas');
-    this.waits.forElementPresent($(this.locator.AGENDA_DELETE_SELECTOR));
+    this.waits.forElementPresent($(FlexAgendaLocators.AGENDA_DELETE_SELECTOR));
 
     this.allAgendas().count().then((count) => {
       while (count > 0) {
