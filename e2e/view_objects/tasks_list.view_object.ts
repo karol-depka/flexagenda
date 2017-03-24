@@ -1,12 +1,11 @@
-import { WaitHelpers } from '../support/waits.e2e';
 import { $, $$, browser, protractor }  from 'protractor';
 
 import { FlexAgendaLocators } from "../support/elementLocators.e2e";
 import { Support }            from "../support/support.e2e";
 import { TaskTest }           from './task.view_object';
+import { WaitHelpers }        from '../support/waits.e2e';
 
 export class TaskListTest {
-  private ec = protractor.ExpectedConditions;
   private locator = new FlexAgendaLocators();
   private support = new Support();
   private task = new TaskTest();

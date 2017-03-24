@@ -9,7 +9,7 @@ import { LoginTest }            from '../view_objects/login.view_object';
 
 browser.ignoreSynchronization = true;
 
-fdescribe('Tasks manipulations: It', () => {
+describe('Tasks manipulations: It', () => {
   var assert: FlexAgendaAssertions;
   var task: TaskTest;
   var taskList: TaskListTest;
