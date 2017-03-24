@@ -10,7 +10,6 @@ import { AgendaTest }           from '../view_objects/agenda.view_object';
 
 export class FlexAgendaAssertions {
     wait: WaitHelpers;
-    data: TestData;
     locator: FlexAgendaLocators;
     support: Support;
     taskList: TaskListTest;
@@ -19,7 +18,6 @@ export class FlexAgendaAssertions {
 
     constructor() {
         this.wait = new WaitHelpers();
-        this.data = new TestData();
         this.locator = new FlexAgendaLocators();
         this.support = new Support();
         this.taskList = new TaskListTest();
@@ -28,8 +26,8 @@ export class FlexAgendaAssertions {
     }
 
     onLoginPage() {
-        expect(this.wait.forExpectedTextInElement('Please login', this.locator.LOGIN_TEXT_ELEMENT_SELECTOR))
-            .toEqual(true);
+        expect(this.wait.forTextPresent($(this.locator.LOGIN_TEXT_ELEMENT_SELECTOR),
+            'Please login')).toEqual(true);
     }
 
     notOnLoginPage() {
@@ -37,9 +35,16 @@ export class FlexAgendaAssertions {
             .toEqual(true);
     }
 
-    userIsLoggedIn() {
-        expect(this.wait.forExpectedTextInElement('Logged in as ' + this.data.USER_LOGIN,
-            this.locator.LOGGED_IN_USER_TEXT_SELECTOR)).toEqual(true);
+    userIsLoggedIn(userLogin: string) {
+        expect(this.wait.forTextPresent($(this.locator.LOGGED_IN_USER_TEXT_SELECTOR),
+            'Logged in as ' + userLogin)).toEqual(true);
+    }
+
+    userIsLoggedOut(userLogin: string) {
+        expect(this.wait.forElementNotPresent($(this.locator.LOGGED_IN_USER_TEXT_SELECTOR)))
+            .toEqual(true);
+
+        this.onLoginPage();
     }
 
     firstTaskEmpty() {

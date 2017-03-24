@@ -6,14 +6,12 @@ import { TestData }           from '../support/testData.e2e'
 export class LoginTest {
   ec = protractor.ExpectedConditions;
   locator = new FlexAgendaLocators();
-  data = new TestData();
 
   loginIfNeeded() {
     return this.navigateToLogin().then(() => {
       browser.sleep(2000);   //FIXME
        $(this.locator.LOGIN_BUTTON_SELECTOR).isPresent().then((isPresent) => {
          if(isPresent) {
-           // console.log('is user logged in: ' + isPresent);
            this.login();
          }
        });
@@ -26,8 +24,12 @@ export class LoginTest {
   }
 
   login() {
-    $(this.locator.LOGIN_INPUT_SELECTOR).sendKeys(this.data.USER_LOGIN);
-    $(this.locator.LOGIN_PASSWORD_SELECTOR).sendKeys(this.data.USER_PASSWORD);
+    this.loginAs(TestData.USER_LOGIN, TestData.USER_PASSWORD);
+  }
+
+  loginAs(login: string, password: string) {
+    $(this.locator.LOGIN_INPUT_SELECTOR).sendKeys(login);
+    $(this.locator.LOGIN_PASSWORD_SELECTOR).sendKeys(password);
     $$(this.locator.LOGIN_BUTTON_SELECTOR).first().click();
     this.waitForPageToLoadAfterLogin();
   }

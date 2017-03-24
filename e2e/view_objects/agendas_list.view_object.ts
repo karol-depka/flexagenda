@@ -63,10 +63,9 @@ export class AgendasListTest {
     this.waits.forElementPresent($(this.locator.AGENDA_DELETE_SELECTOR));
 
     this.allAgendas().count().then((count) => {
-      var i = count;
-      while (i > 0) {
+      while (count > 0) {
         this.deleteFirstAgendaOnTheList();
-        i--;
+        count--;
       }
     });
   }

@@ -1,4 +1,4 @@
-import { browser } from 'protractor';
+import { browser }              from 'protractor';
 
 import { FlexAgendaAssertions } from '../support/assertions.e2e';
 import { TaskListTest }         from '../view_objects/tasks_list.view_object';

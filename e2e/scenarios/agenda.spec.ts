@@ -1,4 +1,4 @@
-import { browser }    from 'protractor';
+import { browser }              from 'protractor';
 
 import { FlexAgendaLocators }   from '../support/elementLocators.e2e';
 import { WaitHelpers }          from '../support/waits.e2e';
@@ -29,7 +29,6 @@ describe('Agenda: User', () => {
     loginPage = new LoginTest();
 
     loginPage.loginIfNeeded().then(() => {
-      // console.log('login if needed in agenda tests');
       done();
     });
   });
@@ -38,7 +37,6 @@ describe('Agenda: User', () => {
     wait.forElementPresent(agendasList.addAgendaButton()).then(() => {
       browser.sleep(3000);    //FIXME: arbitrary waiting; not sure why count is incorrect
       agendasList.countAgendas().then((count) => {
-       // console.log('c'+count);
         agendasList.addNewAgenda();
         expect(agendasList.countAgendas()).toEqual(count+1);
       });

@@ -1,30 +1,28 @@
-import { browser, protractor, $, ElementFinder } from 'protractor';
+import { browser, protractor, ElementFinder, ElementArrayFinder } from 'protractor';
 
 export class WaitHelpers {
   ec = protractor.ExpectedConditions;
 
-  forExpectedTextInElement(text: string, elementCss: string) {
-    return this.forElementText($(elementCss), text);
+  forTextPresent(element: ElementFinder, text: string) {
+    return this.forElementText(element, text);
   }
 
   forElementText(element: ElementFinder, text: string) {
     return browser.wait(this.ec.textToBePresentInElement(element, text));
   }
 
-  forElementNotPresent(elementCss) {
-    return browser.wait(this.ec.not(this.ec.presenceOf(elementCss)));
+  forElementNotPresent(element: ElementFinder) {
+    return browser.wait(this.ec.not(this.ec.presenceOf(element)));
   }
 
-  forElementPresent(elementFinder: ElementFinder) {
-    return browser.wait(this.ec.presenceOf(elementFinder));
+  forElementPresent(element: ElementFinder) {
+    return browser.wait(this.ec.presenceOf(element));
   }
 
-  forElementCount(elementArrayFinder, expectedCount) {
-    // console.log('start waiting for count');
+  forElementCount(elementArray: ElementArrayFinder, expectedCount: number) {
     return browser.wait(() =>
-      elementArrayFinder.count().then((actualCount) => {
-        // console.log('before condition is checked; expected: ' + expectedCount + ' actual count: ' + actualCount);
-        return expectedCount === actualCount;  // or <= instead of ===, depending on the use case
+      elementArray.count().then((actualCount) => {
+        return expectedCount === actualCount;
       }));
     }
 }

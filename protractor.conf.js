@@ -31,6 +31,15 @@ exports.config = {
     });
   },
   onPrepare: function() {
-    jasmine.getEnv().addReporter(new SpecReporter());
+    jasmine.getEnv().addReporter(new SpecReporter({
+      spec: {
+        displayDuration: true
+      },
+      summary: {
+        displaySuccessful: true,
+        displayFailed: true,
+        displayDuration: true
+      }
+    }));
   }
 };
