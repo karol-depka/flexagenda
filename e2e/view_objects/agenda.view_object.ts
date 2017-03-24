@@ -1,4 +1,4 @@
-import { $, $$, browser }  from 'protractor';
+import { $, $$ }  from 'protractor';
 
 import { FlexAgendaLocators } from '../support/elementLocators.e2e';
 import { Support }            from '../support/support.e2e';
@@ -9,7 +9,7 @@ export class AgendaTest {
   private support = new Support();
   private wait = new WaitHelpers();
 
-  
+
   openNewlyCreatedAgenda() {
     $$(this.locator.AGENDA_SELECTOR).last().$(this.locator.AGENDA_OPEN_SELECTOR).click();
     return this.wait.forElementCount($$(this.locator.AGENDA_TITLE_SELECTOR), 1);

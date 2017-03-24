@@ -10,7 +10,7 @@ import { LoginTest }            from '../view_objects/login.view_object';
 
 browser.ignoreSynchronization = true;
 
-describe('User', () => {
+describe('Agenda: User', () => {
   var support:      Support;
   var wait:         WaitHelpers;
   var locator:      FlexAgendaLocators;
@@ -18,7 +18,7 @@ describe('User', () => {
   var agenda:       AgendaTest;
   var agendasList:  AgendasListTest;
   var loginPage:    LoginTest;
-  
+
   beforeAll((done) => {
     support = new Support();
     wait = new WaitHelpers();
@@ -54,7 +54,7 @@ describe('User', () => {
      agendasList.addNewAgenda();
      agenda.openNewlyCreatedAgenda().then(() => {
        assert.singleAgendaIsOpen();
-     }); 
+     });
   });
 
   it('should be able to rename agenda', () => {
@@ -69,7 +69,7 @@ describe('User', () => {
 
     assert.agendaStartTimeIs(expectedStartTime);
   });
-  
+
   it('should be able to delete all agendas from the list', () => {
     agendasList.deleteAllAgendas();
 

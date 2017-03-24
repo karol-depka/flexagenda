@@ -1,23 +1,20 @@
-import { AgendasListTest } from '../view_objects/agendas_list.view_object';
-import { TaskTest } from '../view_objects/task.view_object';
 import { browser } from 'protractor';
 
 import { Support }              from '../support/support.e2e';
-import { TestData }             from '../support/testData.e2e';
 import { FlexAgendaAssertions } from '../support/assertions.e2e';
 import { TaskListTest }         from '../view_objects/tasks_list.view_object';
 import { AgendaTest }           from '../view_objects/agenda.view_object';
 import { LoginTest }            from '../view_objects/login.view_object';
+import { AgendasListTest } from '../view_objects/agendas_list.view_object';
 
 browser.ignoreSynchronization = true;
 
-fdescribe('Agenda', () => {
+describe('Durations calculation: Agenda', () => {
   var taskList: TaskListTest;
   var agenda: AgendaTest;
   var support: Support;
   var assert: FlexAgendaAssertions;
   var loginPage: LoginTest;
-  var task: TaskTest;
   var agendasList: AgendasListTest;
 
   beforeAll((done) => {
@@ -28,9 +25,10 @@ fdescribe('Agenda', () => {
     loginPage = new LoginTest();
     agendasList = new AgendasListTest();
 
-    browser.get('/');
-    loginPage.loginIfNeeded().then(() => {
-      agendasList.addAndDisplayNewTestAgenda(done);
+    loginPage.navigateToLogin().then(() => {
+      loginPage.loginIfNeeded().then(() => {
+        agendasList.addAndDisplayNewTestAgenda(done);
+      });
     });
   });
 
@@ -51,7 +49,7 @@ fdescribe('Agenda', () => {
           // console.log('expectedEndTime '+expectedEndTime);
 
           assert.agendaEndTimeIs(expectedEndTime);
-        });    
+        });
       });
     });
   });

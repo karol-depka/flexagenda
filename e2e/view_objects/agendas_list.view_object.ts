@@ -10,8 +10,10 @@ export class AgendasListTest {
   private support = new Support();
 
   addNewAgenda() {
-    return $(this.locator.AGENDA_ADD_NEW_SELECTOR).click().then(() => {
-      return this.waits.forElementPresent($(this.locator.AGENDA_TITLE_SELECTOR));
+    var addAgendaElement = $(this.locator.AGENDA_ADD_NEW_SELECTOR);
+    this.waits.forElementPresent(addAgendaElement);
+     addAgendaElement.click().then(() => {
+       this.waits.forElementPresent($(this.locator.AGENDA_TITLE_SELECTOR));
     });
   }
 
@@ -33,7 +35,6 @@ export class AgendasListTest {
     return $$(this.locator.AGENDA_START_TIME_INPUT_SELECTOR);
   }
 
-  //TODO: check how it will behave when no agendas present
   allAgendas() {
     return $$(this.locator.AGENDA_SELECTOR);
   }
@@ -54,7 +55,6 @@ export class AgendasListTest {
     this.waits.forElementPresent($(this.locator.AGENDA_DELETE_SELECTOR));
 
     this.allAgendas().count().then((count) => {
-      // console.log('agendas count: ' + count);
       var i = count;
       while (i > 0) {
         this.deleteFirstAgendaOnTheList();

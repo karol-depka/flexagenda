@@ -6,7 +6,6 @@ import { TestData }           from './testData.e2e'
 export class Support {
   ec = protractor.ExpectedConditions;
   locator = new FlexAgendaLocators();
-  data = new TestData();
 
   timeNowAdjustedText(hours: number, minutes: number): string {   //not sure if it's working properly
     var time = this.timeNowAdjusted(hours, minutes);

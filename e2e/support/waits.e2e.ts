@@ -1,4 +1,4 @@
-import { element, by, browser, protractor, $, ElementFinder } from 'protractor';
+import { browser, protractor, $, ElementFinder } from 'protractor';
 
 export class WaitHelpers {
   ec = protractor.ExpectedConditions;

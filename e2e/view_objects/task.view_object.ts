@@ -1,8 +1,8 @@
-import { ElementFinder } from 'protractor/built/element';
+
 import { $$ } from 'protractor';
 
 import { FlexAgendaLocators } from '../support/elementLocators.e2e';
-import { TaskListTest }       from '../view_objects/tasks_list.view_object';
+import { ElementFinder } from 'protractor/built/element';
 
 export class TaskTest {
   private locator = new FlexAgendaLocators();
@@ -42,7 +42,7 @@ export class TaskTest {
     else {
       taskDurationField = $$(this.locator.TASK_DURATION_SELECTOR).first();
     }
-    
+
     var minutes = this.updateElementNumberValue(taskDurationField);
 
     //change focus to save
@@ -53,6 +53,10 @@ export class TaskTest {
 
   private updateElementNumberValue(locator: ElementFinder): string {
     var minutes = new Date().getMinutes().toString();
+    if(minutes == '0') {   //TODO: remove after setting 0 minutes for a task is made possible
+      minutes = '1';
+    }
+    
     this.updateElementValue(locator, minutes);
 
     return minutes;

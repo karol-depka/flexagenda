@@ -1,18 +1,15 @@
 import { browser } from 'protractor';
 
 import { FlexAgendaAssertions } from '../support/assertions.e2e';
-import { Support }              from '../support/support.e2e';
 import { LoginTest }            from '../view_objects/login.view_object';
 
 browser.ignoreSynchronization = true;
 
-describe('User', () => {
-  var support: Support;
+describe('User login: User', () => {
   var assert: FlexAgendaAssertions;
   var loginPage: LoginTest;
 
   beforeAll(() => {
-    support = new Support();
     assert = new FlexAgendaAssertions();
     loginPage = new LoginTest();
   });

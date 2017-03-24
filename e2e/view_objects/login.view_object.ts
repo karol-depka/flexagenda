@@ -22,7 +22,7 @@ export class LoginTest {
 
   navigateToLogin() {
     browser.get('/');
-     return this.waitForPageToLoadLoginPage();
+    return this.waitForPageToLoadLoginPage();
   }
 
   login() {

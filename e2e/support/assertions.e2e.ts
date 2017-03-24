@@ -90,17 +90,18 @@ export class FlexAgendaAssertions {
     }
 
     taskTitleIs(title: string) {
-        expect($(this.locator.TASK_TITLE_SELECTOR)
+        expect($$(this.locator.TASK_TITLE_SELECTOR).first()
             .getAttribute('value')).toEqual(title);
     }
 
     taskDescriptionIs(description: string) {
-        expect($(this.locator.TASK_DESCRIPTION_SELECTOR)
+        expect($$(this.locator.TASK_DESCRIPTION_SELECTOR).first()
             .getAttribute('value')).toEqual(description);
     }
 
     taskDurationIs(duration: string) {
-        expect($(this.locator.TASK_DURATION_SELECTOR)
+        //add optional parameter for the elementFinder. If not specified, use first
+        expect($$(this.locator.TASK_DURATION_SELECTOR).first()
             .getAttribute('value')).toEqual(duration);
     }
 

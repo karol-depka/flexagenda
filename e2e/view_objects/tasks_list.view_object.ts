@@ -1,3 +1,4 @@
+import { WaitHelpers } from '../support/waits.e2e';
 import { $, $$, browser, protractor }  from 'protractor';
 
 import { FlexAgendaLocators } from "../support/elementLocators.e2e";
@@ -9,12 +10,14 @@ export class TaskListTest {
   private locator = new FlexAgendaLocators();
   private support = new Support();
   private task = new TaskTest();
+  private wait = new WaitHelpers();
 
   addEmptyTask() {
     $(this.locator.TASK_ADD_NEW_LAST_SELECTOR).click();
   }
 
   addTasks(count: number) {
+    this.wait.forElementPresent($(this.locator.TASK_ADD_NEW_LAST_SELECTOR));
     var i = 0;
     while (i <= count) {
       this.addEmptyTask();
@@ -23,7 +26,9 @@ export class TaskListTest {
   }
 
   addEmptyTaskFirst() {
-    return $$(this.locator.TASK_ADD_NEW_ABOVE_SELECTOR).first().click();
+    var addTask = $$(this.locator.TASK_ADD_NEW_ABOVE_SELECTOR).first();
+    this.wait.forElementPresent(addTask);
+    addTask.click();
   }
 
   allTasks() {
@@ -54,12 +59,12 @@ export class TaskListTest {
     return $$(this.locator.TASK_START_TIME_SELECTOR);
   }
 
-  allDurations() {
-    return this.allDurationsElements().getAttribute('value').then((valuesString) => {
-      valuesString = valuesString + '';
-      return valuesString.split(',');
-    });
-  }
+  // allDurations() {
+  //   return this.allDurationsElements().getAttribute('value').then((valuesString) => {
+  //     valuesString = valuesString + '';
+  //     return valuesString.split(',');
+  //   });
+  // }
 
   allDurationsElements() {
     return $$(this.locator.TASK_DURATION_SELECTOR);
@@ -91,8 +96,8 @@ export class TaskListTest {
     var taskComplete = $$(this.locator.TASK_COMPLETE_SELECTOR).first();
     taskComplete.click().then(() => {
       browser.refresh();      //Workaround to see the checkbox is clicked
+      this.wait.forElementPresent(taskComplete); //wait for checkbox to appear before it is checked by test
     });
-    browser.wait(this.ec.presenceOf(taskComplete)); //wait for checkbox to appear before it is checked by test
   }
 
   unmarkFirstTaskAsDone() {  //fixme

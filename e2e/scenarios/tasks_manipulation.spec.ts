@@ -1,9 +1,5 @@
 import { browser } from 'protractor';
 
-import { Support }              from '../support/support.e2e';
-import { WaitHelpers }          from '../support/waits.e2e';
-import { FlexAgendaLocators }   from '../support/elementLocators.e2e';
-import { TestData }             from '../support/testData.e2e';
 import { FlexAgendaAssertions } from '../support/assertions.e2e';
 import { TaskListTest }         from '../view_objects/tasks_list.view_object';
 import { AgendaTest }           from '../view_objects/agenda.view_object';
@@ -13,11 +9,7 @@ import { LoginTest }            from '../view_objects/login.view_object';
 
 browser.ignoreSynchronization = true;
 
-describe('It', () => {
-  var support: Support;
-  var wait: WaitHelpers;
-  var locator: FlexAgendaLocators;
-  var data: TestData;
+fdescribe('Tasks manipulations: It', () => {
   var assert: FlexAgendaAssertions;
   var task: TaskTest;
   var taskList: TaskListTest;
@@ -26,10 +18,6 @@ describe('It', () => {
   var loginPage: LoginTest;
 
   beforeAll((done) => {
-    support = new Support();
-    wait = new WaitHelpers();
-    locator = new FlexAgendaLocators();
-    data = new TestData();
     assert = new FlexAgendaAssertions();
     task = new TaskTest();
     taskList = new TaskListTest();
@@ -37,18 +25,15 @@ describe('It', () => {
     agendasList = new AgendasListTest();
     loginPage = new LoginTest();
 
-    browser.get('/');
-    loginPage.loginIfNeeded().then(() => {
-      taskList.addTasks(3);
-      done();
+    loginPage.navigateToLogin().then(() => {
+      loginPage.loginIfNeeded().then(() => {
+        agendasList.addAndDisplayNewTestAgenda(done);
+      });
     });
   });
 
   it('should be able to add a default task', () => {
-    agendasList.addAndDisplayNewTestAgenda();
-
-    taskList.countTasks().then((value) => {
-      var initialTaskCount = value;
+    taskList.countTasks().then((initialTaskCount) => {
       taskList.addEmptyTaskFirst();
 
       expect(taskList.countTasks()).toEqual(initialTaskCount+1);
