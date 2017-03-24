@@ -1,11 +1,15 @@
 
-import { $$ } from 'protractor';
+import { $, $$ } from 'protractor';
 
 import { FlexAgendaLocators } from '../support/elementLocators.e2e';
 import { ElementFinder } from 'protractor/built/element';
 
 export class TaskTest {
   private locator = new FlexAgendaLocators();
+
+  allTitles() {
+    return $$(this.locator.TASK_TITLE_SELECTOR);
+  }
 
   updateTaskTitle() {
     var milliseconds = new Date().getMilliseconds();

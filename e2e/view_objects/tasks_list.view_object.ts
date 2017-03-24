@@ -87,8 +87,18 @@ export class TaskListTest {
     $$(this.locator.TASK_MOVE_DOWN_SELECTOR).first().click();
   }
 
-  moveSecondTaskUp() {
+  moveLastTaskUp() {
     this.allTasks().last().$(this.locator.TASK_MOVE_UP_SELECTOR).click()
+  }
+
+  moveFirstTaskDownWithKeys() {
+    var taskElement = this.task.allTitles().first();  //needs element to focus on
+    taskElement.sendKeys(protractor.Key.chord(protractor.Key.CONTROL, protractor.Key.ARROW_DOWN));
+  }
+
+  moveLastTaskUpWithKeys() {
+    var taskElement = this.task.allTitles().last();  //needs element to focus on
+    taskElement.sendKeys(protractor.Key.chord(protractor.Key.CONTROL, protractor.Key.ARROW_UP));
   }
 
   markFirstTaskAsDone() {     //fixme

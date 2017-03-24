@@ -1,4 +1,5 @@
-import { browser }              from 'protractor';
+import { flushMicrotasks } from '@angular/core/testing';
+import { browser, protractor }              from 'protractor';
 
 import { FlexAgendaAssertions } from '../support/assertions.e2e';
 import { TaskListTest }         from '../view_objects/tasks_list.view_object';
@@ -109,7 +110,7 @@ describe('Tasks manipulations: It', () => {
 
   it('should be able to move task up', () => {
     var title = task.updateTaskTitle();
-    taskList.moveSecondTaskUp();
+    taskList.moveLastTaskUp();
 
     assert.taskMoved(title);
   });
@@ -124,11 +125,25 @@ describe('Tasks manipulations: It', () => {
     assert.lastTaskDoesntHaveMoveDownArrow();
   });
 
-  it('should be able to delete all tasks leaving one empty', () => {
-      taskList.deleteAllTasksFromCurrentAgenda();
+  it('should be able to move task down with CTRL+DOWN', () => {
+    var title = task.updateTaskTitle();
+    taskList.moveFirstTaskDownWithKeys();
+    
+    assert.taskMoved(title);
+  });
 
-      assert.tasksCount(1);
-      assert.firstTaskEmpty();
+  it('should be able to move task up with CTRL+UP', () => {
+    var title = task.updateTaskTitle();
+    taskList.moveLastTaskUpWithKeys();
+
+    assert.taskMoved(title);
+  });
+
+  it('should be able to delete all tasks leaving one empty', () => {
+    taskList.deleteAllTasksFromCurrentAgenda();
+
+    assert.tasksCount(1);
+    assert.firstTaskEmpty();
   });
 
   afterAll(() => {

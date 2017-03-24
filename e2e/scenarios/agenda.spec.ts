@@ -35,7 +35,7 @@ describe('Agenda: User', () => {
 
   it('should be able to add a new agenda to the list', () => {
     wait.forElementPresent(agendasList.addAgendaButton()).then(() => {
-      browser.sleep(3000);    //FIXME: arbitrary waiting; not sure why count is incorrect
+      browser.sleep(3000);    //FIXME: arbitrary waiting; not sure why count is incorrect at this point
       agendasList.countAgendas().then((count) => {
         agendasList.addNewAgenda();
         expect(agendasList.countAgendas()).toEqual(count+1);
@@ -56,7 +56,7 @@ describe('Agenda: User', () => {
   });
 
   it('should be able to rename agenda', () => {
-    browser.sleep(3000);  //FIXME: title can't recieve clear signal although last step is waiting for title field
+    browser.sleep(3000);  //FIXME: title can't receive clear signal although last step is waiting for title field
     var expectedTitle = agenda.updateTitle();
 
     assert.agendaTitleIs(expectedTitle);

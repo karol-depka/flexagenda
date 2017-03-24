@@ -64,6 +64,7 @@ export class AgendasListTest {
 
     this.allAgendas().count().then((count) => {
       while (count > 0) {
+        browser.sleep(1000);    //FIXME: remove or update after fix for nuking all agendas is in place
         this.deleteFirstAgendaOnTheList();
         count--;
       }
