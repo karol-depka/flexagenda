@@ -9,8 +9,12 @@ export class AgendasListTest {
   private locator = new FlexAgendaLocators();
   private support = new Support();
 
+  addAgendaButton() {
+    return $(this.locator.AGENDA_ADD_NEW_SELECTOR);
+  }
+
   addNewAgenda() {
-    var addAgendaElement = $(this.locator.AGENDA_ADD_NEW_SELECTOR);
+    var addAgendaElement = this.addAgendaButton();
     this.waits.forElementPresent(addAgendaElement);
      addAgendaElement.click().then(() => {
        this.waits.forElementPresent($(this.locator.AGENDA_TITLE_SELECTOR));
@@ -31,12 +35,16 @@ export class AgendasListTest {
     });
   }
 
-  allAgendasStartTimes() {
+  allStartTimes() {
     return $$(this.locator.AGENDA_START_TIME_INPUT_SELECTOR);
   }
 
   allAgendas() {
     return $$(this.locator.AGENDA_SELECTOR);
+  }
+
+  allTitleElements() {
+    return $$(this.locator.AGENDA_TITLE_SELECTOR);
   }
 
   countAgendas() {
@@ -49,7 +57,7 @@ export class AgendasListTest {
     this.support.confirmDelete();
   }
 
-  deleteAllAgendas() {
+  deleteAll() {
     browser.sleep(3000);
     browser.get('/agendas');
     this.waits.forElementPresent($(this.locator.AGENDA_DELETE_SELECTOR));

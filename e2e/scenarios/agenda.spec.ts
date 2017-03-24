@@ -1,4 +1,4 @@
-import { $, $$, browser }    from 'protractor';
+import { browser }    from 'protractor';
 
 import { FlexAgendaLocators }   from '../support/elementLocators.e2e';
 import { WaitHelpers }          from '../support/waits.e2e';
@@ -35,7 +35,7 @@ describe('Agenda: User', () => {
   });
 
   it('should be able to add a new agenda to the list', () => {
-    wait.forElementPresent($(locator.AGENDA_ADD_NEW_SELECTOR)).then(() => {
+    wait.forElementPresent(agendasList.addAgendaButton()).then(() => {
       browser.sleep(3000);    //FIXME: arbitrary waiting; not sure why count is incorrect
       agendasList.countAgendas().then((count) => {
        // console.log('c'+count);
@@ -43,9 +43,9 @@ describe('Agenda: User', () => {
         expect(agendasList.countAgendas()).toEqual(count+1);
       });
 
-      expect(agendasList.allAgendasStartTimes().last().getAttribute('value'))
+      expect(agendasList.allStartTimes().last().getAttribute('value'))
         .toEqual(support.timeNowAdjustedText(0,0));
-      expect($$(locator.AGENDA_TITLE_SELECTOR).last().getAttribute('value'))
+      expect(agendasList.allTitleElements().last().getAttribute('value'))
         .toEqual('NEW AGENDA TITLE - click to edit');
     });
   });
@@ -71,7 +71,7 @@ describe('Agenda: User', () => {
   });
 
   it('should be able to delete all agendas from the list', () => {
-    agendasList.deleteAllAgendas();
+    agendasList.deleteAll();
 
     assert.agendasListEmpty();
   });

@@ -129,7 +129,7 @@ export class FlexAgendaAssertions {
     }
 
     agendaTitleIs(expectedTitle: string) {
-        expect(this.agenda.grabAgendaTitle()).toEqual(expectedTitle);
+        expect(this.agenda.title()).toEqual(expectedTitle);
     }
 
     agendaStartTimeIs(expectedStartTime: string) {

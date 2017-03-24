@@ -9,17 +9,16 @@ export class AgendaTest {
   private support = new Support();
   private wait = new WaitHelpers();
 
-
   openNewlyCreatedAgenda() {
     $$(this.locator.AGENDA_SELECTOR).last().$(this.locator.AGENDA_OPEN_SELECTOR).click();
     return this.wait.forElementCount($$(this.locator.AGENDA_TITLE_SELECTOR), 1);
   }
 
-  grabStartTime() {
+  startTime() {
     return $(this.locator.AGENDA_START_TIME_INPUT_SELECTOR).getAttribute('value');
   }
 
-  grabAgendaTitle() {
+  title() {
     return $(this.locator.AGENDA_TITLE_SELECTOR).getAttribute('value');
   }
 

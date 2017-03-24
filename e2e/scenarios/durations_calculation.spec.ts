@@ -36,7 +36,7 @@ describe('Durations calculation: Agenda', () => {
     taskList.addTasks(10);
     taskList.updateAllDurations();
 
-    var startTime = agenda.grabStartTime();
+    var startTime = agenda.startTime();
 
     taskList.sumOfDurations().then((agendaDuration) => {
       // workaround as we don't have the END row to show the end time, yet

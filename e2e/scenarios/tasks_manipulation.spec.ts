@@ -51,7 +51,7 @@ describe('Tasks manipulations: It', () => {
   });
 
   it('should be able to show start time for all tasks', () => {
-    agenda.grabStartTime().then((startTime) => {
+    agenda.startTime().then((startTime) => {
        assert.startTimeSetForTasks(startTime);
     });
   });
