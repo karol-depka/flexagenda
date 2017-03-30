@@ -1,11 +1,11 @@
-import { browser }              from 'protractor';
-
 import { WaitHelpers }          from '../support/waits.e2e';
 import { Support }              from '../support/support.e2e';
 import { FlexAgendaAssertions } from '../support/assertions.e2e';
 import { AgendasListTest }      from '../view_objects/agendas_list.view_object';
 import { AgendaTest }           from '../view_objects/agenda.view_object';
 import { LoginTest }            from '../view_objects/login.view_object';
+
+import { browser }              from 'protractor';
 
 browser.ignoreSynchronization = true;
 
@@ -47,7 +47,7 @@ describe('Agenda: User', () => {
 
   it('should be able to display agenda', () => {
      agendasList.addNewAgenda();
-     agenda.openNewlyCreatedAgenda().then(() => {
+     agendasList.openNewlyCreatedAgenda().then(() => {
        assert.singleAgendaIsOpen();
      });
   });

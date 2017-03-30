@@ -1,9 +1,9 @@
-import { browser }            from 'protractor';
-
 import { WaitHelpers }        from '../support/waits.e2e';
 import { TaskListTest }       from '../view_objects/tasks_list.view_object';
 import { AgendasListTest }    from '../view_objects/agendas_list.view_object';
 import { LoginTest }          from '../view_objects/login.view_object';
+
+import { browser }            from 'protractor';
 
 browser.ignoreSynchronization = true;
 

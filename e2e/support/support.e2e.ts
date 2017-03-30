@@ -1,9 +1,10 @@
-import { browser, protractor, $, $$ } from 'protractor';
+import { DeleteDialogTest }           from '../view_objects/delete_dialog.view_object';
 
-import { FlexAgendaLocators } from './elementLocators.e2e'
+import { browser, protractor, $, $$ } from 'protractor';
 
 export class Support {
   ec = protractor.ExpectedConditions;
+  private deleteDialog = new DeleteDialogTest();
 
   timeNowAdjustedText(hours: number, minutes: number): string {   //not sure if it's working properly
     var time = this.timeNowAdjusted(hours, minutes);
@@ -37,7 +38,7 @@ export class Support {
   }
 
   confirmDelete() {
-    var confirmDelete = $(FlexAgendaLocators.DELETE_CONFIRM_SELECTOR);
+    var confirmDelete = $(this.deleteDialog.DELETE_CONFIRM_SELECTOR);
     browser.wait(this.ec.presenceOf(confirmDelete));
     confirmDelete.click();
   }

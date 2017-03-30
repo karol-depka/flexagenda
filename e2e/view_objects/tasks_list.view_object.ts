@@ -1,21 +1,27 @@
-import { $, $$, browser, protractor }  from 'protractor';
+import { Support }                     from '../support/support.e2e';
+import { TaskTest }                    from './task.view_object';
+import { WaitHelpers }                 from '../support/waits.e2e';
 
-import { FlexAgendaLocators } from "../support/elementLocators.e2e";
-import { Support }            from "../support/support.e2e";
-import { TaskTest }           from './task.view_object';
-import { WaitHelpers }        from '../support/waits.e2e';
+import { $, $$, browser, protractor }  from 'protractor';
 
 export class TaskListTest {
   private support = new Support();
   private task = new TaskTest();
   private wait = new WaitHelpers();
 
+  readonly TASK_SELECTOR                    = 'task';
+  readonly TASK_DELETE_SELECTOR             = '#taskDelete';
+  readonly TASK_ADD_NEW_LAST_SELECTOR       = '#taskAddNewLast';
+  readonly TASK_ADD_NEW_ABOVE_SELECTOR      = '#taskAddAbove';
+  readonly TASK_MOVE_UP_SELECTOR            = '#taskMoveUp';
+  readonly TASK_MOVE_DOWN_SELECTOR          = '#taskMoveDown';
+
   addEmptyTask() {
-    $(FlexAgendaLocators.TASK_ADD_NEW_LAST_SELECTOR).click();
+    $(this.TASK_ADD_NEW_LAST_SELECTOR).click();
   }
 
   addTasks(count: number) {
-    this.wait.forElementPresent($(FlexAgendaLocators.TASK_ADD_NEW_LAST_SELECTOR));
+    this.wait.forElementPresent($(this.TASK_ADD_NEW_LAST_SELECTOR));
     var i = 0;
     while (i <= count) {
       this.addEmptyTask();
@@ -24,17 +30,17 @@ export class TaskListTest {
   }
 
   addEmptyTaskFirst() {
-    var addTask = $$(FlexAgendaLocators.TASK_ADD_NEW_ABOVE_SELECTOR).first();
+    var addTask = $$(this.TASK_ADD_NEW_ABOVE_SELECTOR).first();
     this.wait.forElementPresent(addTask);
     addTask.click();
   }
 
   allTasks() {
-    return $$(FlexAgendaLocators.TASK_SELECTOR);
+    return $$(this.TASK_SELECTOR);
   }
 
   allTitles() {
-    return $$(FlexAgendaLocators.TASK_TITLE_SELECTOR);
+    return $$(this.task.TASK_TITLE_SELECTOR);
   }
 
   countTasks() {
@@ -42,7 +48,7 @@ export class TaskListTest {
   }
 
   deleteFirstTaskOnAList() {
-    $$(FlexAgendaLocators.TASK_DELETE_SELECTOR).first().click();
+    $$(this.TASK_DELETE_SELECTOR).first().click();
 
     this.support.confirmDelete();
   }
@@ -58,7 +64,7 @@ export class TaskListTest {
   }
 
   allStartTimes() {
-    return $$(FlexAgendaLocators.TASK_START_TIME_SELECTOR);
+    return $$(this.task.TASK_START_TIME_SELECTOR);
   }
 
   // allDurations() {
@@ -69,7 +75,7 @@ export class TaskListTest {
   // }
 
   allDurationsElements() {
-    return $$(FlexAgendaLocators.TASK_DURATION_SELECTOR);
+    return $$(this.task.TASK_DURATION_SELECTOR);
   }
 
   updateAllDurations() {    //FIXME
@@ -79,7 +85,7 @@ export class TaskListTest {
   }
 
   sumOfDurations() {
-    return $$(FlexAgendaLocators.TASK_DURATION_SELECTOR).getAttribute('value').then((valuesString) => {
+    return $$(this.task.TASK_DURATION_SELECTOR).getAttribute('value').then((valuesString) => {
       valuesString = valuesString + '';
       var values = valuesString.split(',').map(Number);
       return values.reduce((a, b) => { return a + b; });
@@ -87,11 +93,11 @@ export class TaskListTest {
   }
 
   moveFirstTaskDown() {
-    $$(FlexAgendaLocators.TASK_MOVE_DOWN_SELECTOR).first().click();
+    $$(this.TASK_MOVE_DOWN_SELECTOR).first().click();
   }
 
   moveLastTaskUp() {
-    this.allTasks().last().$(FlexAgendaLocators.TASK_MOVE_UP_SELECTOR).click()
+    this.allTasks().last().$(this.TASK_MOVE_UP_SELECTOR).click()
   }
 
   moveFirstTaskDownWithKeys() {
@@ -105,7 +111,7 @@ export class TaskListTest {
   }
 
   markFirstTaskAsDone() {     //fixme
-    var taskComplete = $$(FlexAgendaLocators.TASK_COMPLETE_SELECTOR).first();
+    var taskComplete = $$(this.task.TASK_COMPLETE_SELECTOR).first();
     taskComplete.click().then(() => {
       browser.refresh();      //Workaround to see the checkbox is clicked
       this.wait.forElementPresent(taskComplete); //wait for checkbox to appear before it is checked by test

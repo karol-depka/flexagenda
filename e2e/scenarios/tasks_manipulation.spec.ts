@@ -1,12 +1,12 @@
-import { flushMicrotasks } from '@angular/core/testing';
-import { browser, protractor }              from 'protractor';
-
 import { FlexAgendaAssertions } from '../support/assertions.e2e';
 import { TaskListTest }         from '../view_objects/tasks_list.view_object';
 import { AgendaTest }           from '../view_objects/agenda.view_object';
 import { AgendasListTest }      from '../view_objects/agendas_list.view_object'
 import { TaskTest }             from "../view_objects/task.view_object";
 import { LoginTest }            from '../view_objects/login.view_object';
+import { flushMicrotasks }      from '@angular/core/testing';
+
+import { browser, protractor }  from 'protractor';
 
 browser.ignoreSynchronization = true;
 

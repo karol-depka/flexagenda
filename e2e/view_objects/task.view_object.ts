@@ -1,24 +1,27 @@
+import { ElementFinder }  from 'protractor/built/element';
 
-import { $, $$ } from 'protractor';
-
-import { FlexAgendaLocators } from '../support/elementLocators.e2e';
-import { ElementFinder } from 'protractor/built/element';
+import { $, $$ }          from 'protractor';
 
 export class TaskTest {
+  readonly TASK_TITLE_SELECTOR              = '#taskTitle';
+  readonly TASK_DESCRIPTION_SELECTOR        = '#taskDescription';
+  readonly TASK_DURATION_SELECTOR           = '#taskDuration';
+  readonly TASK_COMPLETE_SELECTOR           = '#taskComplete';
+  readonly TASK_START_TIME_SELECTOR         = '#taskStart';
 
   allTitles() {
-    return $$(FlexAgendaLocators.TASK_TITLE_SELECTOR);
+    return $$(this.TASK_TITLE_SELECTOR);
   }
 
   updateTaskTitle() {
     var milliseconds = new Date().getMilliseconds();
     var newTitle = 'This is my new title at ' + milliseconds + ' milliseconds';
-    var title = $$(FlexAgendaLocators.TASK_TITLE_SELECTOR).first();
+    var title = $$(this.TASK_TITLE_SELECTOR).first();
 
     this.updateElementValue(title, newTitle);
 
     //change focus to save
-    $$(FlexAgendaLocators.TASK_DESCRIPTION_SELECTOR).first().click();
+    $$(this.TASK_DESCRIPTION_SELECTOR).first().click();
 
     return newTitle;
   }
@@ -27,12 +30,12 @@ export class TaskTest {
     var milliseconds = new Date().getMilliseconds();
     var newDescription = 'This is my new description at ' + milliseconds + ' milliseconds';
 
-    var description = $$(FlexAgendaLocators.TASK_DESCRIPTION_SELECTOR).first();
+    var description = $$(this.TASK_DESCRIPTION_SELECTOR).first();
     description.clear();
     description.sendKeys(newDescription);
 
     //change focus to save
-    $$(FlexAgendaLocators.TASK_TITLE_SELECTOR).first().click();
+    $$(this.TASK_TITLE_SELECTOR).first().click();
 
     return newDescription;
   }
@@ -43,13 +46,13 @@ export class TaskTest {
       taskDurationField = taskElement;
     }
     else {
-      taskDurationField = $$(FlexAgendaLocators.TASK_DURATION_SELECTOR).first();
+      taskDurationField = $$(this.TASK_DURATION_SELECTOR).first();
     }
 
     var minutes = this.updateElementNumberValue(taskDurationField);
 
     //change focus to save
-    $$(FlexAgendaLocators.TASK_TITLE_SELECTOR).first().click();
+    $$(this.TASK_TITLE_SELECTOR).first().click();
 
     return minutes;
   }
