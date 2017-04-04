@@ -1,7 +1,9 @@
 <li [ngClass]="{completed: task.completed, 'task-animation': true}"
       (keyup.control.arrowup)="tasksListComponent.reorderTasks(task, isFirst, 'up')"
       (keyup.control.arrowdown)="tasksListComponent.reorderTasks(task, isLast, 'down')"
-      (keyup.control.delete)="tasksListComponent.requestTaskDelete(task.$key, isFirst, isLast)">
+      (keyup.control.delete)="tasksListComponent.requestTaskDelete(task.$key, isFirst, isLast)"
+      (keyup.alt.control.D)="updateObject(task.$key, 'completed', !(task.completed), 'boolean')"
+      >
     <button id="taskAddAbove" md-icon-button color="primary"
         (click)="tasksListComponent.addNewTask(task, isFirst)"
         title="Add task above"><md-icon>add</md-icon></button>
